@@ -1,16 +1,18 @@
 import { Content } from "./Content";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
-import { Hero } from "./Hero";
+import { Layout } from "./Layout";
+import { Profile } from "./Profile";
 
+// TODO:レスポンシブ対応
 function App() {
   return (
-    <div className="min-h-screen overflow-hidden bg-neutral-800 text-neutral-50 flex flex-col">
+    <Layout>
       <Header />
-      <Hero />
+      <Profile />
       <Content className="flex-grow" />
       <Footer />
-    </div>
+    </Layout>
   );
 }
 
