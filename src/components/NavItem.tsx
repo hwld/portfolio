@@ -7,12 +7,12 @@ export const NavItem: React.VFC<HTMLProps<HTMLAnchorElement>> = ({
 }) => {
   return (
     <a
-      className={`relative group text-lg font-bold text-stone-800 ${className}`}
+      className={`relative group text-lg font-bold text-stone-100 ${className}`}
       {...props}
     >
       {children}
       <div
-        className={`absolute w-0 group-hover:w-full duration-300 h-[5px] bg-yellow-500 bottom-[1px]`}
+        className={`absolute w-0 group-hover:w-full duration-300 h-[8px] bg-yellow-500 bottom-[-3px]`}
       ></div>
     </a>
   );

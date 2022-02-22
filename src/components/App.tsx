@@ -2,14 +2,14 @@ import { Content } from "./Content";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { Layout } from "./Layout";
-import { Profile } from "./Profile";
+import { Hero } from "./Hero";
 
 // TODO:レスポンシブ対応
 function App() {
   return (
     <Layout>
       <Header />
-      <Profile />
+      <Hero />
       <Content className="flex-grow" />
       <Footer />
     </Layout>
