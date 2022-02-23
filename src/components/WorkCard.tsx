@@ -11,7 +11,7 @@ export const WorkCard: React.VFC<{
   };
 
   return (
-    <div className="bg-zinc-700 rounded-md flex flex-col shadow-md">
+    <div className="bg-stone-700 rounded-md shadow-2xl">
       <div className="relative group overflow-hidden cursor-pointer">
         <img
           className="rounded-t-md border-b border-gray-400 group-hover:scale-105 group-hover:grayscale-[50%] duration-150"
@@ -40,9 +40,13 @@ export const WorkCard: React.VFC<{
           </div>
         </div>
       </div>
-      <div className="grow p-5 w-full whitespace-nowrap">
-        <h3 className="text-xl font-bold overflow-hidden">{name}</h3>
-        <p className="text-stone-300 ml-3 overflow-hidden">{desc}</p>
+      <div className="grow p-5 max-md:p-3 w-full whitespace-nowrap">
+        <h3 className="text-xl max-md:text-lg font-bold overflow-hidden">
+          {name}
+        </h3>
+        <p className="text-stone-300 ml-3 overflow-hidden max-md:text-sm">
+          {desc}
+        </p>
       </div>
     </div>
   );

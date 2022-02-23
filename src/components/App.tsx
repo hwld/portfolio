@@ -1,8 +1,8 @@
 import { Content } from "./Content";
 import { Footer } from "./Footer";
 import { Header } from "./Header";
-import { Layout } from "./Layout";
 import { Hero } from "./Hero";
+import { Layout } from "./Layout";
 
 // TODO:レスポンシブ対応
 function App() {
@@ -10,7 +10,7 @@ function App() {
     <Layout>
       <Header />
       <Hero />
-      <Content className="flex-grow" />
+      <Content />
       <Footer />
     </Layout>
   );

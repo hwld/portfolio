@@ -1,20 +1,18 @@
 import { DEPLOYED_WORKS, PROJECTS_WORKS } from "../utils";
-import { WorkContainer } from "../WorkContainer";
 import { Link } from "./Link";
-import { WorkCard } from "./WorkCard";
+import { WorkContainer } from "./WorkContainer";
 
 export const Works: React.VFC<{ className?: string }> = ({ className }) => {
   return (
-    <div className={`${className}`}>
-      <h1 className="text-3xl font-bold mb-5" id="works">
+    <div>
+      <h1
+        className="text-3xl max-md:text-xl font-bold mb-5 max-md:mb-3"
+        id="works"
+      >
         趣味で作ったもの
       </h1>
-      <div className="ml-5">
-        <WorkContainer title="デプロイ済み">
-          {DEPLOYED_WORKS.map((work, i) => {
-            return <WorkCard key={i} work={work} />;
-          })}
-        </WorkContainer>
+      <div className="ml-5 max-md:ml-3">
+        <WorkContainer title="デプロイ済み" works={DEPLOYED_WORKS} />
         <WorkContainer
           title={
             <p>
@@ -25,12 +23,9 @@ export const Works: React.VFC<{ className?: string }> = ({ className }) => {
               )
             </p>
           }
+          works={PROJECTS_WORKS}
           className="mt-10"
-        >
-          {PROJECTS_WORKS.map((work, i) => {
-            return <WorkCard key={i} work={work} />;
-          })}
-        </WorkContainer>
+        />
       </div>
     </div>
   );
