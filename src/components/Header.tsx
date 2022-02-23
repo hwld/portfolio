@@ -23,7 +23,7 @@ export const Header: React.VFC<{ className?: string }> = () => {
       <div
         className={`absolute w-[150px] max-md:w-[50px] h-[150px] max-md:h-[50px] bg-yellow-500 rounded-bl-[40%] flex justify-center items-center top-0 right-0`}
       >
-        <EggOrigin className="text-8xl max-md:text-3xl pb-3 max-md:pb-0" />
+        <EggOrigin className="w-32 max-md:w-10 pb-3 max-md:pb-0" />
         <div
           className={`absolute h-[50px] max-md:h-[25px] w-[50px] max-md:w-[25px] bottom-[-50px] max-md:bottom-[-25px] right-0 shadow-[25px_0px] 
                       max-md:shadow-[10px_0px] shadow-yellow-500 max-md:shadow-yellow-500 rounded-tr-[50%]`}

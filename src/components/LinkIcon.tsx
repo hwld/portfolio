@@ -1,10 +1,10 @@
-import React, { ReactNode } from "react";
+import React, { ComponentPropsWithoutRef, ReactNode } from "react";
 
 export const LinkIcon: React.VFC<
   {
     children: ReactNode;
     className?: string;
-  } & React.HTMLProps<HTMLAnchorElement>
+  } & ComponentPropsWithoutRef<"a">
 > = ({ children, className, ...props }) => {
   return (
     <a

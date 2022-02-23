@@ -1,6 +1,6 @@
-import { HTMLProps } from "react";
+import { ComponentPropsWithoutRef } from "react";
 
-export const Link: React.VFC<HTMLProps<HTMLAnchorElement>> = ({
+export const Link: React.VFC<ComponentPropsWithoutRef<"a">> = ({
   children,
   className,
   ...props

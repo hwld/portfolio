@@ -1,6 +1,6 @@
-import { HTMLProps } from "react";
+import { ComponentPropsWithoutRef } from "react";
 
-export const NavItem: React.VFC<HTMLProps<HTMLAnchorElement>> = ({
+export const NavItem: React.VFC<ComponentPropsWithoutRef<"a">> = ({
   className,
   children,
   ...props

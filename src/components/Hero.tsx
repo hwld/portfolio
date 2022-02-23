@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import { Egg } from "../contexts/EggStateContext";
+import Icon from "../images/icons/icon.png";
 
 const Profile: React.VFC<{ className?: string; children?: ReactNode }> = ({
   className,
@@ -16,9 +17,12 @@ const Profile: React.VFC<{ className?: string; children?: ReactNode }> = ({
       >
         <div
           className="flex justify-center items-center h-[150px] max-md:h-[100px] w-[150px] max-md:w-[100px] bg-stone-700 border-2 
-                          border-yellow-500 rounded-[100%] pb-5 max-md:pb-3"
+                          border-yellow-500 rounded-[100%] pb-4 max-md:pb-3"
         >
-          <p className="text-8xl max-md:text-6xl select-none">🐔</p>
+          <img
+            src={Icon}
+            className="w-28 max-md:w-20 select-none pointer-events-none"
+          />
         </div>
       </div>
       <div className="relative max-md:absolute left-[-85px] max-md:left-[40px] max-md:right-[40px]  min-h-[180px] max-md:min-h-[100px] bg-stone-700 rounded-xl flex shadow-2xl">
@@ -45,7 +49,7 @@ export const Hero: React.VFC<{ className?: string }> = () => {
                         flex pb-10 max-md:pb-7"
       >
         {[...new Array(13)].map(() => {
-          return <Egg className="text-9xl max-md:text-6xl" />;
+          return <Egg className="w-52 max-md:w-20" />;
         })}
       </div>
       <Profile className="absolute max-w-[1200px] top-[290px] max-md:top-[140px] left-0 right-0 mx-auto" />

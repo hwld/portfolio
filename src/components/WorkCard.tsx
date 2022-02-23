@@ -23,17 +23,12 @@ export const WorkCard: React.VFC<{
         >
           <div className="absolute bottom-2 right-2 flex">
             {githubUrl && (
-              <LinkIcon href={githubUrl} target="blank" alt="github">
+              <LinkIcon href={githubUrl} target="blank">
                 <FaGithub size={"100%"} />
               </LinkIcon>
             )}
             {siteUrl && (
-              <LinkIcon
-                href={siteUrl}
-                target="blank"
-                className="ml-2"
-                alt="site"
-              >
+              <LinkIcon href={siteUrl} target="blank" className="ml-2">
                 <FaLink size={"100%"} />
               </LinkIcon>
             )}

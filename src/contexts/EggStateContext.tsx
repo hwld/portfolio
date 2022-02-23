@@ -1,10 +1,14 @@
 import {
+  ComponentPropsWithoutRef,
   createContext,
   ReactNode,
   useCallback,
   useContext,
+  useMemo,
   useState,
 } from "react";
+import EggIcon from "../images/icons/egg.png";
+import HinaIcon from "../images/icons/hina.png";
 
 type EggStateContext = { isEgg: boolean; toggleEggState: () => void };
 
@@ -31,20 +35,27 @@ export const EggStateContextProvider: React.VFC<{ children?: ReactNode }> = ({
   );
 };
 
-export const Egg: React.VFC<{ className?: string }> = ({ className }) => {
+export const Egg: React.VFC<
+  { className?: string } & ComponentPropsWithoutRef<"img">
+> = ({ className, ...props }) => {
   const { isEgg } = useEggState();
+  const imageUrl = useMemo(() => {
+    return isEgg ? EggIcon : HinaIcon;
+  }, [isEgg]);
   return (
-    <p className={`select-none duration-100 ${className}`}>
-      {isEgg ? "🥚" : "🐣"}
-    </p>
+    <img
+      src={imageUrl}
+      className={`pointer-events-none select-none ${className}`}
+      {...props}
+    />
   );
 };
 
 export const EggOrigin: React.VFC<{ className?: string }> = ({ className }) => {
   const { toggleEggState } = useEggState();
   return (
-    <p onClick={toggleEggState}>
+    <div onClick={toggleEggState}>
       <Egg className={`cursor-pointer ${className}`} />
-    </p>
+    </div>
   );
 };
