@@ -7,8 +7,8 @@ import {
   useMemo,
   useState,
 } from "react";
-import EggIcon from "../images/icons/egg.png";
-import HinaIcon from "../images/icons/hina.png";
+import EggIcon from "../../images/icons/egg.webp";
+import HinaIcon from "../../images/icons/hina.webp";
 
 type EggStateContext = { isEgg: boolean; toggleEggState: () => void };
 

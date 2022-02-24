@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
+import Icon from "../../images/icons/icon.webp";
 import { Egg } from "../contexts/EggStateContext";
-import Icon from "../images/icons/icon.png";
 
 const Profile: React.VFC<{ className?: string; children?: ReactNode }> = ({
   className,
@@ -48,8 +48,8 @@ export const Hero: React.VFC<{ className?: string }> = () => {
         className="h-[300px] max-md:h-[150px] m-10 max-md:m-5 rounded-3xl max-md:rounded-xl bg-yellow-500 justify-center items-center overflow-hidden 
                         flex pb-10 max-md:pb-7"
       >
-        {[...new Array(13)].map(() => {
-          return <Egg className="w-52 max-md:w-20" />;
+        {[...new Array(13)].map((_, i) => {
+          return <Egg key={i} className="w-52 max-md:w-20" />;
         })}
       </div>
       <Profile className="absolute max-w-[1200px] top-[290px] max-md:top-[140px] left-0 right-0 mx-auto" />

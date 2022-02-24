@@ -1,13 +1,13 @@
-import conferenceImg from "../images/conference_schedule/home.png";
-import countanyImg from "../images/countany/home.png";
-import funSiteImg from "../images/fun_site/home.png";
-import gameStoreImg from "../images/game_store/home.png";
-import pianoImg from "../images/piano/home.png";
-import qFlasherImg from "../images/q-flasher/home.png";
-import reactNotesImg from "../images/react-notes/home.png";
-import garallyImg from "../images/remote-polar/home.png";
-import surveyImg from "../images/survey_manager/home.png";
-import blogImg from "../images/web_blog/home.png";
+import conferenceImg from "../../images/conference_schedule/home.webp";
+import countanyImg from "../../images/countany/home.webp";
+import funSiteImg from "../../images/fun_site/home.webp";
+import gameStoreImg from "../../images/game_store/home.webp";
+import pianoImg from "../../images/piano/home.webp";
+import qFlasherImg from "../../images/q-flasher/home.webp";
+import reactNotesImg from "../../images/react-notes/home.webp";
+import garallyImg from "../../images/remote-polar/home.webp";
+import surveyImg from "../../images/survey_manager/home.webp";
+import blogImg from "../../images/web_blog/home.webp";
 
 export type WorkData = {
   name: string;

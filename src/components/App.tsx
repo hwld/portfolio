@@ -10,7 +10,7 @@ function App() {
     <Layout>
       <Header />
       <Hero />
-      <Content />
+      <Content className="mt-10" />
       <Footer />
     </Layout>
   );
