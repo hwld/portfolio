@@ -1,25 +1,28 @@
-name: Deploy
+name: deploy to firebase hosting
 
 on:
   push:
-    branches:
-      - "main"
+    branch:
+      - main
+
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v2
       - name: Use Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2
         with:
           node-version: 14.x
       - name: yarn install
         run: |
-          yarn install
+          yarn install --frozen-lockfile
       - name: Build App
         run: yarn run build
-      - name: App Deploy
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Deploy to firebase hosting
+        uses: FirebaseExtended/action-hosting-deploy@v0
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_HWLD_PORTFOLIO }}"
+          projectId: hwld-portfolio
+          channelId: live
