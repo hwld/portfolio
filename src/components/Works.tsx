@@ -1,4 +1,4 @@
-import { DEPLOYED_WORKS, PROJECTS_WORKS } from "../utils";
+import { DEPLOYED_WORKS, HOBBY_WORKS, PROJECTS_WORKS } from "../utils";
 import { Link } from "./Link";
 import { WorkContainer } from "./WorkContainer";
 
@@ -24,6 +24,11 @@ export const Works: React.VFC<{ className?: string }> = ({ className }) => {
             </p>
           }
           works={PROJECTS_WORKS}
+          className="mt-10"
+        />
+        <WorkContainer
+          title="ミニゲーム"
+          works={HOBBY_WORKS}
           className="mt-10"
         />
       </div>

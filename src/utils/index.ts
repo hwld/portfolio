@@ -2,6 +2,9 @@ import conferenceImg from "../../images/conference_schedule/home.webp";
 import countanyImg from "../../images/countany/home.webp";
 import funSiteImg from "../../images/fun_site/home.webp";
 import gameStoreImg from "../../images/game_store/home.webp";
+import memoryGameImg from "../../images/hobby/memory-game.webp";
+import reversiImg from "../../images/hobby/reversi.webp";
+import wordleCloneImg from "../../images/hobby/wordle-clone.webp";
 import pianoImg from "../../images/piano/home.webp";
 import qFlasherImg from "../../images/q-flasher/home.webp";
 import reactNotesImg from "../../images/react-notes/home.webp";
@@ -90,5 +93,26 @@ export const PROJECTS_WORKS: WorkData[] = [
     imgUrl: garallyImg,
     githubUrl:
       "https://github.com/hwld/50ReactProjects/tree/master/fun_and_interesting/video_gallery",
+  },
+];
+
+export const HOBBY_WORKS: WorkData[] = [
+  {
+    name: "真剣衰弱",
+    desc: "webで動く真剣衰弱",
+    imgUrl: memoryGameImg,
+    githubUrl: "https://github.com/hwld/memory-game",
+  },
+  {
+    name: "オセロ",
+    desc: "webで動くオセロ",
+    imgUrl: reversiImg,
+    githubUrl: "https://github.com/hwld/reversi",
+  },
+  {
+    name: "Wordle Clone",
+    desc: "wordleというゲームのクローン",
+    imgUrl: wordleCloneImg,
+    githubUrl: "https://github.com/hwld/wordle-clone",
   },
 ];
