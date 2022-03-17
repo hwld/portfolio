@@ -32,7 +32,7 @@ const Profile: React.VFC<{ className?: string; children?: ReactNode }> = ({
           <p className="text-md max-md:text-sm mt-2 max-md:mt-1 ml-3 max-md:ml-2 max-md:pb-2 text-stone-300 break-all">
             Webフロントエンドに興味のある専門学生です。
             <br />
-            React/Typescriptが好きです
+            React/Typescriptが好きです。
           </p>
         </div>
       </div>
@@ -45,8 +45,8 @@ export const Hero: React.VFC<{ className?: string }> = () => {
   return (
     <div className="flex flex-col items-stretch relative">
       <div
-        className="h-[300px] max-md:h-[150px] m-10 max-md:m-5 rounded-3xl max-md:rounded-xl bg-yellow-500 justify-center items-center overflow-hidden 
-                        flex pb-10 max-md:pb-7"
+        className="h-[300px] max-md:h-[150px] my-10 max-md:my-5 mx-auto rounded-3xl max-md:rounded-xl bg-yellow-500 justify-center 
+                      items-center overflow-hidden flex pb-10 max-md:pb-7 max-w-[1400px] w-[90%]"
       >
         {[...new Array(13)].map((_, i) => {
           return <Egg key={i} className="w-52 max-md:w-20" />;

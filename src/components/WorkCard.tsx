@@ -11,7 +11,7 @@ export const WorkCard: React.VFC<{
   };
 
   return (
-    <div className="bg-stone-700 rounded-md shadow-2xl">
+    <div className="bg-stone-700 rounded-md overflow-hidden shadow-2xl">
       <div className="relative group overflow-hidden cursor-pointer">
         <img
           className="rounded-t-md border-b border-gray-400 group-hover:scale-105 group-hover:grayscale-[50%] duration-150"
