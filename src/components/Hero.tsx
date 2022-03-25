@@ -17,7 +17,7 @@ const Profile: React.VFC<{ className?: string; children?: ReactNode }> = ({
       >
         <div
           className="flex justify-center items-center h-[150px] max-md:h-[100px] w-[150px] max-md:w-[100px] bg-stone-700 border-2 
-                          border-yellow-500 rounded-[100%] pb-4 max-md:pb-3"
+                          border-yellow-500 rounded-[100%] pb-3 max-md:pb-2"
         >
           <img
             src={Icon}
