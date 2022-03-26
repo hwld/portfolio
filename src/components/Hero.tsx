@@ -49,7 +49,7 @@ export const Hero: React.VFC<{ className?: string }> = () => {
                       items-center overflow-hidden flex pb-10 max-md:pb-7 max-w-[1400px] w-[90%]"
       >
         {[...new Array(13)].map((_, i) => {
-          return <Egg key={i} className="w-52 max-md:w-20" />;
+          return <Egg key={i} className="w-40 max-md:w-20 mx-3 max-md:mx-1" />;
         })}
       </div>
       <Profile className="absolute max-w-[1200px] top-[290px] max-md:top-[140px] left-0 right-0 mx-auto" />
