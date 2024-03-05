@@ -1,28 +1,21 @@
 /* eslint-disable @next/next/no-img-element */
-import { ReactNode } from "react";
 import { TbExternalLink } from "react-icons/tb";
+import { ProjectTagCard } from "./project-tag-card";
+import { Project } from "@/data/projects";
 
 type Props = {
-  title: string;
-  desc: ReactNode;
-  tags: string[];
-  iamgeSrc: string;
-  projectSrc: string;
+  project: Project;
 };
 
 export const ProjectCard: React.FC<Props> = ({
-  title,
-  desc,
-  tags,
-  iamgeSrc,
-  projectSrc,
+  project: { title, desc, tagLabels, imageSrc, projectSrc },
 }) => {
   return (
     <div className="gap-4 grid sm:grid-cols-[200px_1fr]">
       <img
         alt="screenshot"
         className="w-full aspect-[16/9] bg-zinc-500 rounded shrink-0 object-contain outline outline-1 outline-zinc-700"
-        src={iamgeSrc}
+        src={imageSrc}
       />
       <div className="flex flex-col gap-4">
         <a
@@ -34,7 +27,11 @@ export const ProjectCard: React.FC<Props> = ({
           <TbExternalLink size={16} />
         </a>
         <div className="text-zinc-300 font-light text-sm">{desc}</div>
-        <div className="text-xs font-light">{tags.join(", ")}</div>
+        <div className="text-xs font-light flex gap-1 items-center flex-wrap">
+          {tagLabels.map((label) => {
+            return <ProjectTagCard tagLabel={label} key={label} />;
+          })}
+        </div>
       </div>
     </div>
   );
