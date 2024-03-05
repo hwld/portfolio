@@ -1,17 +1,34 @@
+/* eslint-disable @next/next/no-img-element */
 import { ReactNode } from "react";
 import { TbExternalLink } from "react-icons/tb";
 
-type Props = { title: string; desc: ReactNode; tags: string[] };
+type Props = {
+  title: string;
+  desc: ReactNode;
+  tags: string[];
+  iamgeSrc: string;
+  projectSrc: string;
+};
 
-export const ProjectCard: React.FC<Props> = ({ title, desc, tags }) => {
+export const ProjectCard: React.FC<Props> = ({
+  title,
+  desc,
+  tags,
+  iamgeSrc,
+  projectSrc,
+}) => {
   return (
-    <div className="flex gap-4">
-      <div className="w-[200px] h-[120px] bg-zinc-500 rounded" />
+    <div className="gap-4 grid sm:grid-cols-[200px_1fr]">
+      <img
+        alt="screenshot"
+        className="w-full aspect-[16/9] bg-zinc-500 rounded shrink-0 object-contain outline outline-1 outline-zinc-700"
+        src={iamgeSrc}
+      />
       <div className="flex flex-col gap-4">
         <a
-          href="/"
+          href={projectSrc}
           target="_blank"
-          className="font-medium flex gap-1 items-center underline underline-offset-4"
+          className="font-medium flex gap-1 items-center underline underline-offset-4 transition-colors hover:text-zinc-400 w-fit"
         >
           {title}
           <TbExternalLink size={16} />
