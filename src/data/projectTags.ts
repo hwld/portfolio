@@ -11,8 +11,6 @@ export const tagLinkMap = new Map([
   ["tailwindcss", "https://tailwindcss.com/"],
 ] as const);
 
-export type ProjectTagLabel = ReturnType<
-  (typeof tagLinkMap)["keys"]
-> extends IterableIterator<infer T>
-  ? T
+export type ProjectTagLabel = typeof tagLinkMap extends Map<infer K, unknown>
+  ? K
   : never;
