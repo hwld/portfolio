@@ -16,8 +16,8 @@ export const Navbar: React.FC<Props> = () => {
     width: number;
   }>();
 
-  const handleMouseEnterItem = (e: React.MouseEvent<Element>) => {
-    if (!barRef.current) {
+  const handlePointerEnterItem = (e: React.PointerEvent) => {
+    if (!barRef.current || e.pointerType !== "mouse") {
       return;
     }
 
@@ -48,7 +48,7 @@ export const Navbar: React.FC<Props> = () => {
               key={page.title}
               page={page}
               active={page.url === currentUrl}
-              onMouseEnter={handleMouseEnterItem}
+              onPointerEnter={handlePointerEnterItem}
             >
               {page.title}
             </NavbarItem>
