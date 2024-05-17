@@ -7,7 +7,7 @@ export const Profile: React.FC = () => {
     <div className="flex flex-col gap-6">
       <Image src="avatar.png" height={80} width={80} alt="avatar" />
       <div className="flex flex-col gap-2">
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 font-medium">
           hwld
           <div className="flex gap-2">
             <ProfileIconLink
@@ -20,7 +20,7 @@ export const Profile: React.FC = () => {
             />
           </div>
         </div>
-        <div className="text-zinc-300 font-light text-sm">
+        <div className="text-sm">
           Webフロントエンド・バックエンド・UIデザイン、ソフトウェアアーキテクチャなど、Webアプリケーション開発に関連する様々な分野に興味があります。
           <br />
           TypeScriptが好きで、Webフロントエンド・バックエンドで使用しています。

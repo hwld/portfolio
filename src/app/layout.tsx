@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
+import { Navbar } from "@/components/navbar/navbar";
 
 const noto = Noto_Sans_JP({ subsets: ["latin"] });
 
@@ -17,9 +18,10 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body
-        className={`${noto.className} min-h-screen bg-zinc-900 text-zinc-100 font-medium`}
+        className={`${noto.className} min-h-screen bg-zinc-900 text-zinc-300 font-light`}
       >
         {children}
+        <Navbar />
       </body>
     </html>
   );

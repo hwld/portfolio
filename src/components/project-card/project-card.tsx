@@ -26,8 +26,8 @@ export const ProjectCard: React.FC<Props> = ({
           {title}
           <TbExternalLink size={16} />
         </a>
-        <div className="text-zinc-300 font-light text-sm">{desc}</div>
-        <div className="text-xs font-light flex gap-1 items-center flex-wrap">
+        <div className="text-sm">{desc}</div>
+        <div className="text-xs flex gap-1 items-center flex-wrap">
           {tagLabels.map((label) => {
             return <ProjectTagCard tagLabel={label} key={label} />;
           })}
