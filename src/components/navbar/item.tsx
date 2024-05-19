@@ -30,6 +30,7 @@ export const NavbarItem: React.FC<Props> = ({
       {active && (
         <motion.div
           layout
+          layoutScroll
           layoutId="active-nav-item"
           className="absolute bg-zinc-200 rounded-full"
           style={{ top: "100%", width: "90%", height: "2px" }}
