@@ -1,14 +1,24 @@
 "use client";
 import { NavbarItem } from "./item";
 import { AnimatePresence, motion } from "framer-motion";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
-import { pages } from "@/app/pages";
+import { PageData, pages } from "@/app/pages";
 
 type Props = {};
 
 export const Navbar: React.FC<Props> = () => {
   const currentUrl = usePathname();
+  const pathNodeMapRef = useRef<Map<string, HTMLAnchorElement>>();
+  const getPathNodeMap = () => {
+    if (!pathNodeMapRef.current) {
+      pathNodeMapRef.current = new Map<string, HTMLAnchorElement>();
+    }
+    return pathNodeMapRef.current;
+  };
+
+  const pathName = usePathname();
+
   const [hoverCardStyle, setHoverCardStyle] = useState<{
     x: number;
     y: number;
@@ -22,9 +32,10 @@ export const Navbar: React.FC<Props> = () => {
     }
 
     const rect = e.currentTarget.getBoundingClientRect();
+    const barRect = barRef.current.getBoundingClientRect();
     setHoverCardStyle({
-      x: rect.x - barRef.current.getBoundingClientRect().x,
-      y: rect.y - barRef.current.getBoundingClientRect().y,
+      x: rect.x - barRect.x,
+      y: rect.y - barRect.y,
       width: rect.width,
       height: rect.height,
     });
@@ -34,17 +45,45 @@ export const Navbar: React.FC<Props> = () => {
     setHoverCardStyle(undefined);
   };
 
+  const setNavbarItemRef = (node: HTMLAnchorElement | null, page: PageData) => {
+    const map = getPathNodeMap();
+    if (node) {
+      map.set(page.url, node);
+    } else {
+      map.delete(page.url);
+    }
+  };
+
+  const [selectedItemStyle, setSelectedItemStyle] = useState<{
+    x: number;
+    width: number;
+  }>();
+  useEffect(() => {
+    const map = getPathNodeMap();
+    const node = map.get(pathName);
+    if (node && barRef.current) {
+      const barRect = barRef.current.getBoundingClientRect();
+      const rect = node.getBoundingClientRect();
+
+      setSelectedItemStyle({
+        x: rect.x - barRect.x,
+        width: rect.width,
+      });
+    }
+  }, [pathName]);
+
   const barRef = useRef<HTMLDivElement>(null);
   return (
     <>
       <div
         ref={barRef}
-        className="fixed bottom-6 left-1/2 -translate-x-1/2 h-10 rounded-lg bg-zinc-800 border border-zinc-600 shadow-lg shadow-black p-1 flex items-center gap-[2px]"
+        className="fixed bottom-6 left-1/2 -translate-x-1/2 h-10 rounded-lg bg-zinc-800 border border-zinc-600 p-1 shadow-lg shadow-black flex items-center gap-[2px]"
         onMouseLeave={handleMouseLeaveBar}
       >
         {pages.map((page) => {
           return (
             <NavbarItem
+              ref={(node) => setNavbarItemRef(node, page)}
               key={page.title}
               page={page}
               active={page.url === currentUrl}
@@ -65,6 +104,16 @@ export const Navbar: React.FC<Props> = () => {
             />
           )}
         </AnimatePresence>
+        {selectedItemStyle && (
+          <motion.div
+            className="absolute h-[3px] pointer-events-none rounded-full flex justify-center left-0 top-full"
+            initial={{ ...selectedItemStyle, opacity: 0, y: "-100%" }}
+            animate={{ ...selectedItemStyle, opacity: 1, y: "-100%" }}
+            transition={{ type: "spring", duration: 0.55 }}
+          >
+            <div className="w-[90%] h-[2px] bg-zinc-200 rounded-full" />
+          </motion.div>
+        )}
       </div>
     </>
   );
