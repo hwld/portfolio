@@ -31,7 +31,8 @@ export const NavbarItem: React.FC<Props> = ({
         <motion.div
           layout
           layoutId="active-nav-item"
-          className="absolute h-[2px] w-[90%] bg-zinc-200 top-full rounded-full"
+          className="absolute bg-zinc-200 rounded-full"
+          style={{ top: "100%", width: "90%", height: "2px" }}
           transition={{ type: "spring", duration: 0.6 }}
         />
       )}
