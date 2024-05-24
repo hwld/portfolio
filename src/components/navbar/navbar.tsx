@@ -77,7 +77,7 @@ export const Navbar: React.FC<Props> = () => {
     <>
       <div
         ref={barRef}
-        className="fixed bottom-6 left-1/2 -translate-x-1/2 h-10 rounded-lg bg-zinc-800 border border-zinc-600 p-1 shadow-lg shadow-black flex items-center gap-[2px]"
+        className="fixed bottom-6 left-1/2 -translate-x-1/2 h-10 rounded-lg bg-zinc-800 outline-1 outline outline-zinc-600 p-1 shadow-lg shadow-black flex items-center gap-[2px]"
         onMouseLeave={handleMouseLeaveBar}
       >
         {pages.map((page) => {
@@ -96,7 +96,7 @@ export const Navbar: React.FC<Props> = () => {
         <AnimatePresence>
           {hoverCardStyle && (
             <motion.div
-              className="absolute bg-white/20 rounded-lg pointer-events-none size-10 top-0 left-0 z-10"
+              className="absolute bg-white/20 rounded-md pointer-events-none size-10 top-0 left-0 z-10"
               transition={{ type: "spring", duration: 0.55 }}
               initial={{ ...hoverCardStyle, opacity: 0 }}
               animate={{ ...hoverCardStyle, opacity: 1 }}
