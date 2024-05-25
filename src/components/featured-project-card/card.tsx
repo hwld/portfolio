@@ -1,7 +1,7 @@
-/* eslint-disable @next/next/no-img-element */
 import { TbExternalLink } from "react-icons/tb";
 import { FeaturedProjectTagCard } from "./tag-card";
 import { FeaturedProject } from "@/data/projects";
+import { ProjectThumbnail } from "../project-thumbnail";
 
 type Props = {
   project: FeaturedProject;
@@ -12,11 +12,7 @@ export const FeaturedProjectCard: React.FC<Props> = ({
 }) => {
   return (
     <div className="gap-4 grid sm:grid-cols-[250px_1fr]">
-      <img
-        alt="screenshot"
-        className="w-full aspect-[16/9] bg-zinc-800 rounded shrink-0 object-contain outline outline-1 outline-zinc-700"
-        src={imageSrc}
-      />
+      <ProjectThumbnail src={imageSrc} />
       <div className="flex flex-col gap-4 justify-between">
         <div className="flex flex-col gap-4">
           <a

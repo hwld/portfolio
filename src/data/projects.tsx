@@ -4,7 +4,7 @@ import { ProjectTagLabel } from "./projectTags";
 export type Project = {
   title: string;
   tagLabels: ProjectTagLabel[];
-  imageSrc: string;
+  imageSrc: string | undefined;
   summary: string;
 };
 
