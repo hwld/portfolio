@@ -1,20 +1,20 @@
 /* eslint-disable @next/next/no-img-element */
 import { TbExternalLink } from "react-icons/tb";
-import { ProjectTagCard } from "./project-tag-card";
-import { Project } from "@/data/projects";
+import { FeaturedProjectTagCard } from "./tag-card";
+import { FeaturedProject } from "@/data/projects";
 
 type Props = {
-  project: Project;
+  project: FeaturedProject;
 };
 
-export const ProjectCard: React.FC<Props> = ({
+export const FeaturedProjectCard: React.FC<Props> = ({
   project: { title, desc, tagLabels, imageSrc, projectSrc },
 }) => {
   return (
     <div className="gap-4 grid sm:grid-cols-[250px_1fr]">
       <img
         alt="screenshot"
-        className="w-full aspect-[16/9] bg-zinc-500 rounded shrink-0 object-contain outline outline-1 outline-zinc-700"
+        className="w-full aspect-[16/9] bg-zinc-800 rounded shrink-0 object-contain outline outline-1 outline-zinc-700"
         src={imageSrc}
       />
       <div className="flex flex-col gap-4 justify-between">
@@ -31,7 +31,7 @@ export const ProjectCard: React.FC<Props> = ({
         </div>
         <div className="text-xs flex gap-1 items-center flex-wrap">
           {tagLabels.map((label) => {
-            return <ProjectTagCard tagLabel={label} key={label} />;
+            return <FeaturedProjectTagCard tagLabel={label} key={label} />;
           })}
         </div>
       </div>

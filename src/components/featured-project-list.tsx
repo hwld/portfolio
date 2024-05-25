@@ -1,10 +1,11 @@
 import { TbHash } from "react-icons/tb";
-import { ProjectCard } from "./project-card/project-card";
+import { FeaturedProjectCard } from "./featured-project-card/card";
 import { Separator } from "./separator";
-import { projects } from "@/data/projects";
+import { featuredProjects } from "@/data/projects";
 import React from "react";
+import Link from "next/link";
 
-export const ProjectList: React.FC = () => {
+export const FeaturedProjectList: React.FC = () => {
   return (
     <div className="flex flex-col gap-6">
       <h2 id="projects">
@@ -15,21 +16,20 @@ export const ProjectList: React.FC = () => {
         </a>
       </h2>
       <div className="flex flex-col gap-8 sm:gap-4 ">
-        {projects.map((p, i) => {
+        {featuredProjects.map((p, i) => {
           return (
             <React.Fragment key={p.title}>
-              <ProjectCard project={p} />
-              {i < projects.length - 1 && <Separator />}
+              <FeaturedProjectCard project={p} />
+              {i < featuredProjects.length - 1 && <Separator />}
             </React.Fragment>
           );
         })}
-        <a
-          href="https://github.com/hwld?tab=repositories"
-          target="_blank"
+        <Link
+          href="/projects"
           className="w-fit underline underline-offset-8 hover:text-zinc-50 transition-colors"
         >
           もっと見る
-        </a>
+        </Link>
       </div>
     </div>
   );

@@ -1,13 +1,13 @@
-import Image from "next/image";
 import { ProfileIconLink } from "./profile-icon-link";
 import { TbBrandGithub, TbBrandTwitter } from "react-icons/tb";
+import { AvatarIcon } from "../avatar-icon";
 
 export const Profile: React.FC = () => {
   return (
     <div className="flex flex-col gap-6">
-      <Image src="/avatar.png" height={80} width={80} alt="avatar" />
+      <AvatarIcon />
       <div className="flex flex-col gap-2">
-        <div className="flex items-center gap-4 text-lg font-bold">
+        <div className="flex items-center gap-4 text-xl font-bold">
           hwld
           <div className="flex gap-2">
             <ProfileIconLink
@@ -20,10 +20,10 @@ export const Profile: React.FC = () => {
             />
           </div>
         </div>
-        <div className="max-w-[700px]">
+        <div className="max-w-[700px] md:text-base">
           カッコいいUIのWebアプリケーションを作りたいと思っている人です。
           <br />
-          Webフロントエンドの他にも、バックエンドやソフトウェアアーキテクチャなどのWebアプリ開発に関連する様々な分野に興味があります。
+          Webフロントエンドの他にも、バックエンドや運用、ソフトウェアアーキテクチャなどのWebアプリ開発に関連する様々な分野に興味があり、調べたり試したりしています。
           <br />
           プログラミング言語はTypeScriptが好きで、Webフロントエンド・バックエンド両方で使用しています。
         </div>
