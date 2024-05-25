@@ -5,7 +5,7 @@ import { TbBrandGithub, TbBrandTwitter } from "react-icons/tb";
 export const Profile: React.FC = () => {
   return (
     <div className="flex flex-col gap-6">
-      <Image src="avatar.png" height={80} width={80} alt="avatar" />
+      <Image src="/avatar.png" height={80} width={80} alt="avatar" />
       <div className="flex flex-col gap-2">
         <div className="flex items-center gap-4 font-medium">
           hwld
