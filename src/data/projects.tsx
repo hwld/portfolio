@@ -14,9 +14,12 @@ export const projects: Project[] = [
     title: "aluep",
     desc: (
       <>
-        アプリ開発のお題を投稿・検索できるWebアプリケション。
+        作るものが思いつかない人のための、アプリ開発のお題を投稿・検索できるWebアプリ。
         <br />
         そこそこの規模のWebアプリケーションの開発がしたくて作った。
+        <br />
+        Cloud
+        Runを使っているのだが、コールドスタートのため初回起動に十数秒かかってしまう。
       </>
     ),
     imageSrc: "aluep.png",
@@ -27,9 +30,11 @@ export const projects: Project[] = [
     title: "evodo-openapi",
     desc: (
       <>
-        シンプルなTodoリスト。
+        テーブル形式で表示されたTodoリストのWebアプリ。
         <br />
-        honoとOpenAPIを試してみたくて作った。
+        型安全なAPIアクセスに興味があり、OpenAPIを試してみたくて作った。
+        <br />
+        フロントとバックでドメインが異なっており、ブラウザによってはログイン状態が維持されない。
       </>
     ),
     imageSrc: "evodo-openapi.png",
@@ -40,9 +45,11 @@ export const projects: Project[] = [
     title: "zero-one-ui",
     desc: (
       <>
-        様々なUIを作るプロジェクト
+        Reactで様々なUIを作るためのプロジェクト。
         <br />
-        UIを作る練習のために作った。
+        非同期通信のシミュレーションのため、mswを使ってローカルにダミーのAPIサーバーを立てている。
+        <br />
+        `/`キーで表示されるメニューのUIがお気に入り。
       </>
     ),
     imageSrc: "zero-one-ui.png",

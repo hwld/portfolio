@@ -8,11 +8,8 @@ export const ProjectList: React.FC = () => {
   return (
     <div className="flex flex-col gap-6">
       <h2 id="projects">
-        <div className="text-sm text-zinc-400">projects</div>
-        <a
-          className="flex items-center gap-1 text-lg font-normal"
-          href="#projects"
-        >
+        <div className="text-zinc-400 text-xs">projects</div>
+        <a className="flex items-center gap-1 text-lg" href="#projects">
           <TbHash className="text-lg mt-[1px]" />
           作ったもの
         </a>
@@ -29,7 +26,7 @@ export const ProjectList: React.FC = () => {
         <a
           href="https://github.com/hwld?tab=repositories"
           target="_blank"
-          className="w-fit text-sm underline underline-offset-8 hover:text-zinc-50 transition-colors"
+          className="w-fit underline underline-offset-8 hover:text-zinc-50 transition-colors"
         >
           もっと見る
         </a>

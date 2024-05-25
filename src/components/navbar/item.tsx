@@ -24,7 +24,7 @@ export const NavbarItem = forwardRef<HTMLAnchorElement, Props>(
         )}
       >
         <Icon className="size-5" />
-        <div className="text-sm">{children}</div>
+        <div>{children}</div>
       </Link>
     );
   }

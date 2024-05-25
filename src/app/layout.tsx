@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body
-        className={`${noto.className} min-h-screen bg-zinc-900 text-zinc-300 font-light`}
+        className={`${noto.className} min-h-screen bg-zinc-900 text-zinc-300 font-light text-sm`}
       >
         {children}
         <Navbar />
