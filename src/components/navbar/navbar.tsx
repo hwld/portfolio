@@ -1,9 +1,11 @@
 "use client";
 import { NavbarItem } from "./item";
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { PointerEventHandler, useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { PageData, pages } from "@/app/pages";
+import { TbBrandGithub, TbBrandTwitter } from "react-icons/tb";
+import { IconType } from "react-icons";
 
 type Props = {};
 
@@ -93,10 +95,22 @@ export const Navbar: React.FC<Props> = () => {
             </NavbarItem>
           );
         })}
+        <div className="ml-2 flex gap-1">
+          <SocialLinkItem
+            icon={TbBrandTwitter}
+            href="https://x.com/016User"
+            onPointerEnter={handlePointerEnterItem}
+          />
+          <SocialLinkItem
+            icon={TbBrandGithub}
+            href="https://github.com/hwld"
+            onPointerEnter={handlePointerEnterItem}
+          />
+        </div>
         <AnimatePresence>
           {hoverCardStyle && (
             <motion.div
-              className="absolute bg-white/20 rounded-md pointer-events-none size-10 top-0 left-0 z-10"
+              className="absolute bg-white/20 rounded-lg pointer-events-none size-10 top-0 left-0 z-10"
               transition={{ type: "spring", duration: 0.55 }}
               initial={{ ...hoverCardStyle, opacity: 0 }}
               animate={{ ...hoverCardStyle, opacity: 1 }}
@@ -111,10 +125,27 @@ export const Navbar: React.FC<Props> = () => {
             animate={{ ...selectedItemStyle, opacity: 1, y: "-100%" }}
             transition={{ type: "spring", duration: 0.55 }}
           >
-            <div className="w-[90%] h-[2px] bg-zinc-200 rounded-full" />
+            <div className="w-[80%] h-[2px] bg-zinc-200 rounded-full" />
           </motion.div>
         )}
       </div>
     </>
+  );
+};
+
+const SocialLinkItem: React.FC<{
+  icon: IconType;
+  href: string;
+  onPointerEnter: PointerEventHandler;
+}> = ({ icon: Icon, href, onPointerEnter }) => {
+  return (
+    <a
+      target="_blank"
+      href={href}
+      className="size-8 grid place-items-center rounded-lg shrink-0 border border-zinc-600"
+      onPointerEnter={onPointerEnter}
+    >
+      <Icon className="size-5" />
+    </a>
   );
 };
