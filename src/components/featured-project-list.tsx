@@ -1,20 +1,14 @@
-import { TbHash } from "react-icons/tb";
 import { FeaturedProjectCard } from "./featured-project-card/card";
 import { Separator } from "./separator";
 import { featuredProjects } from "@/data/projects";
 import React from "react";
 import Link from "next/link";
+import { Heading } from "./heading";
 
 export const FeaturedProjectList: React.FC = () => {
   return (
     <div className="flex flex-col gap-6">
-      <h2 id="projects">
-        <div className="text-zinc-400 text-xs">projects</div>
-        <a className="flex items-center gap-1 text-lg" href="#projects">
-          <TbHash className="text-lg mt-[1px]" />
-          作ったもの
-        </a>
-      </h2>
+      <Heading subTitle="projects">作ったもの</Heading>
       <div className="flex flex-col gap-8 sm:gap-4 ">
         {featuredProjects.map((p, i) => {
           return (
