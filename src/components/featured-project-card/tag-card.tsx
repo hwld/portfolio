@@ -11,7 +11,7 @@ export const FeaturedProjectTagCard: React.FC<{
       href={tagLinkMap.get(tagLabel)}
     >
       {tagLabel}
-      <TbExternalLink size={14} />
+      <TbExternalLink size={14} className="text-zinc-400" />
     </a>
   );
 };

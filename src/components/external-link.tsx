@@ -21,7 +21,7 @@ export const ExternalLink: React.FC<Props> = ({
       )}
     >
       {children}
-      <TbExternalLink size={iconSizeClass[size]} />
+      <TbExternalLink size={iconSizeClass[size]} className="text-zinc-400" />
     </a>
   );
 };
