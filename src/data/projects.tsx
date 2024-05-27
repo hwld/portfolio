@@ -49,7 +49,7 @@ export const projects = [
   {
     title: "UI Sandbox",
     summary:
-      "Dribbleにあるプロジェクトや実際のサービスのUIをトレースしたり、パーツを作るときに使っているFigmaファイル。",
+      "Dribbbleにあるプロジェクトや実際のサービスのUIをトレースしたり、パーツを作るときに使っているFigmaファイル。",
     imageSrc: "ui-sandbox.png",
     tagLabels: [],
     createdAt: new Date("2023/10/4"),
