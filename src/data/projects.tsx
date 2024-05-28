@@ -55,7 +55,7 @@ export const projects = [
     title: "portfolio",
     slug: "portfolio",
     summary: "このポートフォリオサイト。",
-    imageSrc: undefined,
+    imageSrc: "/screenshots/portfolio.png",
     tagLabels: [],
     createdAt: new Date("2024/3/5"),
     projectUrl: "/",
