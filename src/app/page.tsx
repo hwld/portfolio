@@ -1,6 +1,6 @@
 import { CertificationList } from "@/components/certification-list";
 import { FeaturedProjectList } from "@/components/featured-project-list";
-import { Profile } from "@/components/profile/profile";
+import { Profile } from "@/components/profile";
 import { SkillList } from "@/components/skill-list";
 
 export default function Home() {
