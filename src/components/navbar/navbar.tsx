@@ -71,6 +71,8 @@ export const Navbar: React.FC<Props> = () => {
         x: rect.x - barRect.x,
         width: rect.width,
       });
+    } else {
+      setSelectedItemStyle(undefined);
     }
   }, [pathName]);
 
