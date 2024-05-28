@@ -102,7 +102,7 @@ export const projects = [
     imageSrc: "/screenshots/zou-calendar.png",
     tagLabels: [],
     createdAt: new Date("2024/4/21"),
-    projectUrl: undefined,
+    projectUrl: "https://zero-one-ui.web.app/calendar",
     githubUrl: "https://github.com/hwld/zero-one-ui/tree/main/src/app/calendar",
   },
   {
@@ -113,7 +113,7 @@ export const projects = [
     imageSrc: "/screenshots/zou-audio-player.png",
     tagLabels: [],
     createdAt: new Date("2024/4/15"),
-    projectUrl: undefined,
+    projectUrl: "https://zero-one-ui.web.app/audio-player",
     githubUrl:
       "https://github.com/hwld/zero-one-ui/tree/main/src/app/audio-player",
   },
@@ -125,7 +125,7 @@ export const projects = [
     imageSrc: "/screenshots/zou-github-projects.png",
     tagLabels: [],
     createdAt: new Date("2024/3/27"),
-    projectUrl: undefined,
+    projectUrl: "https://zero-one-ui.web.app/github-project",
     githubUrl:
       "https://github.com/hwld/zero-one-ui/tree/main/src/app/github-project",
   },

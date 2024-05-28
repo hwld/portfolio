@@ -20,7 +20,7 @@ export const FeaturedProjectList: React.FC = () => {
         })}
         <Link
           href="/projects"
-          className="w-fit underline underline-offset-8 hover:text-zinc-50 transition-colors"
+          className="w-fit underline underline-offset-4 hover:text-zinc-50 transition-colors"
         >
           もっと見る
         </Link>
