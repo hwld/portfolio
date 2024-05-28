@@ -3,6 +3,8 @@ import { AvatarIcon } from "@/components/avatar-icon";
 import { ProjectDetailMarkdown } from "@/components/project-detail-markdown";
 import { projects } from "@/data/projects";
 import { ProjectThumbnail } from "@/components/project-thumbnail";
+import { IconType } from "react-icons";
+import { TbBrandGithub, TbCode, TbLink } from "react-icons/tb";
 
 type Params = { projectSlug: string };
 
@@ -28,9 +30,25 @@ const ProjectDetailPage: React.FC<Props> = ({ params }) => {
   return (
     <div className="max-w-[700px] space-y-6 text-base text-zxinc-300 font-light">
       <AvatarIcon />
-      <div className="max-w-[700px] space-y-4">
+      <div className="space-y-4">
         <ProjectThumbnail src={project.imageSrc} />
-        <h1 className="text-3xl font-bold">{project.title}</h1>
+        <div>
+          <div className="text-sm text-zinc-400 flex gap-1 items-center">
+            <TbCode size={18} />
+            {`${project.createdAt.getFullYear()}年${
+              project.createdAt.getMonth() + 1
+            }月〜`}
+          </div>
+          <h1 className="text-3xl font-bold">{project.title}</h1>
+        </div>
+        <div className="flex gap-2">
+          {project.projectUrl && (
+            <IconLink icon={TbLink} href={project.projectUrl} />
+          )}
+          {project.githubUrl && (
+            <IconLink icon={TbBrandGithub} href={project.githubUrl} />
+          )}
+        </div>
         <div className="text-sm text-zinc-400">{project.summary}</div>
       </div>
       <div>
@@ -41,3 +59,18 @@ const ProjectDetailPage: React.FC<Props> = ({ params }) => {
 };
 
 export default ProjectDetailPage;
+
+const IconLink: React.FC<{ icon: IconType; href: string }> = ({
+  href,
+  icon: Icon,
+}) => {
+  return (
+    <a
+      target="_blank"
+      href={href}
+      className="size-7 grid place-items-center border border-zinc-500 rounded transition-colors hover:bg-zinc-700"
+    >
+      <Icon size={18} />
+    </a>
+  );
+};
