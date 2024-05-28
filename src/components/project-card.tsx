@@ -8,7 +8,7 @@ export const ProjectCard: React.FC<Props> = ({ project }) => {
   return (
     <Link
       className="w-full md:w-[280px] border border-zinc-700 bg-black/20 rounded-lg shrink-0 p-3 flex flex-col overflow-hidden transition-colors group relative justify-between gap-2 shadow"
-      href="/"
+      href={`/projects/${project.slug}`}
     >
       <div className="space-y-2">
         <ProjectThumbnail src={project.imageSrc} interactive />
@@ -18,7 +18,7 @@ export const ProjectCard: React.FC<Props> = ({ project }) => {
         </div>
       </div>
       <div className="text-xs flex gap-1 text-zinc-400 items-center">
-        <TbCode size={16} />{" "}
+        <TbCode size={16} />
         {`${project.createdAt.getFullYear()}年${
           project.createdAt.getMonth() + 1
         }月`}

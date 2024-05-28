@@ -1,5 +1,18 @@
 {
     "editor.wordWrap": "on",
     "typescript.tsdk": "node_modules/typescript/lib",
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "tailwindCSS.classAttributes": [
+        ".*Class",
+        "class",
+        "className",
+        "classNames",
+        "ngClass",
+        ".*ClassMap",
+    ],
+    "tailwindCSS.experimental.classRegex": [
+        [
+            "clsx\\(.*?\\)(?!\\])",
+            "(?:'|\"|`)([^\"'`]*)(?:'|\"|`)"
+        ]
+    ],
 }
