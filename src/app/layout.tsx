@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/navbar/navbar";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 const noto = Noto_Sans_JP({ subsets: ["latin"] });
 
@@ -25,6 +26,7 @@ export default function RootLayout({
         </main>
         <Navbar />
       </body>
+      <GoogleAnalytics gaId="G-V2PYBBQFQ8" />
     </html>
   );
 }
