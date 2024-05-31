@@ -20,10 +20,19 @@ export const ProjectDetailMarkdown: React.FC<Props> = ({ children }) => {
         ol: Ol,
         li: Li,
         strong: Strong,
+        code: Code,
       }}
     >
       {children}
     </ReactMarkdown>
+  );
+};
+
+const Code = ({ children }: PropsWithChildren) => {
+  return (
+    <code className="bg-zinc-300 text-zinc-900 px-1 py-[2px] mx-1 rounded">
+      {children}
+    </code>
   );
 };
 
