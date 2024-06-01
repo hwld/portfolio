@@ -12,6 +12,7 @@ Todoリストとしての機能の他に、Webアプリの設定の変更をTodo
 - Rust
 - Actix Web
 - Diesel
+- TypeScript
 - Next.js
 - Chakra UI
 

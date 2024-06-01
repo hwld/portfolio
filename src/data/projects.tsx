@@ -163,7 +163,7 @@ export const projects = [
   {
     title: "qflasher",
     slug: "qflasher",
-    summary: "素早く反復できることを目指したWebで動く単語帳です。",
+    summary: "効率的な反復学習ができるWebで動く単語帳です。",
     imageSrc: "/screenshots/qflasher.png",
     tagLabels: [],
     createdAt: new Date("2021/9/1"),
