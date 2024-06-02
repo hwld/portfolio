@@ -21,6 +21,7 @@ export const ProjectDetailMarkdown: React.FC<Props> = ({ children }) => {
         li: Li,
         strong: Strong,
         code: Code,
+        hr: Hr,
       }}
     >
       {children}
@@ -99,4 +100,8 @@ const Li = ({ children }: PropsWithChildren) => {
 
 const Strong = ({ children }: PropsWithChildren) => {
   return <strong className="font-semibold text-zinc-200">{children}</strong>;
+};
+
+const Hr = ({ children }: PropsWithChildren) => {
+  return <hr className="border-zinc-500 mt-5">{children}</hr>;
 };

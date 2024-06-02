@@ -24,9 +24,11 @@ const ProjectsPage: React.FC = () => {
           </div>
         </div>
         <div className="flex w-full gap-4 flex-wrap">
-          {projects.map((project) => {
-            return <ProjectCard key={project.title} project={project} />;
-          })}
+          {projects
+            .toSorted((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
+            .map((project) => {
+              return <ProjectCard key={project.title} project={project} />;
+            })}
         </div>
       </div>
     </div>

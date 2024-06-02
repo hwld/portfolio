@@ -30,7 +30,7 @@ export const projects = [
     githubUrl: "https://github.com/hwld/aluep",
   },
   {
-    title: "evodo-openapi",
+    title: "evodo/openapi",
     slug: "evodo-openapi",
     summary:
       "フロントとバックエンドが分離されている状態で、APIアクセスを型安全にするためのOpenAPIを試したくて作ったTodoリストアプリです。",
@@ -256,7 +256,7 @@ export const featuredProjects = projects
           projectSrc: "https://aluep-rx7ks4nz3a-an.a.run.app/",
         };
       }
-      case "evodo-openapi": {
+      case "evodo/openapi": {
         return {
           ...project,
           desc: (
