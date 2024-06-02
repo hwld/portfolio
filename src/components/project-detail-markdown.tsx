@@ -77,7 +77,7 @@ const A = ({ children, href }: ComponentPropsWithoutRef<"a">) => {
 
 const Img = ({ src, alt }: ComponentPropsWithoutRef<"img">) => {
   // eslint-disable-next-line @next/next/no-img-element
-  return <img src={src} alt={alt} className="my-5" />;
+  return <img src={src} alt={alt} className="my-6" />;
 };
 
 const Ul = ({ children }: PropsWithChildren) => {
