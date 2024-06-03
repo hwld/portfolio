@@ -24,8 +24,8 @@ const ProjectsPage: React.FC = () => {
           </div>
         </div>
         <div className="flex w-full gap-4 flex-wrap">
-          {projects
-            .toSorted((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
+          {structuredClone(projects)
+            .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
             .map((project) => {
               return <ProjectCard key={project.title} project={project} />;
             })}
