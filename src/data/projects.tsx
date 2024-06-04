@@ -45,7 +45,7 @@ export const projects = [
     slug: "zero-one-ui",
     summary:
       "Reactを使って、パーツレベルから画面全体のレイアウトまで、さまざまなUIを作るためのプロジェクトです。",
-    imageSrc: "/screenshots/zero-one-ui.png",
+    imageSrc: "/screenshots/zou.png",
     tagLabels: ["TypeScript", "React", "tailwindcss"],
     createdAt: new Date("2023/11/13"),
     projectUrl: "https://zero-one-ui.web.app",
@@ -104,18 +104,6 @@ export const projects = [
     createdAt: new Date("2024/4/21"),
     projectUrl: "https://zero-one-ui.web.app/calendar",
     githubUrl: "https://github.com/hwld/zero-one-ui/tree/main/src/app/calendar",
-  },
-  {
-    title: "zeron-one-ui/audio-player",
-    slug: "zero-one-ui-audio-player",
-    summary:
-      "カスタムaudioを実装したブラウザで動くオーディオプレイヤーです。ファイルのドラッグ&ドロップに対応しています。",
-    imageSrc: "/screenshots/zou-audio-player.png",
-    tagLabels: [],
-    createdAt: new Date("2024/4/15"),
-    projectUrl: "https://zero-one-ui.web.app/audio-player",
-    githubUrl:
-      "https://github.com/hwld/zero-one-ui/tree/main/src/app/audio-player",
   },
   {
     title: "zero-one-ui/github-projects",

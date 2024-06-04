@@ -27,7 +27,7 @@ useEffectで`worker.start`を実行するだけだと、mswが立ち上がる前
 
 zero-one-uiでは、`/`キーでナビゲーションメニューがコマンドバーとして表示されるのですが、このUIがお気に入りです。  
 
-![コマンドバー](/screenshots/zero-one-ui-command-bar.png)
+![コマンドバー](/screenshots/zou-command-bar.png)
 
 どのページからも表示することができ、好きなページに飛べます。  
 また、一部のアプリではエラーをシミュレーションしたり、データを空にするといったコマンドも実行することができます。  
@@ -35,14 +35,14 @@ UIは[Linear](https://linear.app/)のコマンドバーを参考にしており�
 
 ## スクリーンショットたち
 
-![チャットの設定画面](/screenshots/zero-one-ui-chat-settings.png)
+![チャットの設定画面](/screenshots/zou-chat-settings.png)
 
 [Discordの設定画面を見ながら作ったもの](https://zero-one-ui.web.app/chat/settings)です。  
 Discordほどではないですが、Switchにアニメーションを設定していて、動かしていて気持ち良いです。
 
 ---
 
-![todo作成ページ](/screenshots/zero-one-ui-todo-2-create.png)
+![todo作成ページ](/screenshots/zou-todo-2-create.png)
 
 [Linearのissue作成ページを参考に作ったもの](https://zero-one-ui.web.app/todo-2)です。  
 `Cmd + K`で作成ダイアログを開くことができて、タイトルにフォーカスがあたっているので、すぐに入力を開始でき、
@@ -50,7 +50,15 @@ Discordほどではないですが、Switchにアニメーションを設定し�
 
 ---
 
-![Dynamic island](/screenshots/zero-one-ui-dynamic-island.png)
+![Dynamic island](/screenshots/zou-dynamic-island.png)
 
 [iPhoneのDynamic IslandのようなUI](https://zero-one-ui.web.app/dynamic-island)です。  
 Dynamic Islandのような、小さいUIにいろんな情報が詰まっていたり、いろんなことができるものが僕は特に好きです。
+
+---
+
+![Audio player](/screenshots/zou-audio-player.png)
+
+[オーディオプレイヤー](https://zero-one-ui.web.app/audio-player)です。  
+ドロップした音声ファイルを再生することができます。  
+10秒早送り・巻き戻しや、次の音声・前の音声に移動する機能を実装しています。
