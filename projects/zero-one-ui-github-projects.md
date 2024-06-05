@@ -1,7 +1,7 @@
 ## 概要
 
 [zero-one-ui](/projects/zero-one-ui)プロジェクトで作ったUIです。  
-ReactでGitHub Projectsの見た目をできるだけ真似をして作ったクローンアプリです。
+ReactでGitHub Projectsの見た目をできるだけ真似をして作りました。
 
 タスクの作成や削除、タスクの別Statusへの移動、Statusの並び替え、Viewの切り替えなどを実装しています。  
 
