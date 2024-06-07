@@ -43,7 +43,7 @@ Honoはこのミドルウェアの中でcontextというオブジェクトをセ
 
 Zod OpenAPIというミドルウェアでは、`createRoute`という関数にrequestのbodyのzodスキーマや、
 responseのzodスキーマなどを渡してRouteを作ることができます。
-それを使用してリクエストハンドラを実装すると、渡したスキーマの型がついたrequestのbodyのデータを取得することができます。  
+それを使用してルートハンドラを実装すると、渡したスキーマの型がついたrequestのbodyのデータを取得することができます。  
 この`createRoute`に渡したオブジェクトをもとに、OpenAPIスキーマを生成してくれます。
 
 また、AsyncLocalStorageというNode.jsのAPIも使用しています。  

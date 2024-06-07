@@ -95,7 +95,7 @@ const Ol = ({ children }: PropsWithChildren) => {
 };
 
 const Li = ({ children }: PropsWithChildren) => {
-  return <li className="my-1">{children}</li>;
+  return <li className="my-2">{children}</li>;
 };
 
 const Strong = ({ children }: PropsWithChildren) => {
