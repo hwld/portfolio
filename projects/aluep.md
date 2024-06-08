@@ -95,12 +95,78 @@ GitHub Actionsでは[キャッシュが大きくなってしまう](https://gith
 バックエンドとフロントエンドの通信には、型安全なAPIを作成できる[tRPC](https://trpc.io/)を使用しています。  
 バックエンドで定義したAPIエンドポイントを、関数を呼び出すように実行することが可能で、あらゆるものに型がつきます。  
 
-tRPCでは、`router`という関数の中に、procedure(ルートハンドラのようなもの)をまとめたオブジェクトを渡すことでAPIを作成できます。  
-`router`のなかに、さらに`router`を渡すこともできます。  
-例えば、`router({task: router({create: createTask})})`のようなRouterを作ると、  
-`trpc.task.create(...)`のように呼び出すことが可能になります。
+tRPCでは、以下のようなコードでAPIを実装し、フロントエンドから呼び出すことができます。
+
+```ts
+// backend
+const t = initTRPC.create();
+
+const appRouter = t.router({
+  task: t.router({
+    get: t.procedure
+      .input(getTaskInputSchema)
+      .query(async ({ input }) => {
+        const task = await db.task.find({
+          ...input
+        })
+
+        return task;
+      })
+
+    create: t.procedure
+      .input(createTaskInputSchema)
+      .mutation(async ({ input }) => {
+        const task = await db.task.create({
+          ...input
+        });
+
+        return { task.id };
+      });
+  })
+});
+
+type AppRouter = typeof appRouter;
+
+const server = createHTTPServer({
+  router: appRouter
+});
+
+server.listen(3000);
+
+// frontend
+const trpc = createTRPCClient<AppRouter>({
+  links: [
+    httpBatchLink({
+      url: "http://localhost:3000"
+    })
+  ]
+});
+
+// ✅ 各routeには型がついているので、補完が効きます
+const task = await trpc.task.get.query({ id: "1" });
+const created = await trpc.task.create.mutate({ title: "todo" });
+```
+
+フロント側で呼び出しているコードから、バックエンドのルートハンドラまでジャンプすることができるので、
+コードを確認するのも楽ですし、ルートハンドラのインプットとアウトプットの型が変わったことを検出することもできます。
 
 このプロジェクトでは、機能ごとにrouterを作り、ハンドラごとにファイルを切っています。  
+
+```ts
+const userRouter = t.router({
+  create: createUser
+});
+
+const taskRouter = t.router({
+  create: createTask
+})
+
+const appRouter = t.router({
+  user: userRouter,
+  task: taskRouter
+});
+```
+
 そうすることで、どこにコードが存在するのか探しやすくなっていると感じています。  
 ファイル検索でcreateTaskなどと入力するだけでコードを見に行けるのが快適でした。  
 
@@ -109,18 +175,87 @@ tRPCでは、`router`という関数の中に、procedure(ルートハンドラ�
 例えば認証を行うミドルウェアを実装して、Contextにログインしているユーザーをセットすることで、
 ルートハンドラから型がついたユーザー情報を使用することができます。  
 
+```ts
+const isLoggedIn = t.middleware(async ({ctx, next}) => {
+  if (!ctx.session?.user) {
+    throw new TRPCError({ code: "FORBIDEN" });
+  }
+
+  const loggedInUser = await findUser({/* ... */});
+  if(!loggedInUser) {
+    throw new TRPCError({ code: "FORBIDEN" });
+  }
+
+  return next( ctx: { session: { user: loggedInUser } } );
+})
+
+const requireLoggedInProcedure = procedure.use(isLoggedIn);
+
+const handler = requireLoggedInProcedure.query(async ({ ctx }) => {
+  // ✅ session.userに型がつき、nullableではないことが保証されています
+  const loggedInUser = ctx.session.user;
+
+  // ...
+});
+```
+
 ### バックエンド
 
 各ルートハンドラは、基本的にはPrismaを使用してCRUDを書いています。  
-更新系はPrismaを直接使用して行っているのですが、参照系はPrismaを直接使用せず、モデルごとにラッパーを作って使用しています。  
+更新系はPrismaを直接使用して行っているのですが、参照系はPrismaを直接使用せず、モデルごとに以下のようなラッパーを作って使用しています。  
+
+```ts
+type Task = {
+  id: string;
+  title: string;
+  status: TaskStatus;
+  author: { id: string; name: string };
+} 
+
+const taskArgs = {
+  include: {
+    user: true
+  }
+} satisfies Prisma.TaskDefaultArgs;
+
+const convertTask = (
+  raw: Prisma.TaskGetPayload<typeof taskArgs>
+): Task => {
+  return {
+    id: raw.id,
+    title: raw.title,
+    status: raw.status,
+    author: { id: raw.user.id, name: raw.user.name }
+  };
+}
+
+const findTask = async (
+  { tx, ...args }: FindFirstArgs<"task">
+): Promise<Task | undefined> => {
+  const client = tx ?? db;
+  const raw = await client.development.findTask({
+    ...args,
+    ...taskArgs,
+  });
+
+  if (!raw) {
+    return undefined;
+  }
+
+  return convertTask(raw);
+};
+
+// ✅ モデルに必要なフィールドをselectする必要がありません
+const task = await findTask({ where: { id: "1" } });
+```
+
 Prismaのモデルとドメインのモデルの変換をこのラッパーで実現していて、
-ドメインのモデルだけが変更されたときには、ラッパーを修正するだけで済むことが多いです。  
-このラッパーはいわゆるリポジトリと呼ばれるものではなく、Prismaのfindに渡すselectを事前に設定している関数というイメージです。  
+ドメインのモデルだけが変更されたときには、このあたりのコードを変更するだけで済むことが多いです。  
 
 このWebアプリには、人気のお題などを表示する機能があり、集計を行う必要があります。  
 集計のような処理はPrismaで書けそうになかったので、SQLを使って実装しています。  
 デモをわかりやすくするために、リアルタイムで反映させたかったので、バッチ処理などではなく、アクセスが来るたびに集計をし直しています・・・。  
-Cloud Runでは、バックグラウンドのタスクを実行するためのCloud Run ジョブという機能があり、そちらで集計を行っても良いかもしれません。
+Cloud Runでは、バックグラウンドのタスクを実行するためのCloud Run ジョブという機能があり、そちらで集計を行ったほうが良いかもしれません。
 
 このWebアプリで作りたいお題を見つけた場合は、GitHubリポジトリを登録して開発情報を作成し、開発に取り掛かることができます。  
 このとき、ログインしているGitHubアカウントのパブリックリポジトリを選択できるような機能を実装しています。  

@@ -59,6 +59,56 @@ Rustのコンパイル自体がそこまで早くないのに加えて、sqlxで
 これを`IntoResponse::into_response`で`Response`に変換できるようにしています。  
 また、利便性のために`anyhow::Error`から`AppError`に変換できるように`From`トレイトも実装しています。
 
+```rust
+struct AppError {
+  inner: anyhow::Error,
+  code: StatusCode,
+  body: Option<serde_json::Value>
+}
+
+impl AppError {
+  // APpErrorを作成するメソッド
+  pub fn new(code: StatusCode, msg: Option<&str>) -> Self {
+    // ...
+  }
+
+  // jsonからAppErrorを作成するメソッド
+  pub fn with_json(code: StatusCode, json: Serialize) -> Self {
+    // ...
+  }
+}
+
+impl IntoResponse for AppError {
+  fn into_response(self) -> axum::response::Response {
+    if let Some(json) = self.body {
+      (self.code, json.to_string()).into_response()
+    } else {
+      (self.code, self.code.canonical_reason().unwrap_or("Unknown")).into_response()
+    }
+  }
+}
+
+impl<E> From<E> for AppError
+where
+    E: Into<anyhow::Error>,
+{
+    fn from(err: E) -> Self {
+        let err: anyhow::Error = err.into();
+        Self {
+            code: StatusCode::INTERNAL_SERVER_ERROR,
+            inner: err,
+            body: None,
+        }
+    }
+}
+
+impl std::fmt::Display for AppError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{}", self.inner)
+    }
+}
+```
+
 ### テスト
 
 バックエンドはテストも書いています。  
