@@ -1,6 +1,6 @@
 import { getProjectMarkdown, getProjectMarkdownSlugs } from "./lib";
 import { AvatarIcon } from "@/components/avatar-icon";
-import { ProjectDetailMarkdown } from "@/components/project-detail-markdown";
+import { ProjectDetailMarkdown } from "@/components/project-detail-markdown/project-detail-markdown";
 import { projects } from "@/data/projects";
 import { ProjectThumbnail } from "@/components/project-thumbnail";
 import { IconType } from "react-icons";
