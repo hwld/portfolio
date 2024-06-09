@@ -5,6 +5,7 @@ import { projects } from "@/data/projects";
 import { ProjectThumbnail } from "@/components/project-thumbnail";
 import { IconType } from "react-icons";
 import { TbBrandGithub, TbCode, TbLink } from "react-icons/tb";
+import { Metadata } from "next";
 
 type Params = { projectSlug: string };
 
@@ -19,8 +20,17 @@ export const generateStaticParams = async (): Promise<Params[]> => {
   });
 };
 
-type Props = { params: Params };
-const ProjectDetailPage: React.FC<Props> = ({ params }) => {
+type PageProps = { params: Params };
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  return {
+    title: `${params.projectSlug} - hwld`,
+  };
+}
+
+const ProjectDetailPage: React.FC<PageProps> = ({ params }) => {
   const project = projects.find((p) => p.slug === params.projectSlug);
   if (!project) {
     throw new Error(`プロジェクトが存在しません: ${params.projectSlug}`);

@@ -2,7 +2,12 @@
 import { AvatarIcon } from "@/components/avatar-icon";
 import { ProjectCard } from "@/components/project-card";
 import { projects } from "@/data/projects";
+import { Metadata } from "next";
 import { TbHash } from "react-icons/tb";
+
+export const metadata: Metadata = {
+  title: "projects - hwld",
+};
 
 const ProjectsPage: React.FC = () => {
   return (
