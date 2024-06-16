@@ -21,7 +21,14 @@ Reactだけを使っている場合には、Reactを起動する前にmswを立�
 Next.jsを使っている都合上、そういったコードを実行する場所がありません。  
 useEffectで`worker.start`を実行するだけだと、mswが立ち上がる前のfetchでエラーが発生してしまいます。  
 今は妥協として、mswが立ち上がっているかを状態として持っておき、
-立ち上がっていないときはfetchが発生しないような制御を行っています。
+立ち上がっていないときはfetchが発生しないような制御を行っています。  
+
+また、UIのテストを書くためのサンドボックスとしてStorybookを導入しています。  
+Jest / Vitestではなく、Storybookの[Play function](https://storybook.js.org/docs/writing-stories/play-function)
+を使ってテストを書いています。  
+Play関数は一つのストーリーにつき一つしか書くことができないのですが、内部でstep関数を`it`関数のように使っています。  
+手動でクリーンアップするのは面倒ですが、[Storybookのメンテナの方が推奨](https://github.com/storybookjs/storybook/discussions/16861#discussioncomment-2513340)
+しているようなので、テストはできるだけStorybookに寄せるというのを試しています
 
 ## こだわり
 
