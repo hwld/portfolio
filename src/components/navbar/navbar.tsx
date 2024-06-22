@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { PointerEventHandler, useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { PageData, pages } from "@/app/pages";
-import { TbBrandGithub, TbBrandTwitter } from "react-icons/tb";
+import { TbBrandGithub, TbBrandX } from "react-icons/tb";
 import { IconType } from "react-icons";
 
 type Props = {};
@@ -99,7 +99,7 @@ export const Navbar: React.FC<Props> = () => {
         })}
         <div className="ml-2 flex gap-1">
           <SocialLinkItem
-            icon={TbBrandTwitter}
+            icon={TbBrandX}
             href="https://x.com/016User"
             onPointerEnter={handlePointerEnterItem}
           />
