@@ -1,11 +1,9 @@
 ## 概要
 
 [zero-one-ui](/projects/zero-one-ui)プロジェクトで作ったUIです。  
-ReactでGitHub Projectsの見た目をできるだけ真似をして作りました。
+ReactでGitHub Projectsの見た目をできるだけ真似をして作りました。  
 
-タスクの作成や削除、タスクの別Statusへの移動、Statusの並び替え、Viewの切り替えなどを実装しています。  
-
-また、ドロップダウンメニューも様々な場所に存在し、本家のGitHub Projectsに存在するUIはできるだけ実装しています。  
+ただのドロップダウンメニューやネストできるものなど、細かい違いのあるドロップダウンメニューも作っています。
 
 ![ドロップダウン](/screenshots/zou-github-projects-dropdowns.png)
 
@@ -20,7 +18,14 @@ ReactでGitHub Projectsの見た目をできるだけ真似をして作りまし
 
 ![エラートースト](/screenshots/zou-github-projects-toast.png)
 
-## 使用した技術
+### 機能
+
+- ビューの作成・更新・削除
+- タスクの作成・更新・削除
+- タスクのドラッグ&ドロップによる移動
+- Status列のドラッグ&ドロップによる移動
+
+## 使用した技術と実装の詳細
 
 - TypeScript
 - Next.js
