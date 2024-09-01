@@ -18,7 +18,7 @@ Googleアカウントでログインすることができ、初回ログイン�
 
 ![タスクテーブル](/screenshots/evodo-openapi-filtering.png)
 
-## 使用した技術
+## 使用した技術と実装の詳細
 
 - TypeScript
 - Hono

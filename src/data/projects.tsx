@@ -223,6 +223,17 @@ export const projects = [
     projectUrl: undefined,
     githubUrl: "https://github.com/hwld/gweton-web",
   },
+  {
+    title: "nnnotify",
+    slug: "nnnotify",
+    summary:
+      "Server-sent Eventsを利用した、ユーザー毎のリアルタイム通知のデモアプリです。",
+    imageSrc: "/screenshots/nnnotify.png",
+    tagLabels: [],
+    createdAt: new Date("2024/8/27"),
+    projectUrl: undefined,
+    githubUrl: "https://github.com/hwld/nnnotify",
+  },
 ] as const satisfies Project[];
 
 export const featuredProjects = projects
