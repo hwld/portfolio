@@ -3,6 +3,9 @@ import { ProjectTagLabel } from "./projectTags";
 
 export type Project = {
   title: string;
+  /**
+   * /projectsディレクトリにあるマークダウンのファイルの名前
+   */
   slug: string;
   tagLabels: ProjectTagLabel[];
   imageSrc: string | undefined;
