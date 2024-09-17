@@ -237,6 +237,17 @@ export const projects = [
     projectUrl: undefined,
     githubUrl: "https://github.com/hwld/nnnotify",
   },
+  {
+    title: "tsch-farm",
+    slug: "tsch-farm",
+    summary:
+      "monaco-editorを使って作った、type-challengesを快適に解くためのWebアプリです。",
+    imageSrc: "/screenshots/tsch-farm.png",
+    tagLabels: [],
+    createdAt: new Date("2024/9/3"),
+    projectUrl: "https://tsch-farm.pages.dev/",
+    githubUrl: "https://github.com/hwld/tsch-farm",
+  },
 ] as const satisfies Project[];
 
 export const featuredProjects = projects
