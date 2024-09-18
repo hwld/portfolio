@@ -3,8 +3,11 @@ import { AvatarIcon } from "@/components/avatar-icon";
 import { ProjectDetailMarkdown } from "@/components/project-detail-markdown/project-detail-markdown";
 import { projects } from "@/data/projects";
 import { ProjectThumbnail } from "@/components/project-thumbnail";
-import { IconType } from "react-icons";
-import { TbBrandGithub, TbCode, TbLink } from "react-icons/tb";
+import { type IconType } from "@react-icons/all-files/lib";
+import { TbBrandGithub } from "@react-icons/all-files/tb/TbBrandGithub";
+import { TbCode } from "@react-icons/all-files/tb/TbCode";
+import { TbLink } from "@react-icons/all-files/tb/TbLink";
+
 import { Metadata } from "next";
 import Link from "next/link";
 

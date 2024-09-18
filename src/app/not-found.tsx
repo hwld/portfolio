@@ -1,4 +1,4 @@
-import { TbGhost } from "react-icons/tb";
+import { TbGhost } from "@react-icons/all-files/tb/TbGhost";
 
 const NotFoundPage = () => {
   return (

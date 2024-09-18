@@ -4,8 +4,9 @@ import { AnimatePresence, motion } from "framer-motion";
 import { PointerEventHandler, useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { PageData, pages } from "@/app/pages";
-import { TbBrandGithub, TbBrandX } from "react-icons/tb";
-import { IconType } from "react-icons";
+import { TbBrandX } from "@react-icons/all-files/tb/TbBrandX";
+import { TbBrandGithub } from "@react-icons/all-files/tb/TbBrandGithub";
+import { type IconType } from "@react-icons/all-files/lib";
 
 type Props = {};
 

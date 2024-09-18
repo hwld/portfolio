@@ -1,5 +1,5 @@
 import { ProjectTagLabel, tagLinkMap } from "@/data/projectTags";
-import { TbExternalLink } from "react-icons/tb";
+import { TbExternalLink } from "@react-icons/all-files/tb/TbExternalLink";
 
 export const FeaturedProjectTagCard: React.FC<{
   tagLabel: ProjectTagLabel;

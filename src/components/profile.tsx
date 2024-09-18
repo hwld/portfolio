@@ -1,6 +1,9 @@
-import { TbBalloon, TbBook, TbBrandGithub, TbBrandX } from "react-icons/tb";
+import { TbBalloon } from "@react-icons/all-files/tb/TbBalloon";
+import { TbBook } from "@react-icons/all-files/tb/TbBook";
+import { TbBrandGithub } from "@react-icons/all-files/tb/TbBrandGithub";
+import { TbBrandX } from "@react-icons/all-files/tb/TbBrandX";
 import { AvatarIcon } from "./avatar-icon";
-import { IconType } from "react-icons";
+import { type IconType } from "@react-icons/all-files/lib";
 import { ReactNode } from "react";
 import { ExternalLink } from "./external-link";
 import { TextLink } from "./link";

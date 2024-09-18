@@ -1,4 +1,4 @@
-import { TbCircleFilled } from "react-icons/tb";
+import { TbCircleFilled } from "@react-icons/all-files/tb/TbCircleFilled";
 import { Heading } from "./heading";
 import { ReactNode } from "react";
 

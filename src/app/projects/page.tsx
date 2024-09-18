@@ -4,7 +4,7 @@ import { ProjectCard } from "@/components/project-card";
 import { projects } from "@/data/projects";
 import { Metadata } from "next";
 import Link from "next/link";
-import { TbHash } from "react-icons/tb";
+import { TbHash } from "@react-icons/all-files/tb/TbHash";
 
 export const metadata: Metadata = {
   title: "projects - hwld",

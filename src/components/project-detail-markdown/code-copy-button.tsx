@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { TbClipboard, TbClipboardCheck } from "react-icons/tb";
+import { TbClipboard } from "@react-icons/all-files/tb/TbClipboard";
+import { TbClipboardCheck } from "@react-icons/all-files/tb/TbClipboardCheck";
 
 type Props = { codeId: string };
 
