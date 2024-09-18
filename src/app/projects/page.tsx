@@ -3,6 +3,7 @@ import { AvatarIcon } from "@/components/avatar-icon";
 import { ProjectCard } from "@/components/project-card";
 import { projects } from "@/data/projects";
 import { Metadata } from "next";
+import Link from "next/link";
 import { TbHash } from "react-icons/tb";
 
 export const metadata: Metadata = {
@@ -12,7 +13,9 @@ export const metadata: Metadata = {
 const ProjectsPage: React.FC = () => {
   return (
     <div className="space-y-6">
-      <AvatarIcon />
+      <Link href="/">
+        <AvatarIcon />
+      </Link>
       <div className="space-y-10">
         <div className="space-y-2">
           <h1 className="space-y-1">
@@ -25,7 +28,7 @@ const ProjectsPage: React.FC = () => {
           <div className="max-w-[700px] md:text-base">
             このページでは、これまでに趣味で作ってきたものを記録しています。
             <br />
-            プロジェクトの概要や使用した技術、プロジェクトから学んだことなどをできるだけ思い出し、各プロジェクトの詳細ページにまとめました。
+            プロジェクトの概要や使用した技術、プロジェクトから学んだことなどを各プロジェクトの詳細ページにまとめました。
           </div>
         </div>
         <div className="flex w-full gap-4 flex-wrap">

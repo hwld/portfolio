@@ -3,6 +3,7 @@ import { AvatarIcon } from "./avatar-icon";
 import { IconType } from "react-icons";
 import { ReactNode } from "react";
 import { ExternalLink } from "./external-link";
+import { TextLink } from "./link";
 
 export const Profile: React.FC = () => {
   return (
@@ -11,11 +12,18 @@ export const Profile: React.FC = () => {
       <div className="flex flex-col gap-4">
         <div className="flex items-center gap-4 text-xl font-bold">hwld</div>
         <div className="max-w-[700px] md:text-base">
-          カッコいいUIのWebアプリケーションを作りたいと思っている人です。
+          カッコいいUIのWebアプリを作るのが趣味です。
           <br />
-          Webフロントエンドの他にも、バックエンドや運用、ソフトウェアアーキテクチャなどのWebアプリ開発に関連する様々な分野に興味があり、調べたり試したりしています。
+          Webフロントエンドの技術に最も長く触れてきましたが、バックエンドや運用、ソフトウェアアーキテクチャ、セキュリティなどのWebアプリ開発に関連する様々な分野に興味があり、調べたり試したりしています。これまで作ってきたものは
+          <span className="mx-1">
+            <TextLink href="/projects">こちら</TextLink>
+          </span>
+          から見られます。
           <br />
-          プログラミング言語はTypeScriptが好きで、Webフロントエンド・バックエンド両方で使用しています。
+          言語はTypeScriptが好きで、Webフロントエンド・バックエンドの両方で使用しています。
+          <br />
+          <br />
+          ご連絡はXのDMにてお願いします。
         </div>
         <div className="space-y-2">
           <ProfileBasicInfo icon={TbBalloon} title="誕生日">

@@ -6,6 +6,7 @@ import { ProjectThumbnail } from "@/components/project-thumbnail";
 import { IconType } from "react-icons";
 import { TbBrandGithub, TbCode, TbLink } from "react-icons/tb";
 import { Metadata } from "next";
+import Link from "next/link";
 
 type Params = { projectSlug: string };
 
@@ -39,7 +40,9 @@ const ProjectDetailPage: React.FC<PageProps> = ({ params }) => {
 
   return (
     <div className="max-w-[700px] space-y-6 text-base text-zxinc-300 font-light">
-      <AvatarIcon />
+      <Link href="/" className="w-fit">
+        <AvatarIcon />
+      </Link>
       <div className="space-y-4">
         <ProjectThumbnail src={project.imageSrc} />
         <div>

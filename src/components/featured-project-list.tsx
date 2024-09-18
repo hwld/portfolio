@@ -2,8 +2,8 @@ import { FeaturedProjectCard } from "./featured-project-card/card";
 import { Separator } from "./separator";
 import { featuredProjects } from "@/data/projects";
 import React from "react";
-import Link from "next/link";
 import { Heading } from "./heading";
+import { TextLink } from "./link";
 
 export const FeaturedProjectList: React.FC = () => {
   return (
@@ -18,12 +18,9 @@ export const FeaturedProjectList: React.FC = () => {
             </React.Fragment>
           );
         })}
-        <Link
-          href="/projects"
-          className="w-fit underline underline-offset-4 hover:text-zinc-50 transition-colors"
-        >
+        <TextLink href="/projects" size="sm">
           もっと見る
-        </Link>
+        </TextLink>
       </div>
     </div>
   );
