@@ -81,7 +81,7 @@ export const DesktopNavbar: React.FC = () => {
     <>
       <div
         ref={barRef}
-        className="fixed bottom-4 left-1/2 -translate-x-1/2 h-10 rounded-lg bg-zinc-800 border shadow-black/30 border-zinc-600 p-1 flex items-center gap-[2px] shadow-xl"
+        className="h-10 rounded-lg bg-zinc-800 border shadow-black/30 border-zinc-600 p-1 flex items-center gap-[2px] shadow-xl"
         onMouseLeave={handleMouseLeaveBar}
       >
         {pages.map((page) => {

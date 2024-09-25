@@ -30,7 +30,7 @@ export const MobileNavbar: React.FC = () => {
   }, [currentPage]);
 
   return (
-    <div className="fixed grid grid-rows-[1fr_auto] w-[250px] bottom-6 left-1/2 -translate-x-1/2">
+    <div className="grid grid-rows-[1fr_auto] w-[250px]">
       <NavContent
         isOpen={isOpen}
         currentPath={currentPath}
