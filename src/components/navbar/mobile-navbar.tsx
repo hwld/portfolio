@@ -31,10 +31,14 @@ export const MobileNavbar: React.FC = () => {
 
   return (
     <div className="fixed grid grid-rows-[1fr_auto] w-[250px] bottom-6 left-1/2 -translate-x-1/2">
-      <NavContent isOpen={isOpen} currentPath={currentPath} />
+      <NavContent
+        isOpen={isOpen}
+        currentPath={currentPath}
+        onClose={() => setIsOpen(false)}
+      />
       <button
         onClick={() => setIsOpen((s) => !s)}
-        className="h-10 w-full bg-zinc-800 border border-zinc-600 rounded-lg items-center place-items-start grid grid-cols-[1fr_auto] gap-4 px-4 z-10"
+        className="h-10 w-full bg-zinc-800 border shadow-xl shadow-black/30 border-zinc-600 rounded-lg items-center place-items-start grid grid-cols-[1fr_auto] gap-4 px-4 z-10"
       >
         {content}
         <motion.div animate={isOpen ? { rotate: -90 } : { rotate: 0 }}>
@@ -45,15 +49,16 @@ export const MobileNavbar: React.FC = () => {
   );
 };
 
-const NavContent: React.FC<{ isOpen: boolean; currentPath: string }> = ({
-  isOpen,
-  currentPath,
-}) => {
+const NavContent: React.FC<{
+  isOpen: boolean;
+  onClose: () => void;
+  currentPath: string;
+}> = ({ isOpen, onClose, currentPath }) => {
   return (
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="bg-zinc-800 border border-zinc-600 rounded-lg mb-3 p-2 flex flex-col gap-2"
+          className="bg-zinc-800 border border-zinc-600 rounded-lg mb-3 p-2 flex flex-col gap-2 shadow-xl shadow-black/30"
           initial={{ opacity: 0, y: 20, scale: 0.95 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: 20, scale: 0.95 }}
@@ -61,7 +66,12 @@ const NavContent: React.FC<{ isOpen: boolean; currentPath: string }> = ({
           <div className="flex flex-col gap-1">
             {pages.map((p) => {
               return (
-                <NavbarItem key={p.url} page={p} currentPath={currentPath} />
+                <NavbarItem
+                  key={p.url}
+                  page={p}
+                  currentPath={currentPath}
+                  onClick={onClose}
+                />
               );
             })}
           </div>
@@ -92,10 +102,11 @@ const item = tv({
   },
 });
 
-const NavbarItem: React.FC<{ page: PageData; currentPath: string }> = ({
-  page,
-  currentPath,
-}) => {
+const NavbarItem: React.FC<{
+  page: PageData;
+  currentPath: string;
+  onClick: () => void;
+}> = ({ page, currentPath, onClick }) => {
   const active = page.url === currentPath;
   const Icon = active ? page.activeIcon : page.icon;
   const itemClass = item({ active });
@@ -110,7 +121,7 @@ const NavbarItem: React.FC<{ page: PageData; currentPath: string }> = ({
   return active ? (
     <div className={itemClass}>{content}</div>
   ) : (
-    <Link href={page.url} className={itemClass}>
+    <Link href={page.url} className={itemClass} onClick={onClick}>
       {content}
     </Link>
   );

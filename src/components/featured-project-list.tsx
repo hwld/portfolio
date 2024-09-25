@@ -9,7 +9,7 @@ export const FeaturedProjectList: React.FC = () => {
   return (
     <div className="flex flex-col gap-6">
       <Heading subTitle="projects">作ったもの</Heading>
-      <div className="flex flex-col gap-8 sm:gap-4 ">
+      <div className="flex flex-col gap-8 sm:gap-6 ">
         {featuredProjects.map((p, i) => {
           return (
             <React.Fragment key={p.title}>
