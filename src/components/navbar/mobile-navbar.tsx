@@ -3,31 +3,18 @@ import { TbChevronRight } from "@react-icons/all-files/tb/TbChevronRight";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { tv } from "tailwind-variants";
 import { TbBrandX } from "@react-icons/all-files/tb/TbBrandX";
 import { TbBrandGithub } from "@react-icons/all-files/tb/TbBrandGithub";
+import { TbSquareRotatedFilled } from "@react-icons/all-files/tb/TbSquareRotatedFilled";
 import { SocialLinkItem } from "./social-link-item";
+import { getProjectDetailPageTitle } from "@/lib/get-detail-page-title";
+import type { IconType } from "@react-icons/all-files";
 
 export const MobileNavbar: React.FC = () => {
   const currentPath = usePathname();
   const [isOpen, setIsOpen] = useState(false);
-
-  const currentPage = pages.find((p) => p.url === currentPath);
-
-  const content = useMemo(() => {
-    if (!currentPage) {
-      return <div>不明なページ</div>;
-    }
-
-    const Icon = currentPage.activeIcon;
-    return (
-      <div className="grid items-center grid-cols-[auto_1fr] gap-1">
-        <Icon className="size-5" />
-        <p className="pb-[2px]">{currentPage.title}</p>
-      </div>
-    );
-  }, [currentPage]);
 
   return (
     <div className="grid grid-rows-[1fr_auto] w-[250px]">
@@ -40,11 +27,46 @@ export const MobileNavbar: React.FC = () => {
         onClick={() => setIsOpen((s) => !s)}
         className="h-10 w-full bg-zinc-800 border shadow-xl shadow-black/30 border-zinc-600 rounded-lg items-center place-items-start grid grid-cols-[1fr_auto] gap-4 px-4 z-10"
       >
-        {content}
+        <CurrentPageTitle currentPath={currentPath} />
         <motion.div animate={isOpen ? { rotate: -90 } : { rotate: 0 }}>
           <TbChevronRight className="size-5" />
         </motion.div>
       </button>
+    </div>
+  );
+};
+
+const getCurrentPage = (
+  currentPath: string
+): { Icon: IconType; title: string } | undefined => {
+  const page = pages.find((p) => p.url === currentPath);
+  if (page) {
+    return { Icon: page.activeIcon, title: page.title };
+  }
+
+  const projectTitle = getProjectDetailPageTitle(currentPath);
+  if (projectTitle) {
+    return { Icon: TbSquareRotatedFilled, title: projectTitle };
+  }
+
+  return undefined;
+};
+
+const CurrentPageTitle: React.FC<{ currentPath: string }> = ({
+  currentPath,
+}) => {
+  const currentPage = getCurrentPage(currentPath);
+
+  if (!currentPage) {
+    return <div>不明なページ</div>;
+  }
+
+  const { Icon, title } = currentPage;
+
+  return (
+    <div className="grid items-center grid-cols-[auto_1fr] gap-1">
+      <Icon className="size-5" />
+      <p className="pb-[2px] whitespace-nowrap truncate">{title}</p>
     </div>
   );
 };

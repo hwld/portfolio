@@ -8,7 +8,6 @@ type Props = {};
 
 export const Navbar: React.FC<Props> = () => {
   const isMobile = useMediaQuery("(max-width: 700px)");
-  console.log(isMobile);
 
   if (isMobile === undefined) {
     return;
