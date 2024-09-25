@@ -89,7 +89,7 @@ const Code = ({
       <code
         id={codeId}
         className={clsx(
-          "[:not(pre)>&]:bg-zinc-700 [:not(pre)>&]:text-zinc-300 [:not(pre)>&]:px-[6px] [:not(pre)>&]:py-[3px] [:not(pre)>&]:mx-1 [:not(pre)>&]:rounded",
+          "[:not(pre)>&]:bg-zinc-700 [:not(pre)>&]:text-zinc-300 [:not(pre)>&]:px-[6px] [:not(pre)>&]:py-[3px] [:not(pre)>&]:mx-1 [:not(pre)>&]:rounded break-all",
           className
         )}
         {...props}
