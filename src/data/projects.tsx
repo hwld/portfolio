@@ -248,6 +248,17 @@ export const projects = [
     projectUrl: "https://tsch-farm.pages.dev/",
     githubUrl: "https://github.com/hwld/tsch-farm",
   },
+  {
+    title: "zero-one-ui/todoist",
+    slug: "zero-one-ui-todoist",
+    imageSrc: "/screenshots/zou-todoist.png",
+    summary:
+      "TodoistクローンWebアプリです。TreeViewのDnDをフルスクラッチで実装しています。",
+    tagLabels: [],
+    createdAt: new Date("2024/7/28"),
+    projectUrl: "https://zero-one-ui.web.app/todoist/inbox",
+    githubUrl: "https://github.com/hwld/zero-one-ui/tree/main/src/app/todoist",
+  },
 ] as const satisfies Project[];
 
 export const featuredProjects = projects
