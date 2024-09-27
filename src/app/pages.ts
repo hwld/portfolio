@@ -20,8 +20,8 @@ export const pages = [
     activeIcon: TbStack2Filled as IconType,
   },
   {
-    url: "/articles",
-    title: "articles",
+    url: "/blog",
+    title: "blog",
     icon: TbWriting as IconType,
     activeIcon: TbWritingFilled as IconType,
   },

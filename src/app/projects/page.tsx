@@ -31,7 +31,7 @@ const ProjectsPage: React.FC = () => {
             プロジェクトの概要や使用した技術、プロジェクトから学んだことなどを各プロジェクトの詳細ページにまとめました。
           </div>
         </div>
-        <div className="flex w-full gap-4 flex-wrap">
+        <div className="w-full grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-4">
           {structuredClone(projects)
             .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
             .map((project) => {

@@ -7,9 +7,8 @@ import { useState } from "react";
 import { tv } from "tailwind-variants";
 import { TbBrandX } from "@react-icons/all-files/tb/TbBrandX";
 import { TbBrandGithub } from "@react-icons/all-files/tb/TbBrandGithub";
-import { TbSquareRotatedFilled } from "@react-icons/all-files/tb/TbSquareRotatedFilled";
 import { SocialLinkItem } from "./social-link-item";
-import { getProjectDetailPageTitle } from "@/lib/get-detail-page-title";
+import { getDetailPageTitle } from "@/lib/get-detail-page-title";
 import type { IconType } from "@react-icons/all-files";
 
 export const MobileNavbar: React.FC = () => {
@@ -44,9 +43,9 @@ const getCurrentPage = (
     return { Icon: page.activeIcon, title: page.title };
   }
 
-  const projectTitle = getProjectDetailPageTitle(currentPath);
-  if (projectTitle) {
-    return { Icon: TbSquareRotatedFilled, title: projectTitle };
+  const title = getDetailPageTitle(currentPath);
+  if (title) {
+    return { Icon: title.icon, title: title.label };
   }
 
   return undefined;

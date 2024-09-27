@@ -1,4 +1,3 @@
-import { getProjectMarkdown, getProjectMarkdownSlugs } from "./lib";
 import { AvatarIcon } from "@/components/avatar-icon";
 import { ProjectDetailMarkdown } from "@/components/project-detail-markdown/project-detail-markdown";
 import { projects } from "@/data/projects";
@@ -10,11 +9,12 @@ import { TbLink } from "@react-icons/all-files/tb/TbLink";
 
 import { Metadata } from "next";
 import Link from "next/link";
+import { getMarkdown, getMarkdownSlugs } from "@/lib/markdown";
 
 type Params = { projectSlug: string };
 
 export const generateStaticParams = async (): Promise<Params[]> => {
-  const projectMarkdownSlugs = getProjectMarkdownSlugs();
+  const projectMarkdownSlugs = getMarkdownSlugs("projects");
 
   return projects.map((project) => {
     if (!projectMarkdownSlugs.includes(project.slug)) {
@@ -39,7 +39,7 @@ const ProjectDetailPage: React.FC<PageProps> = ({ params }) => {
   if (!project) {
     throw new Error(`プロジェクトが存在しません: ${params.projectSlug}`);
   }
-  const markdown = getProjectMarkdown(params.projectSlug);
+  const markdown = getMarkdown("projects", params.projectSlug);
 
   return (
     <div className="max-w-[700px] space-y-6 text-base text-zxinc-300 font-light">
