@@ -32,7 +32,7 @@ const ProjectsPage: React.FC = () => {
           </div>
         </div>
         <div className="w-full grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-4">
-          {structuredClone(projects)
+          {[...projects]
             .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
             .map((project) => {
               return <ProjectCard key={project.title} project={project} />;

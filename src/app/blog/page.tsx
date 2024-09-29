@@ -26,9 +26,11 @@ export default function BlogPage() {
           </h1>
         </div>
         <div className="grid w-full grid-cols-1 gap-6">
-          {posts.map((p) => {
-            return <PostItem key={p.slug} post={p} />;
-          })}
+          {[...posts]
+            .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
+            .map((p) => {
+              return <PostItem key={p.slug} post={p} />;
+            })}
         </div>
       </div>
     </div>
