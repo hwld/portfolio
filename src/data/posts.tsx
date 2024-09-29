@@ -13,4 +13,9 @@ export const posts: Post[] = [
     slug: "first-post",
     createdAt: new Date("2024/9/27"),
   },
+  {
+    title: "良いコードは変更容易性が9割",
+    slug: "modifiability-is-the-silver-bullet",
+    createdAt: new Date("9999/12/31"),
+  },
 ];
