@@ -29,8 +29,13 @@ type PageProps = { params: Params };
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
+  const project = projects.find((p) => p.slug === params.projectSlug);
+  if (!project) {
+    throw new Error("プロジェクトが存在しない");
+  }
+
   return {
-    title: `${params.projectSlug} - hwld`,
+    title: `${project.title} - hwld`,
   };
 }
 

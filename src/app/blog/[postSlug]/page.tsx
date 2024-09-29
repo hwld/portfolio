@@ -25,7 +25,12 @@ type PageProps = { params: Params };
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
-  return { title: `${params.postSlug} - hwld` };
+  const post = posts.find((p) => p.slug === params.postSlug);
+  if (!post) {
+    throw new Error("投稿が存在しません");
+  }
+
+  return { title: `${post.title} - hwld` };
 }
 
 const PostDetailPage: React.FC<PageProps> = ({ params }) => {
