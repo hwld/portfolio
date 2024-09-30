@@ -9,7 +9,7 @@ import { unified } from "unified";
 import { CodeCopyButton } from "./code-copy-button";
 
 type Props = { children: string };
-export const ProjectDetailMarkdown: React.FC<Props> = async ({ children }) => {
+export const MarkdownViewer: React.FC<Props> = async ({ children }) => {
   const processor = unified()
     .use(remarkParse)
     .use(remarkRehype)
@@ -45,6 +45,7 @@ export const ProjectDetailMarkdown: React.FC<Props> = async ({ children }) => {
       code: Code,
       pre: Pre,
       hr: Hr,
+      blockquote: BlockQuote,
     },
   });
 };
@@ -167,4 +168,12 @@ const Strong = ({ children }: PropsWithChildren) => {
 
 const Hr = ({ children }: PropsWithChildren) => {
   return <hr className="border-zinc-500 mt-5">{children}</hr>;
+};
+
+const BlockQuote = ({ children }: PropsWithChildren) => {
+  return (
+    <blockquote className="text-zinc-300 pl-4 py-2 mt-5 relative border-l-2 border-zinc-400 bg-white/5 [&>p:first-child]:mt-0">
+      {children}
+    </blockquote>
+  );
 };

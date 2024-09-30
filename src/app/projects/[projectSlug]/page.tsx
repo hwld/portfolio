@@ -1,5 +1,5 @@
 import { AvatarIcon } from "@/components/avatar-icon";
-import { ProjectDetailMarkdown } from "@/components/project-detail-markdown/project-detail-markdown";
+import { MarkdownViewer } from "@/components/markdown-viewer/markdown-viewer";
 import { projects } from "@/data/projects";
 import { ProjectThumbnail } from "@/components/project-thumbnail";
 import { type IconType } from "@react-icons/all-files/lib";
@@ -73,7 +73,7 @@ const ProjectDetailPage: React.FC<PageProps> = ({ params }) => {
         <div className="text-sm text-zinc-400">{project.summary}</div>
       </div>
       <div>
-        <ProjectDetailMarkdown>{markdown}</ProjectDetailMarkdown>
+        <MarkdownViewer>{markdown}</MarkdownViewer>
       </div>
     </div>
   );

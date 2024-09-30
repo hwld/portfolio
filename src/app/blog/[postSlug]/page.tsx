@@ -1,5 +1,5 @@
 import { AvatarIcon } from "@/components/avatar-icon";
-import { ProjectDetailMarkdown } from "@/components/project-detail-markdown/project-detail-markdown";
+import { MarkdownViewer } from "@/components/markdown-viewer/markdown-viewer";
 import { posts } from "@/data/posts";
 import { getMarkdown, getMarkdownSlugs } from "@/lib/markdown";
 import type { Metadata } from "next";
@@ -55,7 +55,7 @@ const PostDetailPage: React.FC<PageProps> = ({ params }) => {
         <h1 className="text-3xl font-bold">{post.title}</h1>
       </div>
       <div>
-        <ProjectDetailMarkdown>{markdown}</ProjectDetailMarkdown>
+        <MarkdownViewer>{markdown}</MarkdownViewer>
       </div>
     </div>
   );
