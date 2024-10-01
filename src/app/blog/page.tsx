@@ -25,7 +25,7 @@ export default function BlogPage() {
             </div>
           </h1>
         </div>
-        <div className="grid w-full grid-cols-1 gap-6">
+        <div className="grid w-full grid-cols-1 gap-4">
           {[...posts]
             .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
             .map((p) => {
