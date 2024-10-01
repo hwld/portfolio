@@ -9,6 +9,11 @@ export type Post = {
 
 export const posts: Post[] = [
   {
+    title: "マークアップのスタイルを確認",
+    slug: "test-style",
+    createdAt: new Date("1970/1/1"),
+  },
+  {
     title: "初めての投稿",
     slug: "first-post",
     createdAt: new Date("2024/9/27"),

@@ -11,8 +11,6 @@ import { CodeCopyButton } from "./code-copy-button";
 import { TbUserCircle } from "@react-icons/all-files/tb/TbUserCircle";
 import { TbInfoCircle } from "@react-icons/all-files/tb/TbInfoCircle";
 
-const defaultGap = "--gap";
-
 type Props = { children: string };
 
 export const MarkdownViewer: React.FC<Props> = async ({ children }) => {
@@ -30,7 +28,7 @@ export const MarkdownViewer: React.FC<Props> = async ({ children }) => {
   const hast = await processor.run(mdast, children);
 
   return (
-    <div style={{ [defaultGap as string]: "20px" }}>
+    <div>
       {toJsxRuntime(hast, {
         Fragment: Fragment,
         // @ts-ignore
@@ -61,6 +59,8 @@ export const MarkdownViewer: React.FC<Props> = async ({ children }) => {
     </div>
   );
 };
+
+const defaultMargin = "24px";
 
 const Div = (
   props: ComponentPropsWithoutRef<"div"> & {
@@ -94,7 +94,8 @@ const Callout = (
 ) => {
   return (
     <div
-      className="my-6 grid grid-cols-[auto_1fr] gap-2 p-4 bg-zinc-800 border border-zinc-700 rounded"
+      className="grid grid-cols-[auto_1fr] gap-2 p-4 bg-zinc-800 border border-zinc-700 rounded"
+      style={{ marginBlock: defaultMargin }}
       {...props}
     />
   );
@@ -105,11 +106,15 @@ const CalloutTitle = ({
   ...props
 }: ComponentPropsWithoutRef<"div">) => {
   if (children === "Column") {
-    return <TbUserCircle className="mt-1 size-6 text-green-300" {...props} />;
+    return (
+      <TbUserCircle className="mt-[2px] size-6 text-green-300" {...props} />
+    );
   }
 
   if (children === "Info") {
-    return <TbInfoCircle className="mt-1 size-6 text-blue-300" {...props} />;
+    return (
+      <TbInfoCircle className="mt-[2px] size-6 text-blue-300" {...props} />
+    );
   }
 
   return null;
@@ -124,7 +129,10 @@ const Pre = ({
   ...props
 }: PropsWithChildren & { className?: string }) => {
   return (
-    <div className={clsx("my-5 relative group", className)}>
+    <div
+      className={clsx("relative group", className)}
+      style={{ marginTop: defaultMargin }}
+    >
       <pre
         {...props}
         className="px-5 py-6 rounded overflow-auto focus-visible:outline-none"
@@ -166,7 +174,7 @@ const Code = ({
 
 const P = ({ children }: PropsWithChildren) => {
   return (
-    <p className="leading-7" style={{ marginTop: `var(${defaultGap})` }}>
+    <p className="leading-7" style={{ marginTop: defaultMargin }}>
       {children}
     </p>
   );
@@ -208,14 +216,14 @@ const A = ({ children, href }: ComponentPropsWithoutRef<"a">) => {
 
 const Img = ({ src, alt }: ComponentPropsWithoutRef<"img">) => {
   // eslint-disable-next-line @next/next/no-img-element
-  return <img src={src} alt={alt} className="my-6" />;
+  return <img src={src} alt={alt} style={{ marginBlock: defaultMargin }} />;
 };
 
 const Ul = ({ children }: PropsWithChildren) => {
   return (
     <ul
-      className="pl-5 list-disc marker:text-zinc-500 group group-has-[ul]:mt-0"
-      style={{ marginTop: `var(${defaultGap})` }}
+      className="pl-5 list-disc marker:text-zinc-500 group group-has-[ul]:!mt-0"
+      style={{ marginTop: defaultMargin }}
     >
       {children}
     </ul>
@@ -226,7 +234,7 @@ const Ol = ({ children }: PropsWithChildren) => {
   return (
     <ol
       className="list-decimal marker:text-zinc-400 pl-5"
-      style={{ marginTop: `var(${defaultGap})` }}
+      style={{ marginTop: defaultMargin }}
     >
       {children}
     </ol>
@@ -243,7 +251,7 @@ const Strong = ({ children }: PropsWithChildren) => {
 
 const Hr = ({ children }: PropsWithChildren) => {
   return (
-    <hr className="border-zinc-500" style={{ marginTop: `var(${defaultGap})` }}>
+    <hr className="border-zinc-500" style={{ marginTop: defaultMargin }}>
       {children}
     </hr>
   );
@@ -251,7 +259,10 @@ const Hr = ({ children }: PropsWithChildren) => {
 
 const BlockQuote = ({ children }: PropsWithChildren) => {
   return (
-    <blockquote className="text-zinc-300/80 px-4 py-1 relative border-l-2 border-zinc-400 [&>p:first-child]:!mt-0 my-6">
+    <blockquote
+      className="text-zinc-300/80 px-4 py-1 relative border-l-2 border-zinc-400 [&>p:first-child]:!mt-0"
+      style={{ marginBlock: defaultMargin }}
+    >
       {children}
     </blockquote>
   );
