@@ -72,9 +72,7 @@ const ProjectDetailPage: React.FC<PageProps> = ({ params }) => {
         </div>
         <div className="text-sm text-zinc-400">{project.summary}</div>
       </div>
-      <div>
-        <MarkdownViewer>{markdown}</MarkdownViewer>
-      </div>
+      <MarkdownViewer>{markdown}</MarkdownViewer>
     </div>
   );
 };

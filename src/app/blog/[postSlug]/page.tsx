@@ -54,9 +54,7 @@ const PostDetailPage: React.FC<PageProps> = ({ params }) => {
         </div>
         <h1 className="text-3xl font-bold">{post.title}</h1>
       </div>
-      <div>
-        <MarkdownViewer>{markdown}</MarkdownViewer>
-      </div>
+      <MarkdownViewer>{markdown}</MarkdownViewer>
     </div>
   );
 };
