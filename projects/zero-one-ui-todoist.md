@@ -54,10 +54,12 @@ const move = (
 また、プロジェクトのIndexの移動だけではなく、親子関係の移動も実装しています。  
 ノードはそれぞれdepthというプロパティを持っているので、移動が許されている場合にdepthを変更するといった実装で実現しています。  
 
+DnDのロジックは純粋関数に切り出しているので、Vitestを使って簡単なテストも書いています。
+
 ### zodのエラーメッセージのカスタマイズ
 
 todoistのタスク作成フォームでは、タスクのタイトル・説明が制限を超えてしまった場合に、
-「タスク名の文字数制限: 550/ 500」のようなエラーメッセージが表示されます。  
+「タスク名の文字数制限: 550 / 500」のようなエラーメッセージが表示されます。  
 このプロジェクトではreact-hook-formとzodResolverを使用しているのですが、
 デフォルトでは入力された値を使用したエラーメッセージを作ることができません。  
 そこで、リゾルバに[ZodErrorMap](https://zod.dev/ERROR_HANDLING?id=customizing-errors-with-zoderrormap)
@@ -66,6 +68,39 @@ todoistのタスク作成フォームでは、タスクのタイトル・説明�
 zodのスキーマとしてメッセージを指定している場合には、[そちらが優先される](https://github.com/colinhacks/zod/issues/2492#issuecomment-1657267265)
 ので、ZodErrorMapで上書きすることはできません。  
 zodでは、`schema.parse(value, { errorMap: ErrorMap });`のように、パース時にErrorMapを渡すことができるので、上書きできたら良いと思うのですが・・・。
+
+### バックエンドのドメインバリデーション
+
+ユニットテストのために、外部依存のあるバリデーションを純粋な関数に切り出して、外からgetter関数を受け取るようにしています。  
+
+このプロジェクトにバックエンドは存在せず、MSWを使った擬似的なバックエンドなのですが、実際のバックエンド開発を想定して、
+RDBへのアクセスなどの外部依存のあるバリデーションをどのように実装するかを考えていました。  
+
+これまで作ってきたものは、ほとんどコントローラー層でそういったバリデーションを実行していたのですが、
+テストするためにDBを起動しなければいけない事が多く、どうしてもテストに時間がかかってしまいます。
+そこで、バリデーションを実行する関数をできるだけ純粋に保つために、外から関数を受け取り、DBなしでテストできるようにしています。
+また、入力値を検証したあとにBrand型に変換して、それをRepositoryの入力として受け取ることで、検証済みのデータだけを受け取れるように工夫しています。
+(検証する関数の外でasを使われると検証をスキップされてしまうのですが・・・)
+
+```ts
+type UpdateInput = { id: string, label: string };
+type ValidatedUpdateInput = UpdateInput & Brand<"UpdateInput">;
+
+export const validateUpdateInput = (
+  input: UpdateInput,
+  getters: { getProject: (id: string) => Project | undefined },
+): ValidatedUpdateInput => {
+  const project = getters.getProject(input.id);
+  if (!project) {
+    throw new Error(`プロジェクトが存在しない: ${input.id}`);
+  }
+
+  return input as ValidatedUpdateInput;
+};
+```
+
+このようにすると、`validateUpdateInput`をテストするのにDBが必要ないので、
+バリデーションが複雑になってきても多くの異常ケースを短い時間でテストすることができるようになると考えています。
 
 ## 学び
 
