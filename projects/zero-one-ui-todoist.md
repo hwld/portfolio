@@ -56,6 +56,37 @@ const move = (
 
 DnDのロジックは純粋関数に切り出しているので、Vitestを使って簡単なテストも書いています。
 
+### キャッシュを利用した楽観的更新
+
+DnDの実行の際には、キャッシュを書き換えることによって楽観的更新を実現しています。
+ドラッグによってプロジェクトが移動されると、キャッシュを書き換えて画面を更新し、ドラッグが終了したタイミングで、変更されたプロジェクトを更新するAPIリクエストを実行しています。
+データフェッチにはtanstack-queryを使用しており、ドキュメントにも[楽観的更新についての解説](https://tanstack.com/query/latest/docs/framework/react/guides/optimistic-updates)があります。今回は楽観的更新が複雑になりそうだったので、UI側での実装ではなく、キャッシュを操作する実装を選択しています。
+
+楽観的更新を実現するために気をつけなければいけないのは、refetchによって楽観的に更新したデータが破棄されないようにすることです。
+tanstack-queryのドキュメントでは、そのために`cancelQueries`というAPIを使っています。
+これはすでに実行されているqueryを無視させるためのAPIであり、楽観的更新のデータが上書きされないようにしています。
+
+大体のケースでは`cancelQueries`だけで良いかもしれませんが、mutationのあとに`invalidateQueries`を呼び出しているようなケースでは十分ではありません。
+mutationが完了してqueryが実行されたあとに`cancelQueries`を使うと、そのqueryは無効になるのですが、
+mutationが完了する前に`cancelQueries`を使っても、そのあとのqueryを無効にすることはできません。
+
+このようなときにはmutation自体を無効化する必要があり、実装の方法としては、mutationFnに`AbortSignal`を渡す方法があります。
+
+```ts
+useMutation({
+  mutationFn: async ({ data, signal }: Input) => {
+    const res = await fetch("...", {
+      body: data,
+      signal
+    })
+    // ...
+  }
+})
+```
+
+tanstack-query側でAPIを用意してあると便利なのですが、そういったものは存在しません。
+(昔から[discussions](https://github.com/TanStack/query/discussions/1551)で話されてはいますが、進展はないように感じます)
+
 ### zodのエラーメッセージのカスタマイズ
 
 todoistのタスク作成フォームでは、タスクのタイトル・説明が制限を超えてしまった場合に、
