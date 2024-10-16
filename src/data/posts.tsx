@@ -23,4 +23,9 @@ export const posts: Post[] = [
     slug: "modifiability-is-the-silver-bullet",
     createdAt: new Date("2024/10/1"),
   },
+  {
+    title: "RDBのB-treeインデックスの気持ちに寄り添う",
+    slug: "b-tree-index-kanzenni-rikai-shita",
+    createdAt: new Date("2024/10/16"),
+  },
 ];
