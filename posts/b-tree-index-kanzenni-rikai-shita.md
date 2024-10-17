@@ -1,5 +1,6 @@
 
 >リレーショナルなSQLデータベースかリレーショナルでないシステムかに関わらず、正しいインデックスを作ることは、クエリの応答時間を短くする最善の方法です。  
+>
 >[USE THE INDEX, LUKE!](https://use-the-index-luke.com/ja/sql/performance-scalability/response-time-throughput#:~:text=%E3%83%AA%E3%83%AC%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%8A%E3%83%AB%E3%81%AASQL%E3%83%87%E3%83%BC%E3%82%BF%E3%83%99%E3%83%BC%E3%82%B9%E3%81%8B%E3%83%AA%E3%83%AC%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%8A%E3%83%AB%E3%81%A7%E3%81%AA%E3%81%84%E3%82%B7%E3%82%B9%E3%83%86%E3%83%A0%E3%81%8B%E3%81%AB%20%E9%96%A2%E3%82%8F%E3%82%89%E3%81%9A%E3%80%81%E6%AD%A3%E3%81%97%E3%81%84%E3%82%A4%E3%83%B3%E3%83%87%E3%83%83%E3%82%AF%E3%82%B9%E3%82%92%E4%BD%9C%E3%82%8B%E3%81%93%E3%81%A8%E3%81%AF%E3%80%81%E3%82%AF%E3%82%A8%E3%83%AA%E3%81%AE%E5%BF%9C%E7%AD%94%E6%99%82%E9%96%93%E3%82%92%E7%9F%AD%E3%81%8F%E3%81%99%E3%82%8B%E6%9C%80%E5%96%84%E3%81%AE%E6%96%B9%E6%B3%95%E3%81%A7%E3%81%99%E3%80%82)
 
 僕はパフォーマンスチューニングをしたことがありません。RDBのインデックスを使うとクエリが速くなるという話は聞いたことがありましたが、
@@ -7,6 +8,9 @@
 
 そんなときに、RDBのインデックスとチューニングについて書かれている[USE THE INDEX, LUKE!](https://use-the-index-luke.com/ja/sql/preface)
 というオンラインブックを見つけ、とても参考になりました。この投稿は、そのオンラインブックを自分の理解のためにまとめたものです。
+
+1章はインデックスの構造とパフォーマンスへの影響について、2章は実際のSQLでどのようにインデックスが使われるかについて書いていきます。
+1章はインデックスについての概要を振り返るために、2章は実際のSQLでどのようにチューニングを行うかの参考にするためにまとめています。
 
 > [!info]
 > インデックスには様々な種類がありますが、ここではB-tree(B+tree)について書きます。
@@ -62,7 +66,7 @@
 2. リーフノードのチェーンをたどる
 3. テーブルからデータを読み出す
 
-という手順で行われます。ツリーの走査はインデックスの深さによって効率的に行うことができるのですが、
+という手順で行われます。ツリーの走査はインデックスによって効率的に行うことができるのですが、
 それ以外の2ステップではたくさんのブロックにアクセスする必要があるため、検索が遅い原因になってしまいます。
 
 ### アクセス・フィルター述語
@@ -120,12 +124,373 @@ WHERE句の条件にインデックスを使用できない場合、その条件
 
 ## 2.インデックスはどう使われるか
 
+この章では、実際のSQLでインデックスがどのように使用されるかを書いていきます。
+インデックスの使われ方は、実際に格納されているデータや統計情報によって異なるので、ここでは一例として書いています。
+
 ### WHERE
+
+以下のような複合インデックスでは、
+
+```sql
+CREATE UNIQUE INDEX employees_pk
+    ON employees (employee_id, subsidiary_id)
+```
+
+以下のような等価演算のみのSQLを実行してもインデックスは使用されず、フルテーブルスキャンが実行されます。
+
+```sql
+SELECT first_name, last_name
+  FROM employees
+ WHERE subsidiary_id = 20
+```
+
+上のインデックスでは、まず`employee_id`で並び替えられたあと、`subsidiary_id`で並び替えられます。
+そのため、`subsidiary_id`の順には並んでおらず、インデックスを使って効率的に検索することはできません。
+インデックスを使用させるためには、列を並び替える必要があります。
+
+次は、範囲検索と等価演算が含まれるSQLを見ていきます。
+
+```sql
+SELECT first_name, last_name, date_of_birth
+  FROM employees
+ WHERE date_of_birth >= TO_DATE(?, 'YYYY-MM-DD')
+   AND date_of_birth <= TO_DATE(?, 'YYYY-MM-DD')
+   AND subsidiary_id  = ?
+```
+
+このようなSQLに対して、`date_of_birth`、`subsidiary_id`の順に並んでいるインデックスの場合はどうなるでしょうか。
+仮にそのインデックスが使われる場合のOracleの実行計画は以下のようになります。
+
+```sql
+CREATE UNIQUE INDEX emp_test
+    ON employees (date_of_birth, subsidiary_id)
+```
+
+```txt
+--------------------------------------------------------------
+|Id | Operation                    | Name      | Rows | Cost |
+--------------------------------------------------------------
+| 0 | SELECT STATEMENT             |           |    1 |    4 |
+|*1 |  FILTER                      |           |      |      |
+| 2 |   TABLE ACCESS BY INDEX ROWID| EMPLOYEES |    1 |    4 |
+|*3 |    INDEX RANGE SCAN          | EMP_TEST  |    2 |    2 |
+--------------------------------------------------------------
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+1 - filter(:END_DT >= :START_DT)
+3 - access(DATE_OF_BIRTH >= :START_DT 
+       AND DATE_OF_BIRTH <= :END_DT)
+    filter(SUBSIDIARY_ID  = :SUBS_ID)txt
+```
+
+idが3の`INDEX RANGE SCAN`エントリで使用されている述語をみると、`date_of_birth`の条件はアクセス述語として使用されているのですが、
+`subsidary_id`の条件はインデックスフィルター述語として使用されていることがわかります。この場合には無駄なリーフノードの走査が発生しています。
+例えば、指定された範囲の`date_of_birth`が複数件存在し、指定された`subsidiary_id`が1件しか存在しないときには、無駄なリーフノードの走査が発生します。
+
+一方で`subsidiary_id`、`date_of_birth`の順に並んでいるインデックスが存在する場合には、
+`sub_sidiary_id`が1件しかない場合にはそこで打ち切られるので、無駄なリーフノードをたどる必要がなくなります。
+Oracleの実行計画は以下のようなものが考えられます。
+
+```sql
+CREATE UNIQUE INDEX emp_test2
+    ON employees (subsidiary_id, date_of_birth)
+```
+
+```txt
+---------------------------------------------------------------
+| Id | Operation                    | Name      | Rows | Cost |
+---------------------------------------------------------------
+|  0 | SELECT STATEMENT             |           |    1 |    3 |
+|* 1 |  FILTER                      |           |      |      |
+|  2 |   TABLE ACCESS BY INDEX ROWID| EMPLOYEES |    1 |    3 |
+|* 3 |    INDEX RANGE SCAN          | EMP_TEST2 |    1 |    2 |
+---------------------------------------------------------------
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+1 - filter(:END_DT >= :START_DT)
+3 - access(SUBSIDIARY_ID  = :SUBS_ID
+       AND DATE_OF_BIRTH >= :START_DT
+       AND DATE_OF_BIRTH <= :END_T)
+```
+
+`subsidiary_id`と`date_of_birth`の条件が両方ともアクセス述語として使用されているため、無駄なリーフノードの走査は存在しません。
+
+これは複合インデックスの仕組みを考えるとわかります。複合インデックスでは、最初の列で並べられたあとに次の列で並び替えるため、2番目の列は連続して並んでいるわけではありません。
+
+>大ざっぱに言うと、インデックスはまず等価性を確認するためにあり、それから範囲を調べるために使われます。
+>
+> [USE THE INDEX, LUKE!](https://use-the-index-luke.com/ja/sql/where-clause/searching-for-ranges/greater-less-between-tuning-sql-access-filter-predicates#:~:text=%E5%A4%A7%E3%81%96%E3%81%A3%E3%81%B1%E3%81%AB%E8%A8%80%E3%81%86%E3%81%A8%E3%80%81%E3%82%A4%E3%83%B3%E3%83%87%E3%83%83%E3%82%AF%E3%82%B9%E3%81%AF%E3%81%BE%E3%81%9A%E7%AD%89%E4%BE%A1%E6%80%A7%E3%82%92%E7%A2%BA%E8%AA%8D%E3%81%99%E3%82%8B%E3%81%9F%E3%82%81%E3%81%AB%E3%81%82%E3%82%8A%E3%80%81%E3%81%9D%E3%82%8C%E3%81%8B%E3%82%89%E7%AF%84%E5%9B%B2%E3%82%92%E8%AA%BF%E3%81%B9%E3%82%8B%E3%81%9F%E3%82%81%E3%81%AB%E4%BD%BF%E3%82%8F%E3%82%8C%E3%81%BE%E3%81%99%E3%80%82)
+
+また、インデックスを使用するよりもフルテーブルスキャンを実行したほうが速くなるケースというのも存在します。例えば以下のようなインデックスとSQLを考えます。
+
+```sql
+CREATE UNIQUE INDEX EMPLOYEES_PK 
+    ON EMPLOYEES (SUBSIDIARY_ID, EMPLOYEE_ID)
+
+SELECT first_name, last_name, subsidiary_id, phone_number
+  FROM employees
+ WHERE last_name  = 'WINAND'
+   AND subsidiary_id = 30
+```
+
+このとき、テーブルの中に`subsidiary_id`が30の行が大量に存在する場合、データベースはその行に対して1行ずつデータを読み出すことになるため、
+クエリは遅くなり、フルテーブルスキャンを行ったほうが早くなるというケースがありえます。
+もちろん、`last_name`へのインデックスを追加することで、より効果的な検索を行えるようにはなります。
+
+これら例のように、適切なインデックスを追加するためには、何かの一般論に従うのではなく、実際のアプリケーションがどのようにデータベースにアクセスするのかを把握しておく必要があります。
+最も選択性の高い列をインデックスの左に置けばよいという都市伝説も存在しますが、その列が使われないのであればそのインデックスは意味がありません。
 
 ### JOIN
 
-### ORDER BY, GROUP BY
+データベースは結合するために、入れ子ループ、ハッシュ結合、ソートマージというアルゴリズムを使い分けています。
+
+入れ子ループを使用する場合、以下のようなインデックスとSQLでは、
+
+```sql
+CREATE INDEX emp_up_name ON employees (UPPER(last_name))
+
+CREATE INDEX sales_emp ON sales (subsidiary_id, employee_id)
+
+SELECT e0_.employee_id AS employee_id0
+       -- MORE COLUMNS
+  FROM employees e0_ 
+  LEFT JOIN sales s1_ 
+         ON e0_.subsidiary_id = s1_.subsidiary_id 
+        AND e0_.employee_id = s1_.employee_id 
+ WHERE UPPER(e0_.last_name) LIKE ?
+```
+
+以下のような実行計画が表示されます。
+
+```txt
+---------------------------------------------------------------
+|Id |Operation                    | Name        | Rows | Cost |
+---------------------------------------------------------------
+| 0 |SELECT STATEMENT             |             |  822 |   38 |
+| 1 | NESTED LOOPS OUTER          |             |  822 |   38 |
+| 2 |  TABLE ACCESS BY INDEX ROWID| EMPLOYEES   |    1 |    4 |
+|*3 |   INDEX RANGE SCAN          | EMP_UP_NAME |    1 |      |
+| 4 |  TABLE ACCESS BY INDEX ROWID| SALES       |  821 |   34 |
+|*5 |   INDEX RANGE SCAN          | SALES_EMP   |   31 |      |
+---------------------------------------------------------------
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+  3 - access(UPPER("LAST_NAME") LIKE 'WIN%')
+      filter(UPPER("LAST_NAME") LIKE 'WIN%')
+  5 - access("E0_"."SUBSIDIARY_ID"="S1_"."SUBSIDIARY_ID"(+)
+        AND  "E0_"."EMPLOYEE_ID"  ="S1_"."EMPLOYEE_ID"(+))
+```
+
+データベースは、EMP_UP_NAMEを使ってEMPLOYEESテーブルから結果を取り出した後、SALESテーブルから各従業員に対応するレコードを抽出しています。
+アルゴリズムの名前に入れ子ループとあるように、検索したEMPLOYEESテーブルのデータを1行ずつSALESテーブルの行と結合していきます。
+外側(ここではEMPLOYEESテーブルの絞り込み)の行数が少ない場合には良いパフォーマンスを発揮します。
+そのため、チューニングでは外側のクエリができるだけ小さい行数を返すようにする必要があります。
+
+一方で、結合の片側のレコードをハッシュテーブルに一度に読み込むというのが、ハッシュ結合アルゴリズムです。
+入れ子ループ結合では外部クエリの行数が多いと、ループで結合を行う当性質上、内部クエリで何度もBツリーへの同じ走査が大量発生してしまうというデメリットが存在します。
+そこで、結合の片側の対象レコードを一旦全てハッシュテーブルに読み込んでおくことで、高速に突き合わせができるようにしています。
+
+以下のようなインデックスとSQLでは、
+
+```sql
+CREATE INDEX sales_date ON sales (sale_date)
+
+SELECT *
+  FROM sales s
+  JOIN employees e ON (s.subsidiary_id = e.subsidiary_id
+                  AND  s.employee_id   = e.employee_id  )
+ WHERE s.sale_date > trunc(sysdate) - INTERVAL '6' MONTH
+```
+
+以下のような実行計画が表示されます。
+
+```txt
+--------------------------------------------------------------
+| Id | Operation                    | Name      | Bytes| Cost|
+--------------------------------------------------------------
+|  0 | SELECT STATEMENT             |           |   59M| 3252|
+|* 1 |  HASH JOIN                   |           |   59M| 3252|
+|  2 |   TABLE ACCESS FULL          | EMPLOYEES |    9M|  478|
+|  3 |   TABLE ACCESS BY INDEX ROWID| SALES     |   10M| 1724|
+|* 4 |    INDEX RANGE SCAN          | SALES_DATE|      |     |
+--------------------------------------------------------------
+
+Predicate Information (identified by operation id):
+---------------------------------------------------
+   1 - access("S"."SUBSIDIARY_ID"="E"."SUBSIDIARY_ID"
+          AND "S"."EMPLOYEE_ID"  ="E"."EMPLOYEE_ID"  )
+   4 - access("S"."SALE_DATE" > TRUNC(SYSDATE@!)
+                           -INTERVAL'+00-06' YEAR(2) TO MONTH)
+```
+
+入れ子ループ結合では結合条件でインデックスが使用されていますが、ここではフルテーブルアクセスになっています。
+結合時には一度すべてのテーブルデータを読み込んでハッシュテーブルに格納し、ハッシュ結合時にそのテーブルを使用しています。
+結合条件でインデックスは使われていませんが、Id4をみると、独立したテーブルの条件に使われている`sale_date`には、インデックスが使用されていることがわかります。
+
+ハッシュ結合のニューニングは入れ子ループ結合とは全く異なる、ハッシュテーブルのサイズを小さくするというアプローチが必要になります。
+例えば、SELECTで`*`を使用せずに、必要な列を明示的に指定することでサイズを小さくすることができます。
+
+ソートマージ結合は、結合属性でソートされた2つのテーブルを結合する方法で、左外部結合と右外部結合を同時に実行する、完全外部結合が可能です。
+テーブルが既に並び替えられている場合にはパフォーマンスが良いですが、並び替えられていない場合は、ソートの処理が重いのであまり利用されていません。
+
+### ORDER BY
+
+インデックスには順序があるので、ORDER BY付きのSQLでは、関連するインデックスが行をすでに並び替えている場合、
+結果をソートする必要がなく、パフォーマンスが良くなります。
+
+以下のようなインデックスとSQLでは、
+
+```sql
+CREATE INDEX sales_dt_pr ON sales (sale_date, product_id)
+
+SELECT sale_date, product_id, quantity
+  FROM sales
+ WHERE sale_date = TRUNC(sysdate) - INTERVAL '1' DAY
+ ORDER BY sale_date, product_id
+```
+
+以下のような実行計画が表示されます。
+
+```txt
+---------------------------------------------------------------
+|Id | Operation                   | Name        | Rows | Cost |
+---------------------------------------------------------------
+| 0 | SELECT STATEMENT            |             |  320 |  300 |
+| 1 |  TABLE ACCESS BY INDEX ROWID| SALES       |  320 |  300 |
+|*2 |   INDEX RANGE SCAN          | SALES_DT_PR |  320 |    4 |
+---------------------------------------------------------------
+```
+
+クエリにはORDER BYが存在しますが、実行計画の中に`SORT ORDER BY`は存在しません。
+データベースはインデックスによる順序付けを利用して、ソート処理をスキップしています。
+ここではこのようなORDER BYを、パイプライン化されたORDER BYと呼びます。
+
+パイプライン化されたORDER BYは、どちらの方向にも進むことができます。
+例えば、以下のようなインデックスとSQLでも、ORDER BYの順序が揃っているので、ソートはスキップされます。
+
+```sql
+CREATE INDEX sales_dt_pr ON sales (sale_date, product_id)
+
+SELECT sale_date, product_id, quantity
+  FROM sales
+ WHERE sale_date >= TRUNC(sysdate) - INTERVAL '1' DAY
+ ORDER BY sale_date DESC, product_id DESC
+```
+
+### GROUP BY
+
+データベースは、GROUP BYのためにハッシュアルゴリズムとソートグループアルゴリズムを使い分けます。
+ハッシュアルゴリズムは、一時的なハッシュテーブル上でまとめて全レコードを処理したあとに結果を返すもので、
+ソートグループアルゴリズムは、グループキーでソートすることで各グループを順番に処理できるようにするものです。
+
+ソートグループアルゴリズムでは、インデックスを使用することでソートの処理が不要になり、パフォーマンスが向上します。
+ここではこのようなGROUP BYをパイプライン化されたGROPU BYと呼びます。
+
+以下のようなインデックスとSQLでは、
+
+```sql
+CREATE INDEX sales_dt_pr ON sales (sale_date, product_id)
+
+SELECT product_id, sum(eur_value)
+  FROM sales
+ WHERE sale_date = TRUNC(sysdate) - INTERVAL '1' DAY
+ GROUP BY product_id
+```
+
+以下のような実行計画が表示されます。
+
+```txt
+---------------------------------------------------------------
+|Id |Operation                    | Name        | Rows | Cost |
+---------------------------------------------------------------
+| 0 |SELECT STATEMENT             |             |   17 |  192 |
+| 1 | SORT GROUP BY NOSORT        |             |   17 |  192 |
+| 2 |  TABLE ACCESS BY INDEX ROWID| SALES       |  321 |  192 |
+|*3 |   INDEX RANGE SCAN          | SALES_DT_PR |  321 |    3 |
+---------------------------------------------------------------
+```
+
+`sale_date`が一つに特定され、`product_id`で並び替えているのでインデックスを使用することができ、
+`SORT GROUP BY`に、`NOSORT`という補足がついています。
+
+一方で、以下のSQLのように`sale_date`が一つに特定できず、パイプライン化されたORDER BYが使用できない場合には、
+
+```sql
+SELECT product_id, sum(eur_value)
+  FROM sales
+ WHERE sale_date >= TRUNC(sysdate) - INTERVAL '1' DAY
+ GROUP BY product_id
+```
+
+以下のような実行計画が表示されます。
+
+```txt
+---------------------------------------------------------------
+|Id |Operation                    | Name        | Rows | Cost |
+---------------------------------------------------------------
+| 0 |SELECT STATEMENT             |             |   24 |  356 |
+| 1 | HASH GROUP BY               |             |   24 |  356 |
+| 2 |  TABLE ACCESS BY INDEX ROWID| SALES       |  596 |  355 |
+|*3 |   INDEX RANGE SCAN          | SALES_DT_PR |  596 |    4 |
+---------------------------------------------------------------
+```
+
+ここではハッシュアルゴリズムが使用されています。ハッシュアルゴリズムはソートグループアルゴリズムと違い、
+集計結果だけをバッファリングしておけばよいので、必要なメモリが少なくなります。
 
 ### LIMIT
 
+パイプライン化したORDER BYを使用する場合、
+データベースに全行を取得しないことを伝えるためにLIMTIやFETCH FIRSTを使うことで、全行を取得する前に実行を止めることができます。
+
+例えば、以下のようなインデックスとSQLでは、
+
+```sql
+CREATE INDEX sales_dt_pr ON sales (sale_date, product_id)
+
+SELECT *
+  FROM sales
+ ORDER BY sale_date DESC
+ FETCH FIRST 10 ROWS ONLY
+```
+
+以下のような実行計画が表示されます。
+
+```txt
+-------------------------------------------------------------
+| Operation                     | Name        | Rows | Cost |
+-------------------------------------------------------------
+| SELECT STATEMENT              |             |   10 |    9 |
+|  COUNT STOPKEY                |             |      |      |
+|   VIEW                        |             |   10 |    9 |
+|    TABLE ACCESS BY INDEX ROWID| SALES       | 1004K|    9 |
+|     INDEX FULL SCAN DESCENDING| SALES_DT_PR |   10 |    3 |
+-------------------------------------------------------------
+```
+
+`COUNT STOPKEY`を使用した実行停止が計画されていることがわかります。
+パイプライン化されたORDER BYを使用した最初のN件の選択は、テーブルが大きくなってもパフォーマンスはほぼ変わらないため、スケーラビリティがあります。
+一方で、インデックスが存在せず、パイプライン化したORDER BYが使用できない場合は以下のような実行計画になります。
+
+```txt
+--------------------------------------------------
+| Operation               | Name  | Rows |  Cost |
+--------------------------------------------------
+| SELECT STATEMENT        |       |   10 | 59558 |
+|  COUNT STOPKEY          |       |      |       |
+|   VIEW                  |       | 1004K| 59558 |
+|    SORT ORDER BY STOPKEY|       | 1004K| 59558 |
+|     TABLE ACCESS FULL   | SALES | 1004K|  9246 |
+--------------------------------------------------
+```
+
+ソートが行われていないため、まず全行を読み込んでソートを行ったあと、`SORT ORDER BY STOPKEY`によって最初のN件を選択するクエリが実行されます。
+`COUNT STOPKEY`は存在していますが、そこに至るまでに1004Kの行を処理する必要があります。
+すべてのデータにアクセスしているため、テーブルサイズが大きくなるとパフォーマンスは劣化しやすいです。
+
 ## さいごに
+
+この投稿では、[USE THE INDEX, LIKE!](https://use-the-index-luke.com/ja)を自分なりにまとめて、インデックスの概要とパフォーマンス、インデックスがどのように使われるのかを書きました。特に「インデックスを使っても検索が遅い？」と、「アクセス・フィルター述語」の箇所はとても重要だと感じており、ここだけでも覚えておきたいです。
