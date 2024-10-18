@@ -9,6 +9,7 @@ import {
   type ComponentPropsWithoutRef,
   useEffect,
   useState,
+  useRef,
 } from "react";
 
 type TocContext = {
@@ -34,7 +35,12 @@ export const TocContextProvider: React.FC<PropsWithChildren> = ({
   }, []);
 
   return (
-    <TocContext.Provider value={{ activeLink, active: setActiveLink }}>
+    <TocContext.Provider
+      value={{
+        activeLink,
+        active: setActiveLink,
+      }}
+    >
       {children}
     </TocContext.Provider>
   );
@@ -55,6 +61,25 @@ export const Anchor = (
   const { active, activeLink } = useToc();
   const isActive = activeLink === props.href;
 
+  const isScrollingRef = useRef(false);
+  useEffect(() => {
+    const handleScroll = () => {
+      isScrollingRef.current = true;
+    };
+    const handleScrollEnd = () => {
+      isScrollingRef.current = false;
+    };
+
+    document.addEventListener("scroll", handleScroll);
+    document.addEventListener("scrollend", handleScrollEnd);
+
+    return () => {
+      document.removeEventListener("scroll", handleScroll);
+      document.removeEventListener("scrollend", handleScrollEnd);
+      isScrollingRef.current = false;
+    };
+  }, []);
+
   useEffect(() => {
     if (!props.href?.startsWith("#")) {
       return;
@@ -69,12 +94,7 @@ export const Anchor = (
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.intersectionRatio === 1) {
-            // ratioが1の場合には、ハッシュパラメータで指定されていることを想定する
-            // 別のObserverが同時に発生することがあるので、少し待機する
-            window.setTimeout(() => {
-              active(props.href);
-            }, 50);
+          if (!isScrollingRef.current) {
             return;
           }
 
@@ -86,9 +106,7 @@ export const Anchor = (
 
           if (!entry.isIntersecting && entry.boundingClientRect.top > 0) {
             // headingが下から外に出ていった場合は前のリンクをアクティブにする
-            if (props[DATA_PREV_HREF]) {
-              active(props[DATA_PREV_HREF]);
-            }
+            active(props[DATA_PREV_HREF]);
             return;
           }
         });
