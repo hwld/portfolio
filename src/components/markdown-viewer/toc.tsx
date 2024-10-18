@@ -9,6 +9,7 @@ import { rehypeAddPrevHref, remarkToc } from "@/lib/unified-plugin";
 
 type Props = { markdown: string };
 
+// tocbotを使用するとビルド時にレンダリングできないので、unifiedを使って実装する
 export const Toc: React.FC<Props> = async ({ markdown }) => {
   const processor = unified()
     .use(remarkParse)
@@ -19,9 +20,14 @@ export const Toc: React.FC<Props> = async ({ markdown }) => {
   const mdast = processor.parse(markdown);
   const hast = await processor.run(mdast);
 
+  if (hast.children.length === 0) {
+    return null;
+  }
+
   return (
-    // TODO
-    <div className="fixed right-0 top-0 p-4 border rounded-lg">
+    <div className="sticky top-4 h-fit p-4 rounded-lg bg-zinc-800 border border-zinc-700 shadow-xl w-full">
+      <p className="text-sm text-zinc-400">目次</p>
+      <div className="w-full h-[1px] bg-zinc-600 my-2" />
       <TocContextProvider>
         {toJsxRuntime(hast, {
           Fragment,

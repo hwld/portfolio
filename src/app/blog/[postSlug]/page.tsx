@@ -5,6 +5,7 @@ import { getMarkdown, getMarkdownSlugs } from "@/lib/markdown";
 import type { Metadata } from "next";
 import { TbClock } from "@react-icons/all-files/tb/TbClock";
 import { Toc } from "@/components/markdown-viewer/toc";
+import { MobileTocButton } from "@/components/markdown-viewer/mobile-toc-button";
 
 type Params = { postSlug: string };
 
@@ -52,8 +53,17 @@ const PostDetailPage: React.FC<PageProps> = ({ params }) => {
         </div>
         <h1 className="text-3xl font-bold">{post.title}</h1>
       </div>
-      <Toc markdown={markdown} />
-      <MarkdownViewer>{markdown}</MarkdownViewer>
+      <div className="relative w-full gap-8 grid grid-cols-[minmax(100%,700px)_300px]">
+        <MarkdownViewer>{markdown}</MarkdownViewer>
+        <div className="hidden min-[1200px]:block">
+          <Toc markdown={markdown} />
+        </div>
+        <div className="block min-[1200px]:hidden fixed top-4 right-4">
+          <MobileTocButton>
+            <Toc markdown={markdown} />
+          </MobileTocButton>
+        </div>
+      </div>
     </div>
   );
 };

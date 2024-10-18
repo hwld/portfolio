@@ -125,8 +125,8 @@ export const Anchor = (
   return (
     <a
       className={clsx(
-        "h-8 px-2 flex rounded items-center hover:bg-white/20 transition-colors",
-        isActive ? "text-blue-500" : ""
+        "min-h-8 py-1 px-2 flex rounded items-center hover:bg-white/20 transition-colors break-all text-sm my-1",
+        isActive ? "text-sky-400" : ""
       )}
       data-active={false}
       {...props}
