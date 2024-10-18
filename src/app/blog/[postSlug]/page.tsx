@@ -4,6 +4,7 @@ import { posts } from "@/data/posts";
 import { getMarkdown, getMarkdownSlugs } from "@/lib/markdown";
 import type { Metadata } from "next";
 import { TbClock } from "@react-icons/all-files/tb/TbClock";
+import { Toc } from "@/components/markdown-viewer/toc";
 
 type Params = { postSlug: string };
 
@@ -51,6 +52,7 @@ const PostDetailPage: React.FC<PageProps> = ({ params }) => {
         </div>
         <h1 className="text-3xl font-bold">{post.title}</h1>
       </div>
+      <Toc markdown={markdown} />
       <MarkdownViewer>{markdown}</MarkdownViewer>
     </div>
   );

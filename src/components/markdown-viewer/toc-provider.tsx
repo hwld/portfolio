@@ -1,5 +1,6 @@
 "use client";
 
+import { DATA_PREV_HREF } from "@/lib/unified-plugin";
 import clsx from "clsx";
 import {
   createContext,
@@ -9,18 +10,28 @@ import {
   useEffect,
   useState,
 } from "react";
-import { DATA_PREV_HREF } from "./toc";
 
 type TocContext = {
   activeLink: string | undefined;
-  active: (href: string) => void;
+  active: (href: string | undefined) => void;
 };
 const TocContext = createContext<TocContext | undefined>(undefined);
 
 export const TocContextProvider: React.FC<PropsWithChildren> = ({
   children,
 }) => {
-  const [activeLink, setActiveLink] = useState("");
+  const [activeLink, setActiveLink] = useState<string | undefined>();
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      setActiveLink(window.location.hash);
+    };
+
+    window.addEventListener("hashchange", handleHashChange);
+    return () => {
+      window.removeEventListener("hashchange", handleHashChange);
+    };
+  }, []);
 
   return (
     <TocContext.Provider value={{ activeLink, active: setActiveLink }}>
@@ -58,7 +69,12 @@ export const Anchor = (
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (!props.href) {
+          if (entry.intersectionRatio === 1) {
+            // ratioが1の場合には、ハッシュパラメータで指定されていることを想定する
+            // 別のObserverが同時に発生することがあるので、少し待機する
+            window.setTimeout(() => {
+              active(props.href);
+            }, 50);
             return;
           }
 

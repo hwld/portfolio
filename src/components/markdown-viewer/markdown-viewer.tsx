@@ -11,10 +11,9 @@ import { CodeCopyButton } from "./code-copy-button";
 import { TbUserCircle } from "@react-icons/all-files/tb/TbUserCircle";
 import { TbInfoCircle } from "@react-icons/all-files/tb/TbInfoCircle";
 import rehypeSlug from "rehype-slug";
+import { HEADING_ID_PREFIX } from "@/lib/unified-plugin";
 
 type Props = { children: string };
-
-export const HEADING_ID_PREFIX = "id-";
 
 export const MarkdownViewer: React.FC<Props> = async ({ children }) => {
   const processor = unified()
