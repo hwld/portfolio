@@ -1,9 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
-import { AvatarIcon } from "@/components/avatar-icon";
+import { AvatarIconLink } from "@/components/avatar-icon";
 import { ProjectCard } from "@/components/project-card";
 import { projects } from "@/data/projects";
 import { Metadata } from "next";
-import Link from "next/link";
 import { TbHash } from "@react-icons/all-files/tb/TbHash";
 
 export const metadata: Metadata = {
@@ -13,9 +12,7 @@ export const metadata: Metadata = {
 const ProjectsPage: React.FC = () => {
   return (
     <div className="space-y-6">
-      <Link href="/">
-        <AvatarIcon />
-      </Link>
+      <AvatarIconLink />
       <div className="space-y-10">
         <div className="space-y-2">
           <h1 className="space-y-1">

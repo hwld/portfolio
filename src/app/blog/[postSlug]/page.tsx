@@ -1,9 +1,8 @@
-import { AvatarIcon } from "@/components/avatar-icon";
+import { AvatarIconLink } from "@/components/avatar-icon";
 import { MarkdownViewer } from "@/components/markdown-viewer/markdown-viewer";
 import { posts } from "@/data/posts";
 import { getMarkdown, getMarkdownSlugs } from "@/lib/markdown";
 import type { Metadata } from "next";
-import Link from "next/link";
 import { TbClock } from "@react-icons/all-files/tb/TbClock";
 
 type Params = { postSlug: string };
@@ -42,9 +41,7 @@ const PostDetailPage: React.FC<PageProps> = ({ params }) => {
 
   return (
     <div className="max-w-[700px] space-y-6 text-base text-zxinc-300 font-light">
-      <Link href="/" className="w-fit">
-        <AvatarIcon />
-      </Link>
+      <AvatarIconLink />
       <div>
         <div className="text-zinc-400 flex text-sm items-center gap-1">
           <TbClock className="size-4" />

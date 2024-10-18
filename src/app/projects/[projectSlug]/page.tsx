@@ -1,4 +1,3 @@
-import { AvatarIcon } from "@/components/avatar-icon";
 import { MarkdownViewer } from "@/components/markdown-viewer/markdown-viewer";
 import { projects } from "@/data/projects";
 import { ProjectThumbnail } from "@/components/project-thumbnail";
@@ -6,10 +5,9 @@ import { type IconType } from "@react-icons/all-files/lib";
 import { TbBrandGithub } from "@react-icons/all-files/tb/TbBrandGithub";
 import { TbCode } from "@react-icons/all-files/tb/TbCode";
 import { TbLink } from "@react-icons/all-files/tb/TbLink";
-
 import { Metadata } from "next";
-import Link from "next/link";
 import { getMarkdown, getMarkdownSlugs } from "@/lib/markdown";
+import { AvatarIconLink } from "@/components/avatar-icon";
 
 type Params = { projectSlug: string };
 
@@ -48,9 +46,7 @@ const ProjectDetailPage: React.FC<PageProps> = ({ params }) => {
 
   return (
     <div className="max-w-[700px] space-y-6 text-base text-zxinc-300 font-light">
-      <Link href="/" className="w-fit">
-        <AvatarIcon />
-      </Link>
+      <AvatarIconLink />
       <div className="space-y-4">
         <ProjectThumbnail src={project.imageSrc} />
         <div>

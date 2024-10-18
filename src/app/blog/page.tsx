@@ -1,9 +1,8 @@
-import { AvatarIcon } from "@/components/avatar-icon";
+import { AvatarIconLink } from "@/components/avatar-icon";
 import { TextLink } from "@/components/link";
 import { posts, type Post } from "@/data/posts";
 import { TbHash } from "@react-icons/all-files/tb/TbHash";
 import type { Metadata } from "next";
-import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "blog - hwld",
@@ -12,9 +11,7 @@ export const metadata: Metadata = {
 export default function BlogPage() {
   return (
     <div className="space-y-6">
-      <Link href="/">
-        <AvatarIcon />
-      </Link>
+      <AvatarIconLink />
       <div className="space-y-10">
         <div className="space-y-2">
           <h1 className="space-y-1">
