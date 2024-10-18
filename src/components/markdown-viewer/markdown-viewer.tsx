@@ -10,14 +10,18 @@ import { unified } from "unified";
 import { CodeCopyButton } from "./code-copy-button";
 import { TbUserCircle } from "@react-icons/all-files/tb/TbUserCircle";
 import { TbInfoCircle } from "@react-icons/all-files/tb/TbInfoCircle";
+import rehypeSlug from "rehype-slug";
 
 type Props = { children: string };
+
+export const HEADING_ID_PREFIX = "id-";
 
 export const MarkdownViewer: React.FC<Props> = async ({ children }) => {
   const processor = unified()
     .use(remarkParse)
     .use(remarkCallout)
     .use(remarkRehype)
+    .use(rehypeSlug, { prefix: HEADING_ID_PREFIX })
     .use(rehypeShiki, { theme: "nord", addLanguageClass: true });
 
   const mdast = processor.parse(children);
@@ -182,24 +186,20 @@ const P = ({ children }: PropsWithChildren) => {
 
 const headerBaseClass = "flex items-center text-zinc-200 font-bold gap-2 mb-6";
 
-const H1 = ({ children }: PropsWithChildren) => {
-  return (
-    <h1 className={clsx(headerBaseClass, "text-3xl mt-12")}>{children}</h1>
-  );
+const H1 = (props: ComponentPropsWithoutRef<"h1">) => {
+  return <h1 {...props} className={clsx(headerBaseClass, "text-3xl mt-12")} />;
 };
 
-const H2 = ({ children }: PropsWithChildren) => {
-  return (
-    <h2 className={clsx(headerBaseClass, "text-2xl mt-10")}>{children}</h2>
-  );
+const H2 = (props: ComponentPropsWithoutRef<"h2">) => {
+  return <h2 {...props} className={clsx(headerBaseClass, "text-2xl mt-10")} />;
 };
 
-const H3 = ({ children }: PropsWithChildren) => {
-  return <h3 className={clsx(headerBaseClass, "text-xl mt-8")}>{children}</h3>;
+const H3 = (props: ComponentPropsWithoutRef<"h3">) => {
+  return <h3 {...props} className={clsx(headerBaseClass, "text-xl mt-8")} />;
 };
 
-const H4 = ({ children }: PropsWithChildren) => {
-  return <h4 className={clsx(headerBaseClass, "text-lg mt-6")}>{children}</h4>;
+const H4 = (props: ComponentPropsWithoutRef<"h4">) => {
+  return <h4 {...props} className={clsx(headerBaseClass, "text-lg mt-6")} />;
 };
 
 const A = ({ children, href }: ComponentPropsWithoutRef<"a">) => {
