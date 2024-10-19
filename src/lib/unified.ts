@@ -2,6 +2,22 @@ import type { Root } from "mdast";
 import type { Element } from "hast";
 import { toc } from "mdast-util-toc";
 import { visit } from "unist-util-visit";
+import { unified } from "unified";
+import remarkParse from "remark-parse";
+import remarkRehype from "remark-rehype";
+
+export const getTocHAst = async (markdown: string) => {
+  const processor = unified()
+    .use(remarkParse)
+    .use(remarkToc)
+    .use(remarkRehype)
+    .use(rehypeAddPrevHref);
+
+  const mdast = processor.parse(markdown);
+  const hast = await processor.run(mdast);
+
+  return hast;
+};
 
 export const HEADING_ID_PREFIX = "id-";
 

@@ -1,29 +1,13 @@
 import { toJsxRuntime } from "hast-util-to-jsx-runtime";
 import { Fragment, type ComponentPropsWithoutRef } from "react";
 import { jsx, jsxs } from "react/jsx-runtime";
-import remarkParse from "remark-parse";
-import remarkRehype from "remark-rehype";
-import { unified } from "unified";
 import { Anchor, TocContextProvider } from "./toc-provider";
-import { rehypeAddPrevHref, remarkToc } from "@/lib/unified-plugin";
+import { type Root } from "hast";
 
-type Props = { markdown: string };
+type Props = { hast: Root };
 
 // tocbotを使用するとビルド時にレンダリングできないので、unifiedを使って実装する
-export const Toc: React.FC<Props> = async ({ markdown }) => {
-  const processor = unified()
-    .use(remarkParse)
-    .use(remarkToc)
-    .use(remarkRehype)
-    .use(rehypeAddPrevHref);
-
-  const mdast = processor.parse(markdown);
-  const hast = await processor.run(mdast);
-
-  if (hast.children.length === 0) {
-    return null;
-  }
-
+export const Toc: React.FC<Props> = async ({ hast }) => {
   return (
     <div className="sticky top-4 h-fit p-4 rounded-lg bg-zinc-800 border border-zinc-700 shadow-xl w-full">
       <p className="text-sm text-zinc-400">目次</p>

@@ -6,6 +6,7 @@ import type { Metadata } from "next";
 import { TbClock } from "@react-icons/all-files/tb/TbClock";
 import { Toc } from "@/components/markdown-viewer/toc";
 import { MobileTocButton } from "@/components/markdown-viewer/mobile-toc-button";
+import { getTocHAst } from "@/lib/unified";
 
 type Params = { postSlug: string };
 
@@ -34,12 +35,16 @@ export async function generateMetadata({
   return { title: `${post.title} - hwld` };
 }
 
-const PostDetailPage: React.FC<PageProps> = ({ params }) => {
+const PostDetailPage: React.FC<PageProps> = async ({ params }) => {
   const post = posts.find((p) => p.slug === params.postSlug);
   if (!post) {
     throw new Error(`ポストが存在しません: ${params.postSlug}`);
   }
+
   const markdown = getMarkdown("posts", params.postSlug);
+  const tocHAst = await getTocHAst(markdown);
+
+  const hasToc = tocHAst.children.length > 0;
 
   return (
     <div className="max-w-[700px] space-y-6 text-base text-zxinc-300 font-light">
@@ -56,12 +61,14 @@ const PostDetailPage: React.FC<PageProps> = ({ params }) => {
       <div className="relative w-full gap-8 grid grid-cols-[minmax(100%,700px)_300px]">
         <MarkdownViewer>{markdown}</MarkdownViewer>
         <div className="hidden min-[1200px]:block">
-          <Toc markdown={markdown} />
+          {hasToc ? <Toc hast={tocHAst} /> : null}
         </div>
         <div className="block min-[1200px]:hidden fixed top-4 right-4">
-          <MobileTocButton>
-            <Toc markdown={markdown} />
-          </MobileTocButton>
+          {hasToc ? (
+            <MobileTocButton>
+              <Toc hast={tocHAst} />
+            </MobileTocButton>
+          ) : null}
         </div>
       </div>
     </div>

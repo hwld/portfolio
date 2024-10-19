@@ -11,7 +11,7 @@ import { CodeCopyButton } from "./code-copy-button";
 import { TbUserCircle } from "@react-icons/all-files/tb/TbUserCircle";
 import { TbInfoCircle } from "@react-icons/all-files/tb/TbInfoCircle";
 import rehypeSlug from "rehype-slug";
-import { HEADING_ID_PREFIX } from "@/lib/unified-plugin";
+import { HEADING_ID_PREFIX } from "@/lib/unified";
 
 type Props = { children: string };
 
