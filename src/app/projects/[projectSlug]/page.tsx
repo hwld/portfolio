@@ -1,4 +1,3 @@
-import { MarkdownViewer } from "@/components/markdown-viewer/markdown-viewer";
 import { projects } from "@/data/projects";
 import { ProjectThumbnail } from "@/components/project-thumbnail";
 import { type IconType } from "@react-icons/all-files/lib";
@@ -8,6 +7,7 @@ import { TbLink } from "@react-icons/all-files/tb/TbLink";
 import { Metadata } from "next";
 import { getMarkdown, getMarkdownSlugs } from "@/lib/markdown";
 import { AvatarIconLink } from "@/components/avatar-icon";
+import { MarkdownViewerWithToc } from "@/components/markdown-viewer/with-toc";
 
 type Params = { projectSlug: string };
 
@@ -68,7 +68,7 @@ const ProjectDetailPage: React.FC<PageProps> = ({ params }) => {
         </div>
         <div className="text-sm text-zinc-400">{project.summary}</div>
       </div>
-      <MarkdownViewer>{markdown}</MarkdownViewer>
+      <MarkdownViewerWithToc markdown={markdown} />
     </div>
   );
 };
