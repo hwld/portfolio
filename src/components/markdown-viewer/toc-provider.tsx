@@ -10,56 +10,30 @@ import {
   useEffect,
   useState,
   useRef,
+  type RefObject,
 } from "react";
 
 type TocContext = {
   activeLink: string | undefined;
   active: (href: string | undefined) => void;
+
+  isScrollingRef: RefObject<boolean>;
 };
 const TocContext = createContext<TocContext | undefined>(undefined);
 
 export const useToc = () => {
   const ctx = useContext(TocContext);
   if (!ctx) {
-    throw new Error("TocContext.Providerが存在しません");
+    throw new Error("TocContextProviderが存在しません");
   }
 
   return ctx;
 };
 
-export const TocContextProvider: React.FC<PropsWithChildren> = ({
-  children,
-}) => {
+export const TocContextProvider: React.FC<
+  { contentId: string } & PropsWithChildren
+> = ({ contentId, children }) => {
   const [activeLink, setActiveLink] = useState<string | undefined>();
-
-  useEffect(() => {
-    const handleHashChange = () => {
-      setActiveLink(window.location.hash);
-    };
-
-    window.addEventListener("hashchange", handleHashChange);
-    return () => {
-      window.removeEventListener("hashchange", handleHashChange);
-    };
-  }, []);
-
-  return (
-    <TocContext.Provider
-      value={{
-        activeLink,
-        active: setActiveLink,
-      }}
-    >
-      {children}
-    </TocContext.Provider>
-  );
-};
-
-export const Anchor = (
-  props: ComponentPropsWithoutRef<"a"> & { [DATA_PREV_HREF]?: string }
-) => {
-  const { active, activeLink } = useToc();
-  const isActive = activeLink === props.href;
 
   const isScrollingRef = useRef(false);
   useEffect(() => {
@@ -81,15 +55,12 @@ export const Anchor = (
   }, []);
 
   useEffect(() => {
-    if (!props.href?.startsWith("#")) {
+    const content = document.querySelector(`#${contentId}`);
+    if (!content) {
       return;
     }
 
-    const headingId = decodeURIComponent(props.href);
-    const heading = document.querySelector(`${headingId}`);
-    if (!heading) {
-      return;
-    }
+    const headings = content.querySelectorAll("h1, h2, h3, h4, h5, h6");
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -98,29 +69,62 @@ export const Anchor = (
             return;
           }
 
+          const headingHref = `#${encodeURIComponent(entry.target.id)}`;
+
           if (!entry.isIntersecting && entry.boundingClientRect.top < 0) {
             // headingが上から外に出ていった場合はリンクをアクティブにする
-            active(props.href);
+            setActiveLink(headingHref);
             return;
           }
 
           if (!entry.isIntersecting && entry.boundingClientRect.top > 0) {
             // headingが下から外に出ていった場合は前のリンクをアクティブにする
-            active(props[DATA_PREV_HREF]);
+            setActiveLink(headingHref);
             return;
           }
         });
       },
-      // 画面の上だけを監視する
       { root: null, rootMargin: "0px 0px -90% 0px", threshold: 0 }
     );
 
-    observer.observe(heading);
+    headings.forEach((heading) => {
+      observer.observe(heading);
+    });
 
     return () => {
       observer.disconnect();
     };
-  }, [active, props]);
+  }, [contentId]);
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      setActiveLink(window.location.hash);
+    };
+
+    window.addEventListener("hashchange", handleHashChange);
+    return () => {
+      window.removeEventListener("hashchange", handleHashChange);
+    };
+  }, []);
+
+  return (
+    <TocContext.Provider
+      value={{
+        activeLink,
+        active: setActiveLink,
+        isScrollingRef,
+      }}
+    >
+      {children}
+    </TocContext.Provider>
+  );
+};
+
+export const Anchor = (
+  props: ComponentPropsWithoutRef<"a"> & { [DATA_PREV_HREF]?: string }
+) => {
+  const { activeLink } = useToc();
+  const isActive = activeLink === props.href;
 
   return (
     <a
@@ -128,7 +132,6 @@ export const Anchor = (
         "min-h-8 py-1 px-2 flex rounded items-center hover:bg-white/20 transition-colors break-all text-sm my-1",
         isActive ? "text-sky-400" : ""
       )}
-      data-active={false}
       {...props}
     />
   );

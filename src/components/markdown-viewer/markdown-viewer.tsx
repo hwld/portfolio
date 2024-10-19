@@ -13,9 +13,9 @@ import { TbInfoCircle } from "@react-icons/all-files/tb/TbInfoCircle";
 import rehypeSlug from "rehype-slug";
 import { HEADING_ID_PREFIX } from "@/lib/unified";
 
-type Props = { children: string };
+type Props = { children: string; id?: string };
 
-export const MarkdownViewer: React.FC<Props> = async ({ children }) => {
+export const MarkdownViewer: React.FC<Props> = async ({ children, id }) => {
   const processor = unified()
     .use(remarkParse)
     .use(remarkCallout)
@@ -31,7 +31,7 @@ export const MarkdownViewer: React.FC<Props> = async ({ children }) => {
   const hast = await processor.run(mdast, children);
 
   return (
-    <div>
+    <div id={id}>
       {toJsxRuntime(hast, {
         Fragment: Fragment,
         // @ts-ignore
