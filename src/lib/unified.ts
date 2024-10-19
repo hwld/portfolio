@@ -7,11 +7,7 @@ import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 
 export const getTocHAst = async (markdown: string) => {
-  const processor = unified()
-    .use(remarkParse)
-    .use(remarkToc)
-    .use(remarkRehype)
-    .use(rehypeAddPrevHref);
+  const processor = unified().use(remarkParse).use(remarkToc).use(remarkRehype);
 
   const mdast = processor.parse(markdown);
   const hast = await processor.run(mdast);
@@ -28,16 +24,19 @@ export const remarkToc = () => {
   };
 };
 
-export const DATA_PREV_HREF = "data-prev-href";
+export const DATA_PREV_HEADING_ID = "data-prev-heading-id";
 
-export const rehypeAddPrevHref = () => {
+export const rehypeAddPrevHeadingId = () => {
   return (tree: Element) => {
-    let previousHref: string | null = null;
+    let previousId: string | null = null;
 
     visit(tree, "element", (node: Element) => {
-      if (node.tagName === "a" && node.properties?.href) {
-        node.properties[DATA_PREV_HREF] = previousHref;
-        previousHref = node.properties.href as string;
+      if (
+        ["h1", "h2", "h3", "h4", "h5", "h6"].includes(node.tagName) &&
+        node.properties?.id
+      ) {
+        node.properties[DATA_PREV_HEADING_ID] = previousId;
+        previousId = node.properties.id as string;
       }
     });
   };

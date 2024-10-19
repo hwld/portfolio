@@ -11,7 +11,7 @@ import { CodeCopyButton } from "./code-copy-button";
 import { TbUserCircle } from "@react-icons/all-files/tb/TbUserCircle";
 import { TbInfoCircle } from "@react-icons/all-files/tb/TbInfoCircle";
 import rehypeSlug from "rehype-slug";
-import { HEADING_ID_PREFIX } from "@/lib/unified";
+import { HEADING_ID_PREFIX, rehypeAddPrevHeadingId } from "@/lib/unified";
 
 type Props = { children: string; id?: string };
 
@@ -21,7 +21,8 @@ export const MarkdownViewer: React.FC<Props> = async ({ children, id }) => {
     .use(remarkCallout)
     .use(remarkRehype)
     .use(rehypeSlug, { prefix: HEADING_ID_PREFIX })
-    .use(rehypeShiki, { theme: "nord", addLanguageClass: true });
+    .use(rehypeShiki, { theme: "nord", addLanguageClass: true })
+    .use(rehypeAddPrevHeadingId);
 
   const mdast = processor.parse(children);
 

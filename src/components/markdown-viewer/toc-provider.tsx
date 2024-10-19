@@ -1,6 +1,6 @@
 "use client";
 
-import { DATA_PREV_HREF } from "@/lib/unified";
+import { DATA_PREV_HEADING_ID } from "@/lib/unified";
 import clsx from "clsx";
 import {
   createContext,
@@ -79,12 +79,18 @@ export const TocContextProvider: React.FC<
 
           if (!entry.isIntersecting && entry.boundingClientRect.top > 0) {
             // headingが下から外に出ていった場合は前のリンクをアクティブにする
-            setActiveLink(headingHref);
+            const prevId = entry.target.getAttribute(DATA_PREV_HEADING_ID);
+            if (!prevId) {
+              return;
+            }
+
+            const prevHeadingHref = `#${encodeURIComponent(prevId)}`;
+            setActiveLink(prevHeadingHref);
             return;
           }
         });
       },
-      { root: null, rootMargin: "0px 0px -90% 0px", threshold: 0 }
+      { root: null, rootMargin: "0px 0px -95% 0px", threshold: 0 }
     );
 
     headings.forEach((heading) => {
@@ -120,9 +126,7 @@ export const TocContextProvider: React.FC<
   );
 };
 
-export const Anchor = (
-  props: ComponentPropsWithoutRef<"a"> & { [DATA_PREV_HREF]?: string }
-) => {
+export const Anchor = (props: ComponentPropsWithoutRef<"a">) => {
   const { activeLink } = useToc();
   const isActive = activeLink === props.href;
 
