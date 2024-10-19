@@ -12,6 +12,7 @@ import { TbUserCircle } from "@react-icons/all-files/tb/TbUserCircle";
 import { TbInfoCircle } from "@react-icons/all-files/tb/TbInfoCircle";
 import rehypeSlug from "rehype-slug";
 import { HEADING_ID_PREFIX, rehypeAddPrevHeadingId } from "@/lib/unified";
+import { tv, type VariantProps } from "tailwind-variants";
 
 type Props = { children: string; id?: string };
 
@@ -45,8 +46,8 @@ export const MarkdownViewer: React.FC<Props> = async ({ children, id }) => {
           h2: H2,
           h3: H3,
           h4: H4,
-          h5: H4,
-          h6: H4,
+          h5: H5,
+          h6: H6,
           p: P,
           a: A,
           img: Img,
@@ -184,22 +185,64 @@ const P = ({ children }: PropsWithChildren) => {
   );
 };
 
-const headerBaseClass = "flex items-center text-zinc-200 font-bold gap-2 mb-6";
+const headingClass = tv({
+  base: "text-zinc-200 flex items-center font-bold mb-6 group gap-0",
+  variants: {
+    tag: {
+      h1: "text-3xl mt-12",
+      h2: "text-2xl mt-10 ml-0",
+      h3: "text-xl mt-8",
+      h4: "text-lg mt-6",
+      h5: "text-lg mt-6",
+      h6: "text-lg mt-6",
+    },
+  },
+});
+
+const Heading = ({
+  children,
+  tag = "h1",
+  ...props
+}: ComponentPropsWithoutRef<"h1" | "h2" | "h3" | "h4" | "h5" | "h6"> &
+  VariantProps<typeof headingClass>) => {
+  const heading = headingClass({ tag });
+
+  const href = props.id ? `#${encodeURIComponent(props.id)}` : undefined;
+  const HeadingComponent = tag;
+
+  return (
+    <HeadingComponent {...props} className={heading}>
+      <a
+        className="relative w-0 h-6 before:bg-[url('/icons/link.svg')] before:contents-[''] before:absolute before:right-0 before:top-0 before:block before:pr-1 before:h-6 before:w-7 before:bg-center before:group-hover:opacity-100 before:opacity-0 before:bg-contain before:bg-no-repeat before:transition-opacity"
+        href={href}
+      />
+      {children}
+    </HeadingComponent>
+  );
+};
 
 const H1 = (props: ComponentPropsWithoutRef<"h1">) => {
-  return <h1 {...props} className={clsx(headerBaseClass, "text-3xl mt-12")} />;
+  return <Heading tag="h1" {...props} />;
 };
 
 const H2 = (props: ComponentPropsWithoutRef<"h2">) => {
-  return <h2 {...props} className={clsx(headerBaseClass, "text-2xl mt-10")} />;
+  return <Heading tag="h2" {...props} />;
 };
 
 const H3 = (props: ComponentPropsWithoutRef<"h3">) => {
-  return <h3 {...props} className={clsx(headerBaseClass, "text-xl mt-8")} />;
+  return <Heading tag="h3" {...props} />;
 };
 
 const H4 = (props: ComponentPropsWithoutRef<"h4">) => {
-  return <h4 {...props} className={clsx(headerBaseClass, "text-lg mt-6")} />;
+  return <Heading tag="h4" {...props} />;
+};
+
+const H5 = (props: ComponentPropsWithoutRef<"h4">) => {
+  return <Heading tag="h5" {...props} />;
+};
+
+const H6 = (props: ComponentPropsWithoutRef<"h4">) => {
+  return <Heading tag="h6" {...props} />;
 };
 
 const A = ({ children, href }: ComponentPropsWithoutRef<"a">) => {
