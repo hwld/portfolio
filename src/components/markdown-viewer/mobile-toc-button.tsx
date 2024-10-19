@@ -18,6 +18,13 @@ type Props = { children: ReactNode };
 
 export const MobileTocButton: React.FC<Props> = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const handleClickAnchor = (e: React.MouseEvent) => {
+    if (e.target instanceof HTMLAnchorElement) {
+      setIsOpen(false);
+    }
+  };
+
   const { refs, floatingStyles, context } = useFloating({
     open: isOpen,
     onOpenChange: setIsOpen,
@@ -58,6 +65,7 @@ export const MobileTocButton: React.FC<Props> = ({ children }) => {
                 style={floatingStyles}
               >
                 <motion.div
+                  onClick={handleClickAnchor}
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}

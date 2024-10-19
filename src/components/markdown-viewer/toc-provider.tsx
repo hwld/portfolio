@@ -18,6 +18,15 @@ type TocContext = {
 };
 const TocContext = createContext<TocContext | undefined>(undefined);
 
+export const useToc = () => {
+  const ctx = useContext(TocContext);
+  if (!ctx) {
+    throw new Error("TocContext.Providerが存在しません");
+  }
+
+  return ctx;
+};
+
 export const TocContextProvider: React.FC<PropsWithChildren> = ({
   children,
 }) => {
@@ -44,15 +53,6 @@ export const TocContextProvider: React.FC<PropsWithChildren> = ({
       {children}
     </TocContext.Provider>
   );
-};
-
-export const useToc = () => {
-  const ctx = useContext(TocContext);
-  if (!ctx) {
-    throw new Error("TocContext.Providerが存在しません");
-  }
-
-  return ctx;
 };
 
 export const Anchor = (
