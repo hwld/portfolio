@@ -1,8 +1,14 @@
 // https://github.com/CloudCannon/pagefind/blob/main/pagefind_web_js/lib/coupled_search.ts
 
+import { removeHtmlExtension } from "./utils";
+
 export type RawPagefind = {
   options: (options: PagefindIndexOptions) => Promise<void>;
   init: () => Promise<void>;
+  search: (
+    term: string,
+    options?: PagefindSearchOptions
+  ) => Promise<PagefindSearchResults | null>;
   debouncedSearch: (
     term: string,
     options?: PagefindSearchOptions,
@@ -14,16 +20,68 @@ export type PagefindSearchAllResult = PagefindSearchResult &
   PagefindSearchFragment;
 
 export type Pagefind = RawPagefind & {
+  searchAll: (
+    ...args: Parameters<RawPagefind["search"]>
+  ) => Promise<PagefindSearchAllResult[] | null>;
   debouncedSearchAll: (
     ...args: Parameters<RawPagefind["debouncedSearch"]>
   ) => Promise<PagefindSearchAllResult[] | null>;
 };
 
+export const loadPagefind = async (): Promise<Pagefind> => {
+  const rawPagefind: RawPagefind = await import(
+    // @ts-ignore
+    /* webpackIgnore: true */ "/pagefind/pagefind.js"
+  );
+
+  const pagefind: Pagefind = {
+    ...rawPagefind,
+    searchAll: async (...args) => {
+      const rawResults = await rawPagefind.search(...args);
+      if (!rawResults) {
+        return null;
+      }
+      return transferSearchAllResults(rawResults);
+    },
+    debouncedSearchAll: async (...args) => {
+      const rawResults = await rawPagefind.debouncedSearch(...args);
+      if (!rawResults) {
+        return null;
+      }
+      return transferSearchAllResults(rawResults);
+    },
+  };
+
+  return pagefind;
+};
+
 export const defaultPagefind: Pagefind = {
   init: () => Promise.resolve(),
   options: () => Promise.resolve(),
+  search: () => Promise.resolve(null),
+  searchAll: () => Promise.resolve(null),
   debouncedSearch: () => Promise.resolve(null),
   debouncedSearchAll: () => Promise.resolve(null),
+};
+
+const transferSearchAllResults = async (
+  rawResults: PagefindSearchResults
+): Promise<PagefindSearchAllResult[]> => {
+  const results = await Promise.all(
+    rawResults.results.map(async (r): Promise<PagefindSearchAllResult> => {
+      const data = await r.data();
+
+      return {
+        ...r,
+        ...data,
+        sub_results: data.sub_results.map((sub) => {
+          return { ...sub, url: removeHtmlExtension(sub.url) };
+        }),
+        url: removeHtmlExtension(data.url),
+      };
+    })
+  );
+  return results;
 };
 
 // https://github.com/CloudCannon/pagefind/blob/main/pagefind_web_js/types/index.d.ts
