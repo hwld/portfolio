@@ -10,20 +10,87 @@ import { TbBrandGithub } from "@react-icons/all-files/tb/TbBrandGithub";
 import { SocialLinkItem } from "./social-link-item";
 import { getDetailPageTitle } from "@/lib/get-detail-page-title";
 import type { IconType } from "@react-icons/all-files";
+import {
+  FloatingFocusManager,
+  offset,
+  useClick,
+  useDismiss,
+  useFloating,
+  useInteractions,
+} from "@floating-ui/react";
 
 export const MobileNavbar: React.FC = () => {
   const currentPath = usePathname();
   const [isOpen, setIsOpen] = useState(false);
 
+  const { refs, floatingStyles, context } = useFloating({
+    open: isOpen,
+    onOpenChange: setIsOpen,
+    middleware: [offset(8)],
+    placement: "top-start",
+  });
+
+  const click = useClick(context);
+  const dismiss = useDismiss(context);
+
+  const { getFloatingProps, getReferenceProps } = useInteractions([
+    click,
+    dismiss,
+  ]);
+
   return (
-    <div className="grid grid-rows-[1fr_auto] w-[250px]">
-      <NavContent
-        isOpen={isOpen}
-        currentPath={currentPath}
-        onClose={() => setIsOpen(false)}
-      />
+    <div className="w-[250px]">
+      <AnimatePresence>
+        {isOpen && (
+          <FloatingFocusManager context={context}>
+            <div
+              className="w-full"
+              ref={refs.setFloating}
+              {...getFloatingProps()}
+              style={floatingStyles}
+            >
+              <motion.div
+                className="bg-zinc-800 border border-zinc-600 rounded-lg p-2 flex flex-col gap-2 shadow-xl shadow-black/30"
+                initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: 20, scale: 0.95 }}
+              >
+                <div className="flex flex-col gap-1">
+                  {pages.map((p) => {
+                    return (
+                      <NavbarItem
+                        key={p.url}
+                        page={p}
+                        currentPath={currentPath}
+                        onClick={() => {
+                          setIsOpen(false);
+                        }}
+                      />
+                    );
+                  })}
+                </div>
+                <div className="w-full bg-zinc-600 h-[1px]" />
+                <div className="flex gap-4 items-center justify-between px-2">
+                  <p className="text-zinc-400">social link</p>
+                  <div className="flex gap-2 items-center">
+                    <SocialLinkItem
+                      icon={TbBrandX}
+                      href="https://x.com/016User"
+                    />
+                    <SocialLinkItem
+                      icon={TbBrandGithub}
+                      href="https://github.com/hwld"
+                    />
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+          </FloatingFocusManager>
+        )}
+      </AnimatePresence>
       <button
-        onClick={() => setIsOpen((s) => !s)}
+        ref={refs.setReference}
+        {...getReferenceProps()}
         className="h-10 w-full bg-zinc-800 border shadow-xl shadow-black/30 border-zinc-600 rounded-lg items-center place-items-start grid grid-cols-[1fr_auto] gap-4 px-4 z-10"
       >
         <CurrentPageTitle currentPath={currentPath} />
@@ -67,49 +134,6 @@ const CurrentPageTitle: React.FC<{ currentPath: string }> = ({
       <Icon className="size-5" />
       <p className="pb-[2px] whitespace-nowrap truncate">{title}</p>
     </div>
-  );
-};
-
-const NavContent: React.FC<{
-  isOpen: boolean;
-  onClose: () => void;
-  currentPath: string;
-}> = ({ isOpen, onClose, currentPath }) => {
-  return (
-    <AnimatePresence>
-      {isOpen && (
-        <motion.div
-          className="bg-zinc-800 border border-zinc-600 rounded-lg mb-3 p-2 flex flex-col gap-2 shadow-xl shadow-black/30"
-          initial={{ opacity: 0, y: 20, scale: 0.95 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: 20, scale: 0.95 }}
-        >
-          <div className="flex flex-col gap-1">
-            {pages.map((p) => {
-              return (
-                <NavbarItem
-                  key={p.url}
-                  page={p}
-                  currentPath={currentPath}
-                  onClick={onClose}
-                />
-              );
-            })}
-          </div>
-          <div className="w-full bg-zinc-600 h-[1px]" />
-          <div className="flex gap-4 items-center justify-between px-2">
-            <p className="text-zinc-400">social link</p>
-            <div className="flex gap-2 items-center">
-              <SocialLinkItem icon={TbBrandX} href="https://x.com/016User" />
-              <SocialLinkItem
-                icon={TbBrandGithub}
-                href="https://github.com/hwld"
-              />
-            </div>
-          </div>
-        </motion.div>
-      )}
-    </AnimatePresence>
   );
 };
 
