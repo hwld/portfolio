@@ -50,25 +50,23 @@ export const MobileNavbar: React.FC = () => {
               style={floatingStyles}
             >
               <motion.div
-                className="bg-zinc-800 border border-zinc-600 rounded-lg p-2 flex flex-col gap-2 shadow-xl shadow-black/30"
+                className="bg-zinc-800 border border-zinc-600 rounded-lg p-2 flex flex-col gap-1 shadow-xl shadow-black/30"
                 initial={{ opacity: 0, y: 20, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 20, scale: 0.95 }}
               >
-                <div className="flex flex-col gap-1">
-                  {pages.map((p) => {
-                    return (
-                      <NavbarItem
-                        key={p.url}
-                        page={p}
-                        currentPath={currentPath}
-                        onClick={() => {
-                          setIsOpen(false);
-                        }}
-                      />
-                    );
-                  })}
-                </div>
+                {pages.map((p) => {
+                  return (
+                    <NavbarItem
+                      key={p.url}
+                      page={p}
+                      currentPath={currentPath}
+                      onClick={() => {
+                        setIsOpen(false);
+                      }}
+                    />
+                  );
+                })}
                 <div className="w-full bg-zinc-600 h-[1px]" />
                 <div className="flex gap-4 items-center justify-between px-2">
                   <p className="text-zinc-400">social link</p>

@@ -11,16 +11,18 @@ const link = tv({
 
 type Props<T extends string> = {
   href: Route<T>;
+  onClick?: () => void;
 } & PropsWithChildren &
   VariantProps<typeof link>;
 
 export const TextLink = <T extends string>({
   href,
   children,
+  onClick,
   size = "md",
 }: Props<T>) => {
   return (
-    <NextLink href={href} className={link({ size })}>
+    <NextLink href={href} className={link({ size })} onClick={onClick}>
       {children}
     </NextLink>
   );
