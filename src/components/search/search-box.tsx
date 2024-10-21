@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { TbGhost2 } from "@react-icons/all-files/tb/TbGhost2";
 import { TbGhost3 } from "@react-icons/all-files/tb/TbGhost3";
 import { MdOutlineSubdirectoryArrowRight } from "@react-icons/all-files/md/MdOutlineSubdirectoryArrowRight";
+import { CgSpinner } from "@react-icons/all-files/cg/CgSpinner";
 import {
   useState,
   type ComponentPropsWithoutRef,
@@ -103,29 +104,27 @@ export const SearchBox = forwardRef<
             <p>ページ検索</p>
             <p className="text-zinc-400">Cmd + K</p>
           </div>
-          <Command.List className="overflow-auto flex flex-col scroll-py-2">
-            {isSearching ? null : (
-              <Command.Empty className="pt-20">
-                {query.length > 0 ? (
-                  <div className="flex flex-col gap-2 items-center">
-                    <TbGhost2 className="size-24" />
-                    <p>ページが見つかりませんでした</p>
-                  </div>
-                ) : (
-                  <div className="flex flex-col gap-2 items-center">
-                    <TbGhost3 className="size-24" />
-                    <p>ページを検索することができます</p>
-                    <TextLink
-                      size="sm"
-                      href={Routes.search()}
-                      onClick={onClose}
-                    >
-                      別ページで検索する
-                    </TextLink>
-                  </div>
-                )}
-              </Command.Empty>
-            )}
+          <Command.List className="overflow-auto flex flex-col scroll-py-2 relative">
+            <Command.Empty className="absolute inset-0 grid place-items-center">
+              {isSearching ? (
+                <div className="grid place-items-center">
+                  <CgSpinner className="size-8 animate-spin" />
+                </div>
+              ) : query.length > 0 ? (
+                <div className="flex flex-col gap-2 items-center -mt-10">
+                  <TbGhost2 className="size-24" />
+                  <p>ページが見つかりませんでした</p>
+                </div>
+              ) : (
+                <div className="flex flex-col gap-2 items-center -mt-10">
+                  <TbGhost3 className="size-24" />
+                  <p>ページを検索することができます</p>
+                  <TextLink size="sm" href={Routes.search()} onClick={onClose}>
+                    別ページで検索する
+                  </TextLink>
+                </div>
+              )}
+            </Command.Empty>
             {results.map((r) => {
               return (
                 <div

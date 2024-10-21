@@ -9,6 +9,7 @@ import { TbGhost3 } from "@react-icons/all-files/tb/TbGhost3";
 import { SearchInput } from "./search-input";
 import { useSearchPage } from "./use-search-page";
 import { useQueryState, parseAsString } from "nuqs";
+import { CgSpinner } from "@react-icons/all-files/cg/CgSpinner";
 
 export const SearchPageContent: React.FC = () => {
   const [query, setQuery] = useQueryState<string>(
@@ -35,8 +36,12 @@ export const SearchPageContent: React.FC = () => {
           <SearchInput query={query} onChangeQuery={search} />
         </div>
         <div className="w-full flex flex-col gap-2">
-          {isSearching ? null : results.length === 0 ? (
-            query.length > 0 ? (
+          {results.length === 0 ? (
+            isSearching ? (
+              <div className="grid place-items-center mt-10">
+                <CgSpinner className="size-8 animate-spin" />
+              </div>
+            ) : query.length > 0 ? (
               <div className="flex flex-col gap-2 items-center mt-10">
                 <TbGhost2 className="size-24" />
                 <p>ページが見つかりませんでした</p>
