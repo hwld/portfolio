@@ -7,6 +7,7 @@ import { type IconType } from "@react-icons/all-files/lib";
 import { ReactNode } from "react";
 import { ExternalLink } from "./external-link";
 import { TextLink } from "./link";
+import { Routes } from "@/routes";
 
 export const Profile: React.FC = () => {
   return (
@@ -19,7 +20,7 @@ export const Profile: React.FC = () => {
           <br />
           Webフロントエンドの技術に最も長く触れてきましたが、バックエンドや運用、ソフトウェアアーキテクチャ、セキュリティなどのWebアプリ開発に関連する様々な分野に興味があり、調べたり試したりしています。これまで作ってきたものは
           <span className="mx-1">
-            <TextLink href="/projects">こちら</TextLink>
+            <TextLink href={Routes.projects()}>こちら</TextLink>
           </span>
           から見られます。
           <br />

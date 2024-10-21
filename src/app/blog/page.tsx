@@ -1,6 +1,7 @@
 import { AvatarIconLink } from "@/components/avatar-icon";
 import { TextLink } from "@/components/link";
 import { posts, type Post } from "@/data/posts";
+import { Routes } from "@/routes";
 import { TbHash } from "@react-icons/all-files/tb/TbHash";
 import type { Metadata } from "next";
 
@@ -47,7 +48,7 @@ const PostItem: React.FC<{ post: Post }> = ({ post }) => {
         </div>
         ・<div className="w-[2ch] tabular-nums">{post.createdAt.getDate()}</div>
       </div>
-      <TextLink href={`/blog/${post.slug}`}>{post.title}</TextLink>
+      <TextLink href={Routes.blogDetail(post.slug)}>{post.title}</TextLink>
     </div>
   );
 };

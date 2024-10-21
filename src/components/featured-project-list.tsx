@@ -4,6 +4,7 @@ import { featuredProjects } from "@/data/projects";
 import React from "react";
 import { Heading } from "./heading";
 import { TextLink } from "./link";
+import { Routes } from "@/routes";
 
 export const FeaturedProjectList: React.FC = () => {
   return (
@@ -18,7 +19,7 @@ export const FeaturedProjectList: React.FC = () => {
             </React.Fragment>
           );
         })}
-        <TextLink href="/projects" size="sm">
+        <TextLink href={Routes.projects()} size="sm">
           もっと見る
         </TextLink>
       </div>

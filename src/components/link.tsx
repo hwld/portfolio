@@ -1,6 +1,5 @@
-import type { Route } from "next";
 import NextLink from "next/link";
-import type { PropsWithChildren } from "react";
+import { forwardRef, type PropsWithChildren } from "react";
 import { tv, type VariantProps } from "tailwind-variants";
 
 const link = tv({
@@ -9,21 +8,27 @@ const link = tv({
   defaultVariants: { size: "md" },
 });
 
-type Props<T extends string> = {
-  href: Route<T>;
+type Props = {
+  href: string;
   onClick?: () => void;
+  className?: string;
 } & PropsWithChildren &
   VariantProps<typeof link>;
 
-export const TextLink = <T extends string>({
-  href,
-  children,
-  onClick,
-  size = "md",
-}: Props<T>) => {
-  return (
-    <NextLink href={href} className={link({ size })} onClick={onClick}>
-      {children}
-    </NextLink>
-  );
-};
+export const TextLink = forwardRef<HTMLAnchorElement, Props>(
+  ({ href, children, onClick, size = "md", className, ...props }, ref) => {
+    return (
+      <NextLink
+        ref={ref}
+        href={href}
+        className={link({ size, className })}
+        onClick={onClick}
+        {...props}
+      >
+        {children}
+      </NextLink>
+    );
+  }
+);
+
+TextLink.displayName = "TextLink";
