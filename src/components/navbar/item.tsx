@@ -1,10 +1,10 @@
-import { PageData } from "@/app/pages";
+import { NavbarPageData } from "@/app/pages";
 import clsx from "clsx";
 import Link from "next/link";
 import { ComponentProps, forwardRef } from "react";
 
 type Props = {
-  page: PageData;
+  page: NavbarPageData;
   children: string;
   active?: boolean;
   onPointerEnter?: ComponentProps<"a">["onPointerEnter"];

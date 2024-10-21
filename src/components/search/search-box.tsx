@@ -1,6 +1,5 @@
 import { Command } from "cmdk";
 import { AnimatePresence, motion } from "framer-motion";
-import { TbSearch } from "@react-icons/all-files/tb/TbSearch";
 import { TbGhost2 } from "@react-icons/all-files/tb/TbGhost2";
 import { TbGhost3 } from "@react-icons/all-files/tb/TbGhost3";
 import { MdOutlineSubdirectoryArrowRight } from "@react-icons/all-files/md/MdOutlineSubdirectoryArrowRight";
@@ -9,7 +8,6 @@ import {
   type ComponentPropsWithoutRef,
   forwardRef,
   useEffect,
-  useRef,
 } from "react";
 import {
   FloatingFocusManager,
@@ -19,10 +17,12 @@ import {
   useFloating,
   useInteractions,
 } from "@floating-ui/react";
-import type { PagefindSearchAllResult } from "@/lib/pagefind";
 import { useRouter } from "next/navigation";
-import { usePagefind } from "./pagefind-provider";
-import { TextLink } from "./link";
+import { TextLink } from "../link";
+import { Routes } from "@/routes";
+import { SearchInput } from "./search-input";
+import { useSearchPage } from "./use-search-page";
+import { SearchButton } from "./search-button";
 
 export const SearchBoxTrigger: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -69,13 +69,7 @@ export const SearchBoxTrigger: React.FC = () => {
           </FloatingFocusManager>
         ) : null}
       </AnimatePresence>
-      <button
-        ref={refs.setReference}
-        {...getReferenceProps()}
-        className="size-10 rounded-full bg-zinc-800 border border-zinc-500 shadow-lg grid place-items-center transition-colors hover:bg-zinc-600"
-      >
-        <TbSearch className="size-5" />
-      </button>
+      <SearchButton ref={refs.setReference} {...getReferenceProps()} />
     </div>
   );
 };
@@ -84,35 +78,16 @@ export const SearchBox = forwardRef<
   HTMLDivElement,
   { onClose: () => void } & ComponentPropsWithoutRef<"div">
 >(function SearchBox({ onClose, ...props }, ref) {
-  const pagefind = usePagefind();
-
   const [query, setQuery] = useState("");
-  const [isSearching, setIsSearching] = useState(false);
-  const [results, setResults] = useState<PagefindSearchAllResult[]>([]);
+  const { isSearching, results, search } = useSearchPage({
+    defaultQuery: query,
+    setQuery,
+  });
 
   const router = useRouter();
   const handleSelectCommandItem = (url: string) => {
     router.push(url);
     onClose();
-  };
-
-  const timer = useRef(0);
-  const handleSearch = async (query: string) => {
-    setQuery(query);
-
-    window.clearTimeout(timer.current);
-    setIsSearching(true);
-    timer.current = window.setTimeout(async () => {
-      // 全角アルファベットの検索でエラーになってしまう
-      const searchResults = await pagefind.searchAll(query);
-      setIsSearching(false);
-
-      if (!searchResults) {
-        return;
-      }
-
-      setResults(searchResults);
-    }, 300);
   };
 
   return (
@@ -140,6 +115,13 @@ export const SearchBox = forwardRef<
                   <div className="flex flex-col gap-2 items-center">
                     <TbGhost3 className="size-24" />
                     <p>ページを検索することができます</p>
+                    <TextLink
+                      size="sm"
+                      href={Routes.search()}
+                      onClick={onClose}
+                    >
+                      別ページで検索する
+                    </TextLink>
                   </div>
                 )}
               </Command.Empty>
@@ -196,20 +178,9 @@ export const SearchBox = forwardRef<
             })}
           </Command.List>
           <div className="border-t border-zinc-500 p-2">
-            <div className="relative h-9">
-              <div className="h-full aspect-square grid place-items-center absolute left-0 top-0">
-                <TbSearch className="size-5" />
-              </div>
-              <Command.Input
-                autoFocus
-                className="inset-y-0 pl-8 pr-2 text-sm border border-zinc-400 rounded w-full h-full focus-visible:outline-none focus-visible:border-zinc-300"
-                // NotoSansだと全角アルファベットでbaselineがずれるので
-                style={{ fontFamily: "sans-serif" }}
-                value={query}
-                onValueChange={handleSearch}
-                placeholder="キーワード"
-              />
-            </div>
+            <Command.Input asChild>
+              <SearchInput query={query} onChangeQuery={search} />
+            </Command.Input>
           </div>
         </motion.div>
       </Command>

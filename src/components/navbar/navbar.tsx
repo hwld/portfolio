@@ -3,7 +3,9 @@ import { useMediaQuery } from "@mantine/hooks";
 import { DesktopNavbar } from "./desktop-navbar";
 import { MobileNavbar } from "./mobile-navbar";
 import { AnimatePresence, motion } from "framer-motion";
-import { SearchBoxTrigger } from "../search-box";
+import { SearchBoxTrigger } from "../search/search-box";
+import { SearchButtonLink } from "../search/search-button";
+import { Routes } from "@/routes";
 
 export const Navbar: React.FC = () => {
   const isMobile = useMediaQuery("(max-width: 700px)");
@@ -21,8 +23,17 @@ export const Navbar: React.FC = () => {
         animate={{ opacity: 1, y: 0, x: "-50%" }}
         exit={{ opacity: 0, y: 10, x: "-50%" }}
       >
-        {isMobile ? <MobileNavbar /> : <DesktopNavbar />}
-        <SearchBoxTrigger />
+        {isMobile ? (
+          <>
+            <MobileNavbar />
+            <SearchButtonLink href={Routes.search()} />
+          </>
+        ) : (
+          <>
+            <DesktopNavbar />
+            <SearchBoxTrigger />
+          </>
+        )}
       </motion.div>
     </AnimatePresence>
   );

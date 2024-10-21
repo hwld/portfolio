@@ -6,4 +6,6 @@ export const Routes = {
 
   blog: () => `/blog`,
   blogDetail: (slug: string) => `${Routes.blog()}/${slug}` as const,
+
+  search: () => `/search`,
 };

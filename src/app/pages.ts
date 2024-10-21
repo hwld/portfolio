@@ -5,31 +5,45 @@ import { TbStack2Filled } from "@react-icons/all-files/tb/TbStack2Filled";
 import { TbWriting } from "@react-icons/all-files/tb/TbWriting";
 import { type IconType } from "@react-icons/all-files/lib";
 import { TbWritingFilled } from "@/components/writing-filled-icon";
+import { TbSearch } from "@react-icons/all-files/tb/TbSearch";
+import { Routes } from "@/routes";
 
-export const pages = [
+type Page = {
+  url: string;
+  title: string;
+  icon: IconType;
+  activeIcon: IconType;
+};
+
+export const navbarPages = [
   {
-    url: "/",
+    url: Routes.home(),
     title: "home",
     icon: TbHome as IconType,
     activeIcon: TbHomeFilled as IconType,
   },
   {
-    url: "/projects",
+    url: Routes.projects(),
     title: "projects",
     icon: TbStack2 as IconType,
     activeIcon: TbStack2Filled as IconType,
   },
   {
-    url: "/blog",
+    url: Routes.blog(),
     title: "blog",
     icon: TbWriting as IconType,
     activeIcon: TbWritingFilled as IconType,
   },
-] as const satisfies {
-  url: string;
-  title: string;
-  icon: IconType;
-  activeIcon: IconType;
-}[];
+] as const satisfies Page[];
 
-export type PageData = (typeof pages)[number];
+export type NavbarPageData = (typeof navbarPages)[number];
+
+export const pages = [
+  ...navbarPages,
+  {
+    url: Routes.search(),
+    title: "search",
+    icon: TbSearch as IconType,
+    activeIcon: TbSearch as IconType,
+  },
+] as const satisfies Page[];

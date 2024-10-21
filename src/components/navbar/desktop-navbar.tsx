@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
-import { PageData, pages } from "@/app/pages";
+import { NavbarPageData, navbarPages } from "@/app/pages";
 import { TbBrandX } from "@react-icons/all-files/tb/TbBrandX";
 import { TbBrandGithub } from "@react-icons/all-files/tb/TbBrandGithub";
 import clsx from "clsx";
@@ -47,7 +47,10 @@ export const DesktopNavbar: React.FC = () => {
     setHoverCardStyle(undefined);
   };
 
-  const setNavbarItemRef = (node: HTMLAnchorElement | null, page: PageData) => {
+  const setNavbarItemRef = (
+    node: HTMLAnchorElement | null,
+    page: NavbarPageData
+  ) => {
     const map = getPathNodeMap();
     if (node) {
       map.set(page.url, node);
@@ -84,7 +87,7 @@ export const DesktopNavbar: React.FC = () => {
         className="h-10 rounded-lg bg-zinc-800 border shadow-black/30 border-zinc-600 p-1 flex items-center gap-[2px] shadow-xl"
         onMouseLeave={handleMouseLeaveBar}
       >
-        {pages.map((page) => {
+        {navbarPages.map((page) => {
           return (
             <NavbarItem
               ref={(node) => setNavbarItemRef(node, page)}
@@ -136,7 +139,7 @@ export const DesktopNavbar: React.FC = () => {
 };
 
 type NavbarItemProps = {
-  page: PageData;
+  page: NavbarPageData;
   children: string;
   active?: boolean;
   onPointerEnter?: ComponentProps<"a">["onPointerEnter"];

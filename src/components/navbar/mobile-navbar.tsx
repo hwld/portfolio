@@ -1,4 +1,4 @@
-import { pages, type PageData } from "@/app/pages";
+import { navbarPages, type NavbarPageData, pages } from "@/app/pages";
 import { TbChevronRight } from "@react-icons/all-files/tb/TbChevronRight";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
@@ -55,7 +55,7 @@ export const MobileNavbar: React.FC = () => {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 20, scale: 0.95 }}
               >
-                {pages.map((p) => {
+                {navbarPages.map((p) => {
                   return (
                     <NavbarItem
                       key={p.url}
@@ -146,7 +146,7 @@ const item = tv({
 });
 
 const NavbarItem: React.FC<{
-  page: PageData;
+  page: NavbarPageData;
   currentPath: string;
   onClick: () => void;
 }> = ({ page, currentPath, onClick }) => {
