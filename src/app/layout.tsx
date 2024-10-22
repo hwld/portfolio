@@ -24,9 +24,7 @@ export default function RootLayout({
           className={`${noto.className} min-h-screen bg-zinc-900 text-zinc-300 font-light text-sm`}
           style={{ colorScheme: "dark" }}
         >
-          <main className="max-w-[1000px] relative pt-14 pb-32 m-auto  px-6 md:px-12 min-h-[100dvh]">
-            {children}
-          </main>
+          {children}
           <Navbar />
         </body>
       </PagefindProvider>

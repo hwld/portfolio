@@ -33,7 +33,7 @@ export const MarkdownViewer: React.FC<Props> = async ({ children, id }) => {
   const hast = await processor.run(mdast, children);
 
   return (
-    <div id={id}>
+    <div id={id} className="text-base">
       {toJsxRuntime(hast, {
         Fragment: Fragment,
         // @ts-ignore

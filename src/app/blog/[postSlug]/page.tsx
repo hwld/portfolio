@@ -1,9 +1,9 @@
-import { AvatarIconLink } from "@/components/avatar-icon";
 import { posts } from "@/data/posts";
 import { getMarkdown, getMarkdownSlugs } from "@/lib/markdown";
 import type { Metadata } from "next";
 import { TbClock } from "@react-icons/all-files/tb/TbClock";
 import { MarkdownViewerWithToc } from "@/components/markdown-viewer/with-toc";
+import { DetailLayout } from "@/components/layout/detail-layout";
 
 type Params = { postSlug: string };
 
@@ -41,9 +41,8 @@ const PostDetailPage: React.FC<PageProps> = async ({ params }) => {
   const markdown = getMarkdown("posts", params.postSlug);
 
   return (
-    <div className="max-w-[700px] space-y-6 text-base text-zxinc-300 font-light">
-      <AvatarIconLink />
-      <div>
+    <DetailLayout>
+      <div className="flex flex-col gap-2">
         <div className="text-zinc-400 flex text-sm items-center gap-1">
           <TbClock className="size-4" />
           {`${post.createdAt.getFullYear()}年 ${
@@ -53,7 +52,7 @@ const PostDetailPage: React.FC<PageProps> = async ({ params }) => {
         <h1 className="text-3xl font-bold">{post.title}</h1>
       </div>
       <MarkdownViewerWithToc markdown={markdown} />
-    </div>
+    </DetailLayout>
   );
 };
 

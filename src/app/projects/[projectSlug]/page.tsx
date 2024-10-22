@@ -6,8 +6,8 @@ import { TbCode } from "@react-icons/all-files/tb/TbCode";
 import { TbLink } from "@react-icons/all-files/tb/TbLink";
 import { Metadata } from "next";
 import { getMarkdown, getMarkdownSlugs } from "@/lib/markdown";
-import { AvatarIconLink } from "@/components/avatar-icon";
 import { MarkdownViewerWithToc } from "@/components/markdown-viewer/with-toc";
+import { DetailLayout } from "@/components/layout/detail-layout";
 
 type Params = { projectSlug: string };
 
@@ -45,9 +45,8 @@ const ProjectDetailPage: React.FC<PageProps> = ({ params }) => {
   const markdown = getMarkdown("projects", params.projectSlug);
 
   return (
-    <div className="max-w-[700px] space-y-6 text-base text-zxinc-300 font-light">
-      <AvatarIconLink />
-      <div className="space-y-4">
+    <DetailLayout>
+      <div className="flex flex-col gap-4">
         <ProjectThumbnail src={project.imageSrc} />
         <div>
           <div className="text-sm text-zinc-400 flex gap-1 items-center">
@@ -69,7 +68,7 @@ const ProjectDetailPage: React.FC<PageProps> = ({ params }) => {
         <div className="text-sm text-zinc-400">{project.summary}</div>
       </div>
       <MarkdownViewerWithToc markdown={markdown} />
-    </div>
+    </DetailLayout>
   );
 };
 
