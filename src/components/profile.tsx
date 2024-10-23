@@ -13,21 +13,27 @@ export const Profile: React.FC = () => {
   return (
     <div className="flex flex-col gap-6">
       <AvatarIcon />
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-6">
         <div className="flex items-center gap-4 text-xl font-bold">hwld</div>
-        <div className="max-w-[700px] md:text-base">
-          カッコいいUIのWebアプリを作るのが趣味です。
-          <br />
-          Webフロントエンドの技術に最も長く触れてきましたが、バックエンドや運用、ソフトウェアアーキテクチャ、セキュリティなどのWebアプリ開発に関連する様々な分野に興味があり、調べたり試したりしています。これまで作ってきたものは
-          <span className="mx-1">
-            <TextLink href={Routes.projects()}>こちら</TextLink>
-          </span>
-          から見られます。
-          <br />
-          言語はTypeScriptが好きで、Webフロントエンド・バックエンドの両方で使用しています。
-          <br />
-          <br />
-          ご連絡はXのDMにてお願いします。
+        <div className="max-w-[700px] md:text-base space-y-3">
+          <p>かっこいいUIのWebアプリを作るのが好きなひとです。</p>
+          <p>
+            言語はTypeScriptが好きで、Webフロントエンド・バックエンドの両方で使用しています。
+          </p>
+          <p>
+            Webフロントエンドの技術に長く触れてきましたが、バックエンドや運用、ソフトウェアアーキテクチャ、セキュリティなどのWebアプリ開発に関連する様々な分野に興味があり、調べたり試したりしています。
+          </p>
+          <p>
+            これまでに調べてきたものは
+            <span className="mx-1">
+              <TextLink href={Routes.blog()}>こちら</TextLink>
+            </span>
+            から、作ってきたものは
+            <span className="mx-1">
+              <TextLink href={Routes.projects()}>こちら</TextLink>
+            </span>
+            から見られます。
+          </p>
         </div>
         <div className="space-y-2">
           <ProfileBasicInfo icon={TbBalloon} title="誕生日">
