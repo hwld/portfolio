@@ -28,4 +28,9 @@ export const posts: Post[] = [
     slug: "b-tree-index-kanzenni-rikai-shita",
     createdAt: new Date("2024/10/16"),
   },
+  {
+    title: "RDBの同時実行制御をまとめる",
+    slug: "rdb-concurrency-control-overview",
+    createdAt: new Date("2024/10/24"),
+  },
 ];
