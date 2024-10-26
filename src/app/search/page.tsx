@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 const SearchPage: React.FC = () => {
   return (
-    <SummaryLayout pageTitle="ページ検索" pageSubTitle="search">
+    <SummaryLayout pageTitle="ページ検索" pageSubTitle="search" hideAvatar>
       <Suspense>
         <SearchPageContent />
       </Suspense>

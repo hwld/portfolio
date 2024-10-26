@@ -17,7 +17,7 @@ export const Navbar: React.FC = () => {
   return (
     <AnimatePresence mode="popLayout">
       <motion.div
-        className={"fixed bottom-6 left-[50vw] flex gap-2"}
+        className={"fixed bottom-6 left-[50vw] flex gap-2 select-none"}
         key={String(isMobile)}
         initial={{ opacity: 0, y: 10, x: "-50%" }}
         animate={{ opacity: 1, y: 0, x: "-50%" }}

@@ -9,6 +9,8 @@ type Props = {
   pageTitle: string;
   pageSubTitle: string;
   pageDescription?: ReactNode;
+
+  hideAvatar?: boolean;
 };
 
 export const SummaryLayout: React.FC<Props> = ({
@@ -16,10 +18,11 @@ export const SummaryLayout: React.FC<Props> = ({
   pageTitle,
   pageSubTitle,
   pageDescription,
+  hideAvatar,
 }) => {
   return (
     <BaseLayout>
-      <AvatarIconLink />
+      {hideAvatar ? null : <AvatarIconLink />}
       <div className="flex flex-col gap-10">
         <div className="flex flex-col gap-2">
           <h1 className="flex flex-col gap-1">

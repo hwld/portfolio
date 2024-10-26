@@ -7,7 +7,7 @@ export const BaseLayout: React.FC<Props> = ({ children, width = "wide" }) => {
   return (
     <div
       className={clsx(
-        "relative pt-14 pb-32 m-auto px-6 md:px-12 min-h-[100dvh] max-w-[1000px]"
+        "relative pt-8 pb-32 m-auto px-6 md:pt-14 md:px-12 min-h-[100dvh] max-w-[1000px]"
       )}
     >
       <div
