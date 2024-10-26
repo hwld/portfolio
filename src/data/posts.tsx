@@ -24,7 +24,7 @@ export const posts: Post[] = [
     createdAt: new Date("2024/10/1"),
   },
   {
-    title: "RDBのB-treeインデックスについてまとめる",
+    title: "RDBのB-treeインデックスと共にあらんことを",
     slug: "b-tree-index-kanzenni-rikai-shita",
     createdAt: new Date("2024/10/16"),
   },

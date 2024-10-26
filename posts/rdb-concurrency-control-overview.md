@@ -1,14 +1,21 @@
 
-データベースには、トランザクションとACID特性、ロック、アノマリーとトランザクション分離レベルなどの概念がありますが、
+データベースには、トランザクション、ACID特性、ロック、アノマリー、トランザクション分離レベルなどの多くの概念がありますが、
 それらがどのように関連しているかについて考えたことがありませんでした。
 
 この投稿は、RDBの同時実行制御という観点からそれらの概念を自分の理解のためにまとめたものです。
-トランザクション分離レベルについて詳しく整理されている[スライド](https://speakerdeck.com/mpyw/postgres-niokerutoranzakusiyonfen-li-reberu)と[記事](https://zenn.dev/mpyw/articles/rdb-transaction-isolations#postgres)の内容をベースにしています。
+トランザクション分離レベルについて詳しく整理されている[スライド](https://speakerdeck.com/mpyw/postgres-niokerutoranzakusiyonfen-li-reberu)と[記事](https://zenn.dev/mpyw/articles/rdb-transaction-isolations)の内容をベースにしています。
 
 ## RDBの同時実行制御の概要
 
-ここでは、RDBの同時実行制御はなぜ必要なのか、どのように実現されているかの概要をまとめています。
+ここでは、RDBの同時実行制御とはなにか、なぜ必要なのか、どのように実現されているかの概要をまとめています。
 具体的には、同時実行制御の観点から、トランザクション、ACID特性、ロック、アノマリー、トランザクション分離レベル、MVCCについて簡単にまとめています。
+
+### RDBの同時実行制御とは
+
+RDBにおける同時実行制御・並行制御 (Concurrency Control) とは、**複数のトランザクションを効率的に処理しつつ、データの整合性を保つための技術**です。
+
+ここでの整合性とはデータに矛盾がないことを指します。
+具体的には、存在しないはずのデータを読み取ることや、前後で読み取ったデータが異なることがない状態を意味します。
 
 ### トランザクションと同時実行制御
 
@@ -76,7 +83,7 @@ ANSIが定義しているトランザクション分離レベルは以下のと�
   - 上記すべてのアノマリーが起こらない
 
 ANSIがこれらを定義したあとにも様々なアノマリーが見つかり、トランザクション分離レベルが更新されたり、新しい分離レベルが増えたのですが、
-この記事ではあまり深く掘り下げず、ANSIの定義に従ってまとめていきます。
+この投稿ではあまり深く掘り下げず、ANSIの定義に従ってまとめていきます。
 
 ### MVCCによるスナップショット参照
 
@@ -226,9 +233,9 @@ SnapshotDataは以下のような値を持っており、データの可視性�
 
 xminとxmaxがレコードとSnapshotData両方に存在して紛らわしいので、レコードにあるものはxmin列・xmax列と呼びます。
 
-SnapshotDataとレコードのxmin・xmax、CLOGを以下のように比較することで、SnapshotDataを作成した時点の可視性を判定できます。
+SnapshotDataとレコードのxmin・xmax、CLOGを比較することで、SnapshotDataを作成した時点の可視性を判定できます。
 **xmin列**の可視性がある場合にはレコードが**見える**、**xmax列**の可視性がある場合にはレコードが**見えない**ことになります。
-以下は、一つのXIDの可視性があるかを判定する流れです。
+以下は、一つのXIDの可視性を判定する流れです。
 
 1. XIDが自身のトランザクションのIDと一致していれば可視
 2. XIDがxmax以上なら不可視
@@ -251,8 +258,22 @@ Visibility Mapの更新が行われず、テーブルアクセスが増えてし
 
 データベースに出てくる様々な概念を調べ、同時実行制御の観点からまとめました。
 
-同時実行制御の基本は、「**ロックによって整合性は確保できるものの、パフォーマンスが低下するため、可能な限りロックを最小限にする必要がある**」というところにあると感じています。
+RDBの同時実行制御の出発点は、「**ロックによって整合性は確保できるものの、パフォーマンスが低下するため、可能な限りロックを最小限にする必要がある**」というところにあると感じています。
 2PLでは遅いということでトランザクション分離レベルが策定され、ロックを行わないMVCCによる参照が使われているところからそう感じました。
 
 現代のRDBMSでは、製品ごとに異なる実装アプローチが採用されており、SQLやトランザクション分離レベル毎に挙動が異なっています。
-ここでまとめた知識が、実際のデータベース運用で発生する同時実行制御の問題解決の足がかりになってほしいです。
+ここでまとめた知識が、実際のデータベース運用で発生する同時実行制御の問題解決の足がかりになることを期待しています。
+
+## 参考資料
+
+- [MySQL 8.0　リファレンスマニュアル](https://dev.mysql.com/doc/refman/8.0/ja/)
+- [PostgreSQL 16.4文書](https://www.postgresql.jp/document/16/html/)
+- [一人トランザクション技術 Advent Calendar 2016](https://qiita.com/advent-calendar/2016/transaction)
+- [MySQL/Postgres におけるトランザクション分離レベル](https://speakerdeck.com/mpyw/postgres-niokerutoranzakusiyonfen-li-reberu)
+- [MySQL/Postgres におけるトランザクション分離レベルと発生するアノマリーを整理する](https://zenn.dev/mpyw/articles/rdb-transaction-isolations)
+- [日本MySQLユーザ会会(MyNA会) 2021年03月 - Dive into InnoDB MVCC](https://www.youtube.com/watch?t=4135&v=ImC_aGW7zD0&feature=youtu.be)
+- [MVCCとInnoDBでの実装について](https://shallow1729.hatenablog.com/entry/2021/05/17/212613)
+- [InnoDBのMVCCのガベージコレクションについて](https://shallow1729.hatenablog.com/entry/2021/07/23/090911)
+- [Inside PostgreSQL Kernel - MVCCとストレージ構造](https://www.postgresqlinternals.org/chapter4/)
+- [PostgreSQL のトランザクション & MVCC & スナップショットの仕組み](https://www.nminoru.jp/~nminoru/postgresql/pg-transaction-mvcc-snapshot.html)
+- [PostgreSQLのMVCCとガベージコレクション（Vacuum）](https://masahikosawada.github.io/2021/12/22/MVCC-and-GC-in-PostgreSQL/)
