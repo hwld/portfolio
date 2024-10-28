@@ -12,7 +12,7 @@ import {
 import { TbChevronDown } from "@react-icons/all-files/tb/TbChevronDown";
 import clsx from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
-import { useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 
 type Props = { children: ReactNode };
 
@@ -40,21 +40,53 @@ export const MobileTocButton: React.FC<Props> = ({ children }) => {
     dismiss,
   ]);
 
+  const [displayButton, setDisplayButton] = useState(true);
+
+  const lastScrollY = useRef(0);
+  useEffect(() => {
+    const handleScroll = () => {
+      // 上にスクロールしたら表示
+      if (window.scrollY < lastScrollY.current) {
+        setDisplayButton(true);
+      }
+
+      // 下にスクロールしたら非表示
+      if (window.scrollY > lastScrollY.current && !isOpen) {
+        setDisplayButton(false);
+      }
+
+      lastScrollY.current = window.scrollY;
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [isOpen]);
+
   return (
     <>
-      <button
-        ref={refs.setReference}
-        {...getReferenceProps()}
-        className="h-8 bg-zinc-800 border border-zinc-500 px-2 rounded grid place-items-center grid-cols-[auto_1fr] items-center gap-1 text-zinc-300"
-      >
-        <span className="text-sm">目次</span>
-        <TbChevronDown
-          className={clsx(
-            "size-5 transition-transform mt-[2px]",
-            isOpen ? "rotate-180" : ""
-          )}
-        />
-      </button>
+      <AnimatePresence initial={false}>
+        {displayButton ? (
+          <motion.button
+            ref={refs.setReference}
+            {...getReferenceProps()}
+            className="h-8 bg-zinc-800 border border-zinc-500 px-2 rounded grid place-items-center grid-cols-[auto_1fr] items-center gap-1 text-zinc-300"
+            initial={{ opacity: 0, y: -5 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -5 }}
+            transition={{ duration: 0.2 }}
+          >
+            <span className="text-sm mb-[2px]">目次</span>
+            <TbChevronDown
+              className={clsx(
+                "size-5 transition-transform mt-[2px]",
+                isOpen ? "-rotate-180" : ""
+              )}
+            />
+          </motion.button>
+        ) : null}
+      </AnimatePresence>
       <AnimatePresence>
         {isOpen ? (
           <FloatingPortal>
@@ -69,7 +101,7 @@ export const MobileTocButton: React.FC<Props> = ({ children }) => {
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.1 }}
+                  transition={{ duration: 0.2 }}
                 >
                   {children}
                 </motion.div>
