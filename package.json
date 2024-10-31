@@ -29,6 +29,7 @@
     "react": "^18",
     "react-dom": "^18",
     "rehype-slug": "^6.0.0",
+    "remark-gfm": "^4.0.0",
     "tailwind-variants": "^0.2.1",
     "unist-util-visit": "^5.0.0"
   },

@@ -6,6 +6,7 @@ import { jsx, jsxs } from "react/jsx-runtime";
 import remarkParse from "remark-parse";
 import remarkCallout from "@r4ai/remark-callout";
 import remarkRehype from "remark-rehype";
+import remarkGfm from "remark-gfm";
 import { unified } from "unified";
 import { CodeCopyButton } from "./code-copy-button";
 import { TbUserCircle } from "@react-icons/all-files/tb/TbUserCircle";
@@ -19,6 +20,7 @@ type Props = { children: string; id?: string };
 export const MarkdownViewer: React.FC<Props> = async ({ children, id }) => {
   const processor = unified()
     .use(remarkParse)
+    .use(remarkGfm)
     .use(remarkCallout)
     .use(remarkRehype)
     .use(rehypeSlug, { prefix: HEADING_ID_PREFIX })
