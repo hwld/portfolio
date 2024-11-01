@@ -11,6 +11,7 @@ import { unified } from "unified";
 import { CodeCopyButton } from "./code-copy-button";
 import { TbUserCircle } from "@react-icons/all-files/tb/TbUserCircle";
 import { TbInfoCircle } from "@react-icons/all-files/tb/TbInfoCircle";
+import { TbAlertTriangle } from "@react-icons/all-files/tb/TbAlertTriangle";
 import rehypeSlug from "rehype-slug";
 import { HEADING_ID_PREFIX, rehypeAddPrevHeadingId } from "@/lib/unified";
 import { tv, type VariantProps } from "tailwind-variants";
@@ -122,6 +123,10 @@ const CalloutTitle = ({
     return (
       <TbInfoCircle className="mt-[2px] size-6 text-blue-300" {...props} />
     );
+  }
+
+  if (children === "Warning") {
+    return <TbAlertTriangle className="mt-[3px] size-6 text-orange-300" />;
   }
 
   return null;
