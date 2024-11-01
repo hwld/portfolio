@@ -29,7 +29,7 @@ export const projects = [
     imageSrc: "/screenshots/aluep.png",
     tagLabels: ["TypeScript", "Next.js", "Prisma", "NextAuth", "Mantine"],
     createdAt: new Date("2022/11/8"),
-    projectUrl: "https://aluep-rx7ks4nz3a-an.a.run.app/",
+    projectUrl: "https://aluep.vercel.app/",
     githubUrl: "https://github.com/hwld/aluep",
   },
   {
@@ -277,7 +277,7 @@ export const featuredProjects = projects
               Runを使っているのですが、コールドスタートのため初回起動に十数秒かかってしまいます。
             </>
           ),
-          projectSrc: "https://aluep-rx7ks4nz3a-an.a.run.app/",
+          projectSrc: "https://aluep.vercel.app/",
         };
       }
       case "evodo/openapi": {
