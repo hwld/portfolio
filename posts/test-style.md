@@ -27,7 +27,8 @@ Header6のセクション
 
 ## リンク
 
-[example](https://example.com)
+[外部リンク](https://example.com)  
+[ハッシュリンク](#コードブロック)
 
 ## 画像
 

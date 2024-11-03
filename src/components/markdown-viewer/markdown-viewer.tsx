@@ -15,6 +15,7 @@ import { TbAlertTriangle } from "@react-icons/all-files/tb/TbAlertTriangle";
 import rehypeSlug from "rehype-slug";
 import { HEADING_ID_PREFIX, rehypeAddPrevHeadingId } from "@/lib/unified";
 import { tv, type VariantProps } from "tailwind-variants";
+import Link from "next/link";
 
 type Props = { children: string; id?: string };
 
@@ -253,15 +254,24 @@ const H6 = (props: ComponentPropsWithoutRef<"h4">) => {
 };
 
 const A = ({ children, href }: ComponentPropsWithoutRef<"a">) => {
-  return (
-    <a
-      href={href}
-      target="_blank"
-      className="text-sky-400 underline underline-offset-2"
-    >
-      {children}
-    </a>
-  );
+  const className = "text-sky-400 underline underline-offset-2";
+
+  if (href?.startsWith("#")) {
+    return (
+      <Link
+        href={`#${HEADING_ID_PREFIX}${href.split("#")[1]}`}
+        className={className}
+      >
+        {children}
+      </Link>
+    );
+  } else {
+    return (
+      <a href={href} target="_blank" className={className}>
+        {children}
+      </a>
+    );
+  }
 };
 
 const Img = ({ src, alt }: ComponentPropsWithoutRef<"img">) => {
