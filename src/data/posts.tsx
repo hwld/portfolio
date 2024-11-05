@@ -33,4 +33,9 @@ export const posts: Post[] = [
     slug: "rdb-concurrency-control-overview",
     createdAt: new Date("2024/10/24"),
   },
+  {
+    title: "Next.js コールドスタート問題の調査記録",
+    slug: "nextjs-cold-start",
+    createdAt: new Date("2024/11/04"),
+  },
 ];

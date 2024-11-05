@@ -29,7 +29,7 @@ export const projects = [
     imageSrc: "/screenshots/aluep.png",
     tagLabels: ["TypeScript", "Next.js", "Prisma", "NextAuth", "Mantine"],
     createdAt: new Date("2022/11/8"),
-    projectUrl: "https://aluep.vercel.app/",
+    projectUrl: "https://aluep-rx7ks4nz3a-an.a.run.app/",
     githubUrl: "https://github.com/hwld/aluep",
   },
   {
@@ -274,10 +274,10 @@ export const featuredProjects = projects
               そこそこの規模のWebアプリケーションの開発がしたくて作りました。
               <br />
               Cloud
-              Runを使っているのですが、コールドスタートのため初回起動に十数秒かかってしまいます。
+              Runを使っているのですが、コールドスタートのためレスポンスに数秒かかることがあります。
             </>
           ),
-          projectSrc: "https://aluep.vercel.app/",
+          projectSrc: project.projectUrl,
         };
       }
       case "evodo/openapi": {
@@ -292,7 +292,7 @@ export const featuredProjects = projects
               フロントエンドとバックエンドでドメインが異なっており、ブラウザによってはログイン状態が維持されないかもしれません。
             </>
           ),
-          projectSrc: "https://evodo-openapi.pages.dev/",
+          projectSrc: project.projectUrl,
         };
       }
       case "zero-one-ui": {
@@ -307,7 +307,7 @@ export const featuredProjects = projects
               `/`キーで表示されるメニューのUIがお気に入りです。
             </>
           ),
-          projectSrc: "https://zero-one-ui.web.app/",
+          projectSrc: project.projectUrl,
         };
       }
       default: {

@@ -37,7 +37,7 @@ export const MarkdownViewer: React.FC<Props> = async ({ children, id }) => {
   const hast = await processor.run(mdast, children);
 
   return (
-    <div id={id} className="text-base [&>*:first-child]:!mt-0">
+    <div id={id} className="text-base [&>*:first-child]:!mt-0 break-all">
       {toJsxRuntime(hast, {
         Fragment: Fragment,
         // @ts-ignore
@@ -254,7 +254,7 @@ const H6 = (props: ComponentPropsWithoutRef<"h4">) => {
 };
 
 const A = ({ children, href }: ComponentPropsWithoutRef<"a">) => {
-  const className = "text-sky-400 underline underline-offset-2";
+  const className = "text-sky-400 underline underline-offset-2 mx-1";
 
   if (href?.startsWith("#")) {
     return (
