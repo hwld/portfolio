@@ -36,6 +36,6 @@ export const posts: Post[] = [
   {
     title: "Next.js コールドスタート問題の調査記録",
     slug: "nextjs-cold-start",
-    createdAt: new Date("2024/11/04"),
+    createdAt: new Date("2024/11/06"),
   },
 ];
