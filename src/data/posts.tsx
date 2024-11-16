@@ -38,4 +38,9 @@ export const posts: Post[] = [
     slug: "nextjs-cold-start",
     createdAt: new Date("2024/11/06"),
   },
+  {
+    title: "Reactのrender関数とコンポーネントの違い",
+    slug: "diff-render-function-and-component",
+    createdAt: new Date("2024/11/16"),
+  },
 ];
