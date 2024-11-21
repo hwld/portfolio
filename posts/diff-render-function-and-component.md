@@ -163,15 +163,16 @@ Reactでは`useCallback`を使って関数をメモ化することもできま�
 しかし、`Counter`関数がレンダリングのたびに異なっているにもかかわらず、render関数では`SlowMount`がアンマウントされません。
 
 render関数で`SlowMount`がアンマウントされないのは、アンマウントやマウントがコンポーネントに固有のものだからです。
-`SlowMount`がアンマウントされたのは、親である`Counter`コンポーネントがアンマウントされたからで、`Counter`関数自体にはマウントもアンマウントもありません。
-ReactはJSXの`<Counter />`という記法でコンポーネントを生成し、コンポーネントだけにマウントやアンマウントなどを行います。
-また、コンポーネントを生成する方法としては、JSXの他に`createElement`もあります。
+`SlowMount`がアンマウントされたのは、親である`Counter`コンポーネントがアンマウントされたからで、render関数としての`Counter`にはマウントもアンマウントもありません。
+
+ReactはJSXの`<Counter />`という記法や`createElement`関数によってコンポーネントからReact要素を生成し、最終的に画面に描画されます。
+コンポーネント以外でも、`div`や`p`などのHTMLタグからReact要素を生成し、画面に描画することもできます。
 
 > [!info]
 > JSXである`<Component />`というコードは、TypeScriptやBabelといったツールによって`_jsx(Component, ...)`というコードに変換されます。
 > React 17以前では上にある`createElement`が使われていましたが、[パフォーマンス改善や簡略化](https://github.com/reactjs/rfcs/blob/createlement-rfc/text/0000-create-element-changes.md#motivation)のために`_jsx`が使われるようになりました。
 
-`Counter()`でコンポーネントは生成されず、`Counter`関数内部にあるJSXがコンポーネントとして生成されます。
+`Counter()`と呼び出す場合、`Counter`関数はコンポーネントではないので、`Counter`関数内部にあるJSXがReact要素として生成されます。
 `SlowMount`はトップレベルで作られた関数なのでレンダリング間で同一であり、`App`コンポーネントが再レンダリングされてもアンマウントされません。
 
 ## まとめ
