@@ -46,6 +46,6 @@ export const posts: Post[] = [
   {
     title: "OAuthとOIDCを認証の観点でまとめる",
     slug: "oauth-oidc",
-    createdAt: new Date("2024/11/24"),
+    createdAt: new Date("2024/11/26"),
   },
 ];
