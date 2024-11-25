@@ -167,7 +167,7 @@ Reactでは`useCallback`を使って関数をメモ化することもできま�
 render関数で`SlowMount`がアンマウントされないのは、アンマウントやマウントがコンポーネントに固有のものだからです。
 `SlowMount`がアンマウントされたのは、親である`Counter`コンポーネントがアンマウントされたからで、render関数としての`Counter`にはマウントもアンマウントもありません。
 
-ReactはJSXの`<Counter />`という記法や`createElement`関数によってコンポーネントからReact要素を生成し、最終的に画面に描画されます。
+ReactはJSXの`<Counter />`という記法や`createElement`関数によってコンポーネントからReact要素を生成し、最終的に画面に描画します。
 コンポーネント以外でも、`div`や`p`などのHTMLタグからReact要素を生成し、画面に描画することもできます。
 
 > [!info]

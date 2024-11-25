@@ -43,4 +43,9 @@ export const posts: Post[] = [
     slug: "diff-render-function-and-component",
     createdAt: new Date("2024/11/16"),
   },
+  {
+    title: "OAuthとOIDCを認証の観点でまとめる",
+    slug: "oauth-oidc",
+    createdAt: new Date("2024/11/24"),
+  },
 ];
