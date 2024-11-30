@@ -48,4 +48,9 @@ export const posts: Post[] = [
     slug: "oauth-oidc",
     createdAt: new Date("2024/11/26"),
   },
+  {
+    title: "Webサーバーアーキテクチャをまとめる",
+    slug: "web-server-architecture",
+    createdAt: new Date("2024/11/29"),
+  },
 ];
