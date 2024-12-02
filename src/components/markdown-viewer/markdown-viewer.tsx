@@ -282,7 +282,7 @@ const Img = ({ src, alt }: ComponentPropsWithoutRef<"img">) => {
 const Ul = ({ children }: PropsWithChildren) => {
   return (
     <ul
-      className="pl-5 list-disc marker:text-zinc-500 group group-has-[ul]:!mt-0"
+      className="pl-5 list-disc marker:text-zinc-500 group group-has-[ul]:!mt-0 group-has-[ol]:!mt-0"
       style={{ marginTop: defaultMargin }}
     >
       {children}
@@ -293,7 +293,7 @@ const Ul = ({ children }: PropsWithChildren) => {
 const Ol = ({ children }: PropsWithChildren) => {
   return (
     <ol
-      className="list-decimal marker:text-zinc-400 pl-5"
+      className="list-decimal marker:text-zinc-400 pl-5 group group-has-[ol]:!mt-0 group-has-[ul]:!mt-0"
       style={{ marginTop: defaultMargin }}
     >
       {children}
