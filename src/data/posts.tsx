@@ -50,7 +50,7 @@ export const posts: Post[] = [
   },
   {
     title: "Webサーバーアーキテクチャをまとめる",
-    slug: "web-server-architecture",
+    slug: "web-server-arch",
     createdAt: new Date("2024/11/29"),
   },
 ];
