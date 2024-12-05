@@ -35,6 +35,7 @@ export const TocContextProvider: React.FC<
 > = ({ contentId, children }) => {
   const [activeLink, setActiveLink] = useState<string | undefined>();
 
+  // スクロール状態の変更
   const isScrollingRef = useRef(false);
   useEffect(() => {
     const handleScroll = () => {
@@ -54,6 +55,7 @@ export const TocContextProvider: React.FC<
     };
   }, []);
 
+  // スクロールに応じてアクティブなリンクの変更
   useEffect(() => {
     const content = document.querySelector(`#${contentId}`);
     if (!content) {
@@ -74,6 +76,7 @@ export const TocContextProvider: React.FC<
           if (!entry.isIntersecting && entry.boundingClientRect.top < 0) {
             // headingが上から外に出ていった場合はリンクをアクティブにする
             setActiveLink(headingHref);
+            scrollTocAnchorIntoView(headingHref);
             return;
           }
 
@@ -81,11 +84,13 @@ export const TocContextProvider: React.FC<
             // headingが下から外に出ていった場合は前のリンクをアクティブにする
             const prevId = entry.target.getAttribute(DATA_PREV_HEADING_ID);
             if (!prevId) {
+              setActiveLink("");
               return;
             }
 
             const prevHeadingHref = `#${encodeURIComponent(prevId)}`;
             setActiveLink(prevHeadingHref);
+            scrollTocAnchorIntoView(prevHeadingHref);
             return;
           }
         });
@@ -102,6 +107,7 @@ export const TocContextProvider: React.FC<
     };
   }, [contentId]);
 
+  // リンクのクリックでアクティブなリンクを変更
   useEffect(() => {
     const handleHashChange = () => {
       setActiveLink(window.location.hash);
@@ -126,6 +132,8 @@ export const TocContextProvider: React.FC<
   );
 };
 
+const tocAnchorClass = "toc-anchor";
+
 export const Anchor = (props: ComponentPropsWithoutRef<"a">) => {
   const { activeLink } = useToc();
   const isActive = activeLink === props.href;
@@ -133,10 +141,23 @@ export const Anchor = (props: ComponentPropsWithoutRef<"a">) => {
   return (
     <a
       className={clsx(
+        tocAnchorClass,
         "min-h-8 py-1 px-2 flex rounded items-center hover:bg-white/20 transition-colors break-all text-sm my-1",
         isActive ? "text-sky-400" : ""
       )}
       {...props}
     />
   );
+};
+
+// ToCのリンクが見えるようにスクロールする
+const scrollTocAnchorIntoView = (href: string) => {
+  const anchorElement = document.querySelector(
+    `.${tocAnchorClass}[href='${href}']`
+  );
+
+  anchorElement?.scrollIntoView({
+    behavior: "smooth",
+    block: "nearest",
+  });
 };

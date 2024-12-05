@@ -8,20 +8,14 @@ type Props = { hast: Root };
 
 // tocbotを使用するとビルド時にレンダリングできないので、unifiedを使って実装する
 export const Toc: React.FC<Props> = async ({ hast }) => {
-  return (
-    <div className="sticky top-4 h-fit p-4 rounded-lg bg-zinc-800 border border-zinc-700 shadow-xl w-full">
-      <p className="text-sm text-zinc-400">目次</p>
-      <div className="w-full h-[1px] bg-zinc-600 my-2" />
-      {toJsxRuntime(hast, {
-        Fragment,
-        // @ts-ignore
-        jsx,
-        // @ts-ignore
-        jsxs,
-        components: { ul: Ul, a: Anchor },
-      })}
-    </div>
-  );
+  return toJsxRuntime(hast, {
+    Fragment,
+    // @ts-ignore
+    jsx,
+    // @ts-ignore
+    jsxs,
+    components: { ul: Ul, a: Anchor },
+  });
 };
 
 const Ul = (props: ComponentPropsWithoutRef<"ul">) => {

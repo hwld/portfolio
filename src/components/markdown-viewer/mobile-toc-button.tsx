@@ -8,11 +8,14 @@ import {
   FloatingPortal,
   offset,
   FloatingOverlay,
+  size,
 } from "@floating-ui/react";
 import { TbChevronDown } from "@react-icons/all-files/tb/TbChevronDown";
 import clsx from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import { flushSync } from "react-dom";
+import { mobileToCAvailableHeight } from "./mobile-toc";
 
 type Props = { children: ReactNode };
 
@@ -25,11 +28,22 @@ export const MobileTocButton: React.FC<Props> = ({ children }) => {
     }
   };
 
+  const [availableHeight, setAvailableHeight] = useState("0px");
+
   const { refs, floatingStyles, context } = useFloating({
     open: isOpen,
     onOpenChange: setIsOpen,
     placement: "bottom-end",
-    middleware: [offset(8)],
+    middleware: [
+      offset(8),
+      size({
+        apply: ({ availableHeight }) => {
+          flushSync(() => {
+            setAvailableHeight(`${availableHeight}px`);
+          });
+        },
+      }),
+    ],
   });
 
   const click = useClick(context);
@@ -94,7 +108,11 @@ export const MobileTocButton: React.FC<Props> = ({ children }) => {
               <div
                 ref={refs.setFloating}
                 {...getFloatingProps()}
-                style={floatingStyles}
+                style={{
+                  ...floatingStyles,
+                  maxHeight: availableHeight,
+                  [mobileToCAvailableHeight as string]: availableHeight,
+                }}
               >
                 <motion.div
                   onClick={handleClickAnchor}
@@ -102,6 +120,7 @@ export const MobileTocButton: React.FC<Props> = ({ children }) => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.2 }}
+                  className="h-full"
                 >
                   {children}
                 </motion.div>

@@ -1,8 +1,8 @@
 import { getTocHAst } from "@/lib/unified";
 import { MarkdownViewer } from "./markdown-viewer";
-import { MobileTocButton } from "./mobile-toc-button";
-import { Toc } from "./toc";
 import { TocContextProvider } from "./toc-provider";
+import { DesktopToc } from "./desktop-toc";
+import { MobileToc } from "./mobile-toc";
 
 type Props = { markdown: string };
 
@@ -17,14 +17,10 @@ export const MarkdownViewerWithToc: React.FC<Props> = async ({ markdown }) => {
       <MarkdownViewer id={viewerId}>{markdown}</MarkdownViewer>
       <TocContextProvider contentId={viewerId}>
         <div className="hidden min-[1200px]:block">
-          {hasToc ? <Toc hast={tocHAst} /> : null}
+          {hasToc ? <DesktopToc hast={tocHAst} /> : null}
         </div>
         <div className="block min-[1200px]:hidden fixed top-4 right-4">
-          {hasToc ? (
-            <MobileTocButton>
-              <Toc hast={tocHAst} />
-            </MobileTocButton>
-          ) : null}
+          {hasToc ? <MobileToc hast={tocHAst} /> : null}
         </div>
       </TocContextProvider>
     </div>
