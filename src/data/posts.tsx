@@ -51,6 +51,6 @@ export const posts: Post[] = [
   {
     title: "Webサーバーの仕組みをまとめる",
     slug: "web-server-arch",
-    createdAt: new Date("2024/11/29"),
+    createdAt: new Date("2024/12/5"),
   },
 ];
