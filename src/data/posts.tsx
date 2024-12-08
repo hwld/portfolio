@@ -53,4 +53,9 @@ export const posts: Post[] = [
     slug: "web-server-arch",
     createdAt: new Date("2024/12/5"),
   },
+  {
+    title: "JavaScriptのイベントループをまとめる",
+    slug: "js-event-loop",
+    createdAt: new Date("2024/12/7"),
+  },
 ];
