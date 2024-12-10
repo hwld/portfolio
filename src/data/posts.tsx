@@ -56,6 +56,6 @@ export const posts: Post[] = [
   {
     title: "JavaScriptの実行メカニズムをまとめる",
     slug: "js-system",
-    createdAt: new Date("2024/12/7"),
+    createdAt: new Date("2024/12/10"),
   },
 ];
