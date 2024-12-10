@@ -54,8 +54,8 @@ export const posts: Post[] = [
     createdAt: new Date("2024/12/5"),
   },
   {
-    title: "JavaScriptのイベントループをまとめる",
-    slug: "js-event-loop",
+    title: "JavaScriptの実行メカニズムをまとめる",
+    slug: "js-system",
     createdAt: new Date("2024/12/7"),
   },
 ];
