@@ -58,4 +58,9 @@ export const posts: Post[] = [
     slug: "js-system",
     createdAt: new Date("2024/12/10"),
   },
+  {
+    title: "ブラウザがWebページを表示する流れをまとめる",
+    slug: "browser-rendering",
+    createdAt: new Date("2024/12/14"),
+  },
 ];
