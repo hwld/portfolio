@@ -19,6 +19,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ja" style={{ scrollbarGutter: "stable" }}>
+      <head>
+        <meta
+          name="google-site-verification"
+          content="8h0KC_lm97miN_H49N2-Nz7pWKYKYLtodBozWb6jACc"
+        />
+      </head>
       <PagefindProvider>
         <body
           className={`${noto.className} min-h-screen bg-zinc-900 text-zinc-300 font-light text-sm`}
