@@ -59,8 +59,8 @@ export const posts: Post[] = [
     createdAt: new Date("2024/12/10"),
   },
   {
-    title: "ブラウザがWebページを表示する流れをまとめる",
+    title: "ブラウザがWebページを表示する仕組みをまとめる",
     slug: "browser-rendering",
-    createdAt: new Date("2024/12/14"),
+    createdAt: new Date("2024/12/15"),
   },
 ];
