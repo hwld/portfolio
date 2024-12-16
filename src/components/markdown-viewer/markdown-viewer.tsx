@@ -1,7 +1,12 @@
 import rehypeShiki from "@shikijs/rehype";
 import clsx from "clsx";
 import { toJsxRuntime } from "hast-util-to-jsx-runtime";
-import { PropsWithChildren, ComponentPropsWithoutRef, Fragment } from "react";
+import {
+  PropsWithChildren,
+  ComponentPropsWithoutRef,
+  Fragment,
+  CSSProperties,
+} from "react";
 import { jsx, jsxs } from "react/jsx-runtime";
 import remarkParse from "remark-parse";
 import remarkCallout from "@r4ai/remark-callout";
@@ -26,7 +31,7 @@ export const MarkdownViewer: React.FC<Props> = async ({ children, id }) => {
     .use(remarkCallout)
     .use(remarkRehype)
     .use(rehypeSlug, { prefix: HEADING_ID_PREFIX })
-    .use(rehypeShiki, { theme: "nord", addLanguageClass: true })
+    .use(rehypeShiki, { theme: "github-dark-default", addLanguageClass: true })
     .use(rehypeAddPrevHeadingId);
 
   const mdast = processor.parse(children);
@@ -139,8 +144,11 @@ const CalloutBody = (props: ComponentPropsWithoutRef<"div">) => {
 
 const Pre = ({
   className,
+  style,
   ...props
-}: PropsWithChildren & { className?: string }) => {
+}: PropsWithChildren & { className?: string; style?: CSSProperties }) => {
+  const { backgroundColor: _, ...bgRemovedStyle } = style || {};
+
   return (
     <div
       className={clsx("relative group", className)}
@@ -148,7 +156,8 @@ const Pre = ({
     >
       <pre
         {...props}
-        className="px-5 py-6 rounded overflow-auto focus-visible:outline-none"
+        style={{ ...bgRemovedStyle }}
+        className="px-5 py-6 rounded overflow-auto focus-visible:outline-none border border-zinc-600 bg-zinc-800"
       />
     </div>
   );
@@ -168,11 +177,14 @@ const Code = ({
   return (
     <>
       {lang && (
-        <div className="text-xs absolute right-2 top-2 rounded text-zinc-400 select-none">
-          {lang}
-        </div>
+        <>
+          <div className="text-xs absolute right-2 top-2 rounded text-zinc-400 select-none">
+            {lang}
+          </div>
+          {/* codeブロックかをlangの有無で確認してる */}
+          <CodeCopyButton codeId={codeId} />
+        </>
       )}
-      <CodeCopyButton codeId={codeId} />
       <code
         id={codeId}
         className={clsx(
@@ -223,6 +235,7 @@ const Heading = ({
       <a
         className="relative w-0 h-6 before:bg-[url('/icons/link.svg')] before:contents-[''] before:absolute before:right-0 before:top-0 before:block before:pr-1 before:h-6 before:w-7 before:bg-center before:group-hover:opacity-100 before:opacity-0 before:bg-contain before:bg-no-repeat before:transition-opacity"
         href={href}
+        aria-label="見出しへのリンク"
       />
       {children}
     </HeadingComponent>

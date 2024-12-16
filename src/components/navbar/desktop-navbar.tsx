@@ -102,11 +102,13 @@ export const DesktopNavbar: React.FC = () => {
         })}
         <div className="ml-2 flex gap-1">
           <SocialLinkItem
+            label="Xへのリンク"
             icon={TbBrandX}
             href="https://x.com/016User"
             onPointerEnter={handlePointerEnterItem}
           />
           <SocialLinkItem
+            label="GitHubへのリンク"
             icon={TbBrandGithub}
             href="https://github.com/hwld"
             onPointerEnter={handlePointerEnterItem}

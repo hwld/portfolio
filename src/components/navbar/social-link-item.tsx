@@ -6,15 +6,18 @@ type Props = {
   icon: IconType;
   href: string;
   onPointerEnter?: PointerEventHandler;
+  label: string;
 };
 
 export const SocialLinkItem: React.FC<Props> = ({
   icon: Icon,
   href,
   onPointerEnter,
+  label,
 }) => {
   return (
     <a
+      aria-label={label}
       target="_blank"
       href={href}
       className={clsx(

@@ -19,7 +19,12 @@ export const SearchButton = forwardRef<HTMLButtonElement, Props>(
     const classes = searchButton();
 
     return (
-      <button ref={ref} {...props} className={classes.button()}>
+      <button
+        ref={ref}
+        {...props}
+        className={classes.button()}
+        aria-label="ページを検索"
+      >
         <TbSearch className={classes.icon()} />
       </button>
     );
