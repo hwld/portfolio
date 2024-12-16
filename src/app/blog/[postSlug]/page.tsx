@@ -29,7 +29,16 @@ export async function generateMetadata({
     throw new Error("投稿が存在しません");
   }
 
-  return { title: `${post.title} - hwld` };
+  const title = `${post.title} - hwld`;
+  return {
+    metadataBase: new URL("https://hwld00.web.app"),
+    title,
+    openGraph: {
+      type: "article",
+      title,
+      images: [`/images/ogp/${post.slug}.png`],
+    },
+  };
 }
 
 const PostDetailPage: React.FC<PageProps> = async ({ params }) => {
