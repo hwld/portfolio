@@ -13,7 +13,7 @@ export const ProjectCard: React.FC<Props> = ({ project }) => {
       <div className="space-y-2">
         <ProjectThumbnail src={project.imageSrc} interactive />
         <div className="space-y-1 p-2">
-          <div className="text-base font-medium">{project.title}</div>
+          <div className="text-base font-bold">{project.title}</div>
           <div>{project.summary}</div>
         </div>
       </div>

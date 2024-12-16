@@ -19,7 +19,9 @@ export const FeaturedProjectCard: React.FC<Props> = ({
       </Link>
       <div className="flex flex-col gap-4 justify-between">
         <div className="flex flex-col gap-4">
-          <TextLink href={Routes.project(slug)}>{title}</TextLink>
+          <TextLink href={Routes.project(slug)} className="text-lg">
+            {title}
+          </TextLink>
           <div>{desc}</div>
         </div>
         <div className="text-xs flex gap-1 items-center flex-wrap">

@@ -14,7 +14,7 @@ export const Profile: React.FC = () => {
     <div className="flex flex-col gap-6">
       <AvatarIcon />
       <div className="flex flex-col gap-6">
-        <div className="flex items-center gap-4 text-xl font-bold">hwld</div>
+        <div className="flex items-center gap-4 text-2xl font-bold">hwld</div>
         <div className="max-w-[700px] md:text-base space-y-3">
           <p>かっこいいUIのWebアプリを作るのが好きなひとです。</p>
           <p>

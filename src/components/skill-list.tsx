@@ -64,7 +64,7 @@ const SkillCard: React.FC<{ skill: Skill }> = ({
         height={80}
         alt={`${name}-logo`}
       />
-      <div className="font-medium flex items-center gap-1">
+      <div className="font-bold flex items-center gap-1">
         {name}
         <TbExternalLink size={14} className="text-zinc-400" />
       </div>

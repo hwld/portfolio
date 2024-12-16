@@ -59,10 +59,18 @@ const ProjectDetailPage: React.FC<PageProps> = ({ params }) => {
         </div>
         <div className="flex gap-2">
           {project.projectUrl && (
-            <IconLink icon={TbLink} href={project.projectUrl} />
+            <IconLink
+              label="成果物へのリンク"
+              icon={TbLink}
+              href={project.projectUrl}
+            />
           )}
           {project.githubUrl && (
-            <IconLink icon={TbBrandGithub} href={project.githubUrl} />
+            <IconLink
+              label="GitHubへのリンク"
+              icon={TbBrandGithub}
+              href={project.githubUrl}
+            />
           )}
         </div>
         <div className="text-sm text-zinc-400">{project.summary}</div>
@@ -74,13 +82,15 @@ const ProjectDetailPage: React.FC<PageProps> = ({ params }) => {
 
 export default ProjectDetailPage;
 
-const IconLink: React.FC<{ icon: IconType; href: string }> = ({
+const IconLink: React.FC<{ icon: IconType; href: string; label: string }> = ({
   href,
   icon: Icon,
+  label,
 }) => {
   return (
     <a
       target="_blank"
+      aria-label={label}
       href={href}
       className="size-7 grid place-items-center border border-zinc-500 rounded transition-colors hover:bg-zinc-700"
     >
