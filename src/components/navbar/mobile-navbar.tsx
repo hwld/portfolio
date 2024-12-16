@@ -72,10 +72,12 @@ export const MobileNavbar: React.FC = () => {
                   <p className="text-zinc-400">social link</p>
                   <div className="flex gap-2 items-center">
                     <SocialLinkItem
+                      label="Xへのリンク"
                       icon={TbBrandX}
                       href="https://x.com/016User"
                     />
                     <SocialLinkItem
+                      label="GitHubへのリンク"
                       icon={TbBrandGithub}
                       href="https://github.com/hwld"
                     />
