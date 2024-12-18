@@ -1,3 +1,5 @@
+export const appUrl = "https://hwld00.web.app";
+
 export const Routes = {
   home: () => `/` as const,
 

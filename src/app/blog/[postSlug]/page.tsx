@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { TbClock } from "@react-icons/all-files/tb/TbClock";
 import { MarkdownViewerWithToc } from "@/components/markdown-viewer/with-toc";
 import { DetailLayout } from "@/components/layout/detail-layout";
+import { appUrl } from "@/routes";
 
 type Params = { postSlug: string };
 
@@ -31,7 +32,7 @@ export async function generateMetadata({
 
   const title = `${post.title} - hwld`;
   return {
-    metadataBase: new URL("https://hwld00.web.app"),
+    metadataBase: new URL(appUrl),
     title,
     openGraph: {
       type: "article",
