@@ -64,7 +64,7 @@ export const posts: Post[] = [
     createdAt: new Date("2024/12/15"),
   },
   {
-    title: "運用を支えるオブザーバビリティの概要をまとめる",
+    title: "運用を支えるオブザーバビリティについてまとめる",
     slug: "o11y",
     createdAt: new Date("9999/1/1"),
   },
