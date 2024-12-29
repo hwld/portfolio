@@ -74,7 +74,7 @@ const BlogOgImage: React.FC<{ post: Post; avatar: string }> = ({
 };
 
 const generate = async ({ post, avatar }: { post: Post; avatar: string }) => {
-  const browser = await puppeteer.launch();
+  const browser = await puppeteer.launch({ args: ["--no-sandbox"] });
   const page = await browser.newPage();
   await page.setViewport({ width: 1200, height: 630 });
 
