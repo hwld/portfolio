@@ -2,7 +2,7 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
 import { Post, posts } from "@/data/posts";
-import { chromium } from "playwright";
+import puppeteer from "puppeteer";
 import { renderToStaticMarkup } from "react-dom/server";
 import { readFileSync } from "fs";
 import path from "path";
@@ -12,12 +12,15 @@ const BlogOgImage: React.FC<{ post: Post; avatar: string }> = ({
   avatar,
 }) => {
   return (
-    <html>
+    <html style={{ height: "100%" }}>
       <head>
         <style
           dangerouslySetInnerHTML={{
             __html: `
             @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@700&display=swap');
+            * {
+              box-sizing: border-box;
+            }
           `,
           }}
         />
@@ -35,15 +38,16 @@ const BlogOgImage: React.FC<{ post: Post; avatar: string }> = ({
           fontFamily: "Noto Sans JP",
           padding: "36px",
           display: "flex",
+          height: "100%",
         }}
       >
         <div
           style={{
+            display: "flex",
             width: "100%",
             backgroundColor: "var(--zinc-900)",
             borderRadius: "16px",
             padding: "36px",
-            display: "flex",
             flexDirection: "column",
             gap: "36px",
             boxShadow:
@@ -70,15 +74,15 @@ const BlogOgImage: React.FC<{ post: Post; avatar: string }> = ({
 };
 
 const generate = async ({ post, avatar }: { post: Post; avatar: string }) => {
-  const browser = await chromium.launch();
-  const page = await browser.newPage({
-    viewport: { width: 1200, height: 630 },
-  });
+  const browser = await puppeteer.launch();
+  const page = await browser.newPage();
+  await page.setViewport({ width: 1200, height: 630 });
 
   const markup = renderToStaticMarkup(
     <BlogOgImage post={post} avatar={avatar} />
   );
-  await page.setContent(markup, { waitUntil: "load" });
+  const fullHtml = `<!DOCTYPE html>${markup}`;
+  await page.setContent(fullHtml, { waitUntil: "load" });
   await page.screenshot({ path: `./public/images/ogp/${post.slug}.png` });
 
   await browser.close();
