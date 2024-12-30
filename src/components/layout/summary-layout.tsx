@@ -5,6 +5,7 @@ import { TbHash } from "@react-icons/all-files/tb/TbHash";
 
 type Props = {
   children: ReactNode;
+  width?: "wide" | "narrow";
 
   pageTitle: string;
   pageSubTitle: string;
@@ -15,13 +16,14 @@ type Props = {
 
 export const SummaryLayout: React.FC<Props> = ({
   children,
+  width,
   pageTitle,
   pageSubTitle,
   pageDescription,
   hideAvatar,
 }) => {
   return (
-    <BaseLayout>
+    <BaseLayout width={width}>
       {hideAvatar ? null : <AvatarIconLink />}
       <div className="flex flex-col gap-10">
         <div className="flex flex-col gap-2">

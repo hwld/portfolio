@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function BlogPage() {
   return (
-    <SummaryLayout pageSubTitle="blog" pageTitle="ブログ">
+    <SummaryLayout width="narrow" pageSubTitle="blog" pageTitle="ブログ">
       <div className="grid w-full grid-cols-1 gap-4">
         {[...posts]
           .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
