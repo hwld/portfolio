@@ -68,4 +68,9 @@ export const posts: Post[] = [
     slug: "o11y",
     createdAt: new Date("2024/12/25"),
   },
+  {
+    title: "「処理の状況を伝える」Webフロントエンド",
+    slug: "frontend-feedback",
+    createdAt: new Date("2024/12/31"),
+  },
 ];
