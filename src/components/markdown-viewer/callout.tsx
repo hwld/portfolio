@@ -24,10 +24,11 @@ export type CalloutDivProps = {
 /**
  *  コールアウト関連のdiv要素であればそれを返す。それ以外はnullを返す。
  */
-export const MaybeCalloutRelatedDiv = (
-  props: ComponentPropsWithoutRef<"div"> &
-    CalloutDivProps & { defaultMargin: string }
-) => {
+export const MaybeCalloutRelatedDiv = ({
+  defaultMargin,
+  ...props
+}: ComponentPropsWithoutRef<"div"> &
+  CalloutDivProps & { defaultMargin: string }) => {
   // コールアウトのルート要素
   if (props["data-callout-type"]) {
     if (!isCalloutType(props["data-callout-type"])) {
@@ -40,7 +41,7 @@ export const MaybeCalloutRelatedDiv = (
       <Callout
         {...props}
         type={props["data-callout-type"]}
-        defaultMargin={props.defaultMargin}
+        defaultMargin={defaultMargin}
       />
     );
   }
