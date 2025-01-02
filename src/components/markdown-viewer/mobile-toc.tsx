@@ -1,20 +1,25 @@
+"use client";
 import { type Root } from "hast";
 import { MobileTocButton } from "./mobile-toc-button";
 import { Toc } from "./toc";
+import { useMediaQuery } from "@mantine/hooks";
 
-type Props = { hast: Root };
+type Props = { hAst: Root; mobileBreakPointPx: number };
 
 export const mobileToCAvailableHeight = "--mobile-toc-available-height";
 export const mobileToCAvailableWidth = "--mobile-toc-available-width";
 
-export const MobileToc: React.FC<Props> = async ({ hast }) => {
+export const MobileToc: React.FC<Props> = ({ hAst, mobileBreakPointPx }) => {
   const margin = "16px";
+  const isMobile =
+    useMediaQuery(`(max-width: ${mobileBreakPointPx}px)`) ?? false;
+
+  if (!isMobile) {
+    return null;
+  }
 
   return (
-    <div
-      className="block min-[1200px]:hidden fixed"
-      style={{ top: margin, right: margin }}
-    >
+    <div className="fixed" style={{ top: margin, right: margin }}>
       <MobileTocButton>
         <div
           className="flex flex-col py-4 rounded-lg h-fit bg-zinc-800 border border-zinc-500 shadow-xl w-full"
@@ -24,7 +29,7 @@ export const MobileToc: React.FC<Props> = async ({ hast }) => {
           }}
         >
           <div className="overflow-auto px-4">
-            <Toc hast={hast} />
+            <Toc hAst={hAst} />
           </div>
         </div>
       </MobileTocButton>

@@ -9,6 +9,7 @@ import {
   offset,
   FloatingOverlay,
   size,
+  autoUpdate,
 } from "@floating-ui/react";
 import { TbChevronDown } from "@react-icons/all-files/tb/TbChevronDown";
 import clsx from "clsx";
@@ -20,10 +21,13 @@ import {
   mobileToCAvailableWidth,
 } from "./mobile-toc";
 
-type Props = { children: ReactNode };
+type Props = {
+  children: ReactNode;
+};
 
 export const MobileTocButton: React.FC<Props> = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isButtonVisible, setIsButtonVisible] = useState(true);
 
   const handleClickAnchor = (e: React.MouseEvent) => {
     if (e.target instanceof HTMLAnchorElement) {
@@ -49,6 +53,7 @@ export const MobileTocButton: React.FC<Props> = ({ children }) => {
         },
       }),
     ],
+    whileElementsMounted: autoUpdate,
   });
 
   const click = useClick(context);
@@ -59,19 +64,17 @@ export const MobileTocButton: React.FC<Props> = ({ children }) => {
     dismiss,
   ]);
 
-  const [displayButton, setDisplayButton] = useState(true);
-
   const lastScrollY = useRef(0);
   useEffect(() => {
     const handleScroll = () => {
-      // 上にスクロールしたら表示
+      // 上にスクロールしたらボタンを表示
       if (window.scrollY < lastScrollY.current) {
-        setDisplayButton(true);
+        setIsButtonVisible(true);
       }
 
-      // 下にスクロールしたら非表示
+      // 下にスクロールしたらボタンを非表示
       if (window.scrollY > lastScrollY.current && !isOpen) {
-        setDisplayButton(false);
+        setIsButtonVisible(false);
       }
 
       lastScrollY.current = window.scrollY;
@@ -81,12 +84,12 @@ export const MobileTocButton: React.FC<Props> = ({ children }) => {
     return () => {
       window.removeEventListener("scroll", handleScroll);
     };
-  }, [isOpen]);
+  }, [isOpen, setIsButtonVisible]);
 
   return (
     <>
       <AnimatePresence initial={false}>
-        {displayButton ? (
+        {isButtonVisible ? (
           <motion.button
             ref={refs.setReference}
             {...getReferenceProps()}

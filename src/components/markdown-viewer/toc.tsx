@@ -4,11 +4,11 @@ import { jsx, jsxs } from "react/jsx-runtime";
 import { Anchor } from "./toc-provider";
 import { type Root } from "hast";
 
-type Props = { hast: Root };
+type Props = { hAst: Root };
 
 // tocbotを使用するとビルド時にレンダリングできないので、unifiedを使って実装する
-export const Toc: React.FC<Props> = async ({ hast }) => {
-  return toJsxRuntime(hast, {
+export const Toc: React.FC<Props> = ({ hAst }) => {
+  return toJsxRuntime(hAst, {
     Fragment,
     // @ts-ignore
     jsx,

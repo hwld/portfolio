@@ -15,10 +15,14 @@ export const MarkdownViewerWithToc: React.FC<Props> = async ({ markdown }) => {
   return (
     <div className="relative w-full gap-8 grid grid-cols-[minmax(100%,700px)_300px]">
       <MarkdownViewer id={viewerId}>{markdown}</MarkdownViewer>
-      <TocContextProvider contentId={viewerId}>
-        {hasToc ? <DesktopToc hast={tocHAst} /> : null}
-        {hasToc ? <MobileToc hast={tocHAst} /> : null}
-      </TocContextProvider>
+      {hasToc ? (
+        <TocContextProvider contentId={viewerId}>
+          <div className="block max-[1200px]:hidden">
+            <DesktopToc hAst={tocHAst} />
+          </div>
+          <MobileToc mobileBreakPointPx={1200} hAst={tocHAst} />
+        </TocContextProvider>
+      ) : null}
     </div>
   );
 };
