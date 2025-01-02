@@ -101,7 +101,7 @@ const Pre = ({
       <pre
         {...props}
         style={{ ...bgRemovedStyle }}
-        className="px-5 py-6 rounded overflow-auto focus-visible:outline-none border border-zinc-600 bg-zinc-800"
+        className="px-5 py-6 rounded-md overflow-auto focus-visible:outline-none border border-zinc-700 bg-zinc-500/5"
       />
     </div>
   );
