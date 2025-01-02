@@ -14,13 +14,11 @@ import remarkRehype from "remark-rehype";
 import remarkGfm from "remark-gfm";
 import { unified } from "unified";
 import { CodeCopyButton } from "./code-copy-button";
-import { TbUserCircle } from "@react-icons/all-files/tb/TbUserCircle";
-import { TbInfoCircle } from "@react-icons/all-files/tb/TbInfoCircle";
-import { TbAlertTriangle } from "@react-icons/all-files/tb/TbAlertTriangle";
 import rehypeSlug from "rehype-slug";
 import { HEADING_ID_PREFIX, rehypeAddPrevHeadingId } from "@/lib/unified";
 import { tv, type VariantProps } from "tailwind-variants";
 import Link from "next/link";
+import { MaybeCalloutRelatedDiv } from "./callout";
 
 type Props = { children: string; id?: string };
 
@@ -76,70 +74,16 @@ export const MarkdownViewer: React.FC<Props> = async ({ children, id }) => {
 
 const defaultMargin = "24px";
 
-const Div = (
-  props: ComponentPropsWithoutRef<"div"> & {
-    "data-callout"?: true;
-    "data-callout-type"?: string;
-    "data-callout-title"?: true;
-    "data-callout-body"?: true;
-  }
-) => {
-  if (props["data-callout-type"] !== undefined) {
-    return (
-      <Callout {...props} data-callout-type={props["data-callout-type"]} />
-    );
-  }
-
-  if (props["data-callout-title"]) {
-    return (
-      <CalloutTitle {...props} data-callout-type={props["data-callout-type"]} />
-    );
-  }
-
-  if (props["data-callout-body"]) {
-    return <CalloutBody {...props} />;
-  }
-
-  return <div {...props} />;
-};
-
-const Callout = (
-  props: ComponentPropsWithoutRef<"div"> & { "data-callout-type": string }
-) => {
-  return (
-    <div
-      className="grid grid-cols-[auto_1fr] gap-2 p-4 bg-zinc-800 border border-zinc-700 rounded"
-      style={{ marginBlock: defaultMargin }}
-      {...props}
-    />
+const Div = (props: ComponentPropsWithoutRef<"div">) => {
+  const CalloutRelativeComponent = (
+    <MaybeCalloutRelatedDiv defaultMargin={defaultMargin} {...props} />
   );
-};
 
-const CalloutTitle = ({
-  children,
-  ...props
-}: ComponentPropsWithoutRef<"div">) => {
-  if (children === "Column") {
-    return (
-      <TbUserCircle className="mt-[2px] size-6 text-green-300" {...props} />
-    );
+  if (CalloutRelativeComponent) {
+    return CalloutRelativeComponent;
+  } else {
+    return <div {...props} />;
   }
-
-  if (children === "Info") {
-    return (
-      <TbInfoCircle className="mt-[2px] size-6 text-blue-300" {...props} />
-    );
-  }
-
-  if (children === "Warning") {
-    return <TbAlertTriangle className="mt-[3px] size-6 text-orange-300" />;
-  }
-
-  return null;
-};
-
-const CalloutBody = (props: ComponentPropsWithoutRef<"div">) => {
-  return <div {...props} className="[&>p:first-child]:!mt-0" />;
 };
 
 const Pre = ({
@@ -324,7 +268,7 @@ const Strong = ({ children }: PropsWithChildren) => {
 
 const Hr = ({ children }: PropsWithChildren) => {
   return (
-    <hr className="border-zinc-500" style={{ marginTop: defaultMargin }}>
+    <hr className="border-zinc-600" style={{ marginTop: defaultMargin }}>
       {children}
     </hr>
   );
