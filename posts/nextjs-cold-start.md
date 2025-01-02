@@ -100,16 +100,16 @@ debugの実態は[ここ](https://github.com/vercel/next.js/blob/3c01e3a9a17e5cc
 <https://github.com/vercel/next.js/blob/3c01e3a9a17e5cc8d060b87e57d30ef544fe5dcd/packages/next/src/server/lib/router-server.ts#L216-L289>
 
 ```ts
-    // 抜粋
-    async function invokeRender() {
-      debug('invokeRender', req.url, req.headers)
+// 抜粋
+async function invokeRender() {
+  debug('invokeRender', req.url, req.headers)
 
-      const initResult = await renderServer?.instance?.initialize(
-        renderServerOpts
-      )
-      await initResult?.requestHandler(req, res)
-      return
-    }
+  const initResult = await renderServer?.instance?.initialize(
+    renderServerOpts
+  )
+  await initResult?.requestHandler(req, res)
+  return
+}
 ```
 
 これまで読んできたコードの少なくとも最初の部分については実行されていると確認できました。
