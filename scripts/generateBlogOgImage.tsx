@@ -83,6 +83,9 @@ const generate = async ({ post, avatar }: { post: Post; avatar: string }) => {
   );
   const fullHtml = `<!DOCTYPE html>${markup}`;
   await page.setContent(fullHtml, { waitUntil: "load" });
+  await page.evaluate(async () => {
+    await document.fonts.ready;
+  });
   await page.screenshot({ path: `./public/images/ogp/${post.slug}.png` });
 
   await browser.close();
