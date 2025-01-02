@@ -10,7 +10,7 @@ export const MobileToc: React.FC<Props> = async ({ hast }) => {
   return (
     <MobileTocButton>
       <div
-        className={`flex flex-col py-4 rounded-lg h-fit bg-zinc-800 border border-zinc-700 shadow-xl w-full`}
+        className="flex flex-col py-4 rounded-lg h-fit bg-zinc-800 border border-zinc-500 shadow-xl w-full"
         style={{ maxHeight: `calc(var(${mobileToCAvailableHeight}) - 16px)` }}
       >
         <div className="overflow-auto px-4">
