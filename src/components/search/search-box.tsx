@@ -95,12 +95,12 @@ export const SearchBox = forwardRef<
     <div ref={ref} className="w-full" {...props}>
       <Command shouldFilter={false} className="focus-visible:outline-none">
         <motion.div
-          className="bg-zinc-800 rounded-lg overflow-hidden shadow-xl border border-zinc-500 h-[500px] grid grid-rows-[auto_1fr_auto]"
+          className="bg-zinc-900 rounded-lg overflow-hidden shadow-xl border border-zinc-500 h-[500px] grid grid-rows-[auto_1fr_auto] text-zinc-100"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 20 }}
         >
-          <div className="bg-zinc-700 py-1 px-2 text-xs flex items-center justify-between">
+          <div className="p-2 text-xs flex items-center justify-between border-b border-zinc-500">
             <p>ページ検索</p>
             <p className="text-zinc-400">Cmd + K</p>
           </div>

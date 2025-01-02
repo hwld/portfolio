@@ -7,6 +7,9 @@ import { SearchBoxTrigger } from "../search/search-box";
 import { SearchButtonLink } from "../search/search-button";
 import { Routes } from "@/routes";
 
+export const navbarBaseClass =
+  "h-10 w-full bg-zinc-900 border shadow-xl shadow-black/30 border-zinc-500 rounded-full text-zinc-100";
+
 export const Navbar: React.FC = () => {
   const isMobile = useMediaQuery("(max-width: 700px)");
 
@@ -17,11 +20,9 @@ export const Navbar: React.FC = () => {
   return (
     <AnimatePresence mode="popLayout">
       <motion.div
-        className={"fixed bottom-6 left-[50vw] flex gap-2 select-none"}
-        key={String(isMobile)}
+        className={"fixed bottom-4 left-[50vw] flex gap-2 select-none"}
         initial={{ opacity: 0, y: 10, x: "-50%" }}
         animate={{ opacity: 1, y: 0, x: "-50%" }}
-        exit={{ opacity: 0, y: 10, x: "-50%" }}
       >
         {isMobile ? (
           <>

@@ -21,8 +21,7 @@ export const SocialLinkItem: React.FC<Props> = ({
       target="_blank"
       href={href}
       className={clsx(
-        "size-8 grid place-items-center rounded-lg shrink-0 border border-zinc-600",
-        onPointerEnter ? "" : "transition-all hover:bg-zinc-600"
+        "size-8 grid place-items-center rounded-full shrink-0 hover:text-zinc-100 transition-colors hover:bg-zinc-700"
       )}
       onPointerEnter={onPointerEnter}
     >

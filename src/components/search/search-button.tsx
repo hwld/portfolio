@@ -9,7 +9,7 @@ type Props = ComponentPropsWithoutRef<"button">;
 const searchButton = tv({
   slots: {
     button:
-      "size-10 rounded-full bg-zinc-800 border border-zinc-500 shadow-lg grid place-items-center transition-colors hover:bg-zinc-600",
+      "size-10 rounded-full bg-zinc-900 text-zinc-100 border border-zinc-500 shadow-xl grid place-items-center transition-colors hover:bg-zinc-600",
     icon: "size-5",
   },
 });
