@@ -15,7 +15,10 @@ import clsx from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { flushSync } from "react-dom";
-import { mobileToCAvailableHeight } from "./mobile-toc";
+import {
+  mobileToCAvailableHeight,
+  mobileToCAvailableWidth,
+} from "./mobile-toc";
 
 type Props = { children: ReactNode };
 
@@ -29,6 +32,7 @@ export const MobileTocButton: React.FC<Props> = ({ children }) => {
   };
 
   const [availableHeight, setAvailableHeight] = useState("0px");
+  const [availableWidth, setAvailableWidth] = useState("0px");
 
   const { refs, floatingStyles, context } = useFloating({
     open: isOpen,
@@ -37,9 +41,10 @@ export const MobileTocButton: React.FC<Props> = ({ children }) => {
     middleware: [
       offset(8),
       size({
-        apply: ({ availableHeight }) => {
+        apply: ({ availableHeight, availableWidth }) => {
           flushSync(() => {
             setAvailableHeight(`${availableHeight}px`);
+            setAvailableWidth(`${availableWidth}px`);
           });
         },
       }),
@@ -110,8 +115,8 @@ export const MobileTocButton: React.FC<Props> = ({ children }) => {
                 {...getFloatingProps()}
                 style={{
                   ...floatingStyles,
-                  maxHeight: availableHeight,
                   [mobileToCAvailableHeight as string]: availableHeight,
+                  [mobileToCAvailableWidth as string]: availableWidth,
                 }}
               >
                 <motion.div
