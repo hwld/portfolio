@@ -15,7 +15,12 @@ import {
   useInteractions,
 } from "@floating-ui/react";
 import clsx from "clsx";
-import { allPageLinks, PageLink, navbarSocialLinks } from "./consts";
+import {
+  allPageLinks,
+  PageLink,
+  navbarSocialLinks,
+  navbarPageLinks,
+} from "./consts";
 
 export const MobileNavbar: React.FC = () => {
   const currentPath = usePathname();
@@ -25,7 +30,7 @@ export const MobileNavbar: React.FC = () => {
     open: isOpen,
     onOpenChange: setIsOpen,
     middleware: [offset(8)],
-    placement: "top-start",
+    placement: "top",
   });
 
   const click = useClick(context);
@@ -37,7 +42,7 @@ export const MobileNavbar: React.FC = () => {
   ]);
 
   return (
-    <div className="w-[250px]">
+    <div className="w-[200px]">
       <AnimatePresence>
         {isOpen && (
           <FloatingFocusManager context={context}>
@@ -53,7 +58,7 @@ export const MobileNavbar: React.FC = () => {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 20, scale: 0.95 }}
               >
-                {allPageLinks.map((page) => {
+                {navbarPageLinks.map((page) => {
                   return (
                     <NavbarItem
                       key={page.path}

@@ -19,10 +19,11 @@ import { HEADING_ID_PREFIX, rehypeAddPrevHeadingId } from "@/lib/unified";
 import { tv, type VariantProps } from "tailwind-variants";
 import Link from "next/link";
 import { MaybeCalloutRelatedDiv } from "./callout";
+import { MAKRDOWN_VIEWER_ID } from "./consts";
 
-type Props = { children: string; id?: string };
+type Props = { children: string };
 
-export const MarkdownViewer: React.FC<Props> = async ({ children, id }) => {
+export const MarkdownViewer: React.FC<Props> = async ({ children }) => {
   const processor = unified()
     .use(remarkParse)
     .use(remarkGfm)
@@ -40,7 +41,10 @@ export const MarkdownViewer: React.FC<Props> = async ({ children, id }) => {
   const hast = await processor.run(mdast, children);
 
   return (
-    <div id={id} className="text-base [&>*:first-child]:!mt-0 break-all">
+    <div
+      id={MAKRDOWN_VIEWER_ID}
+      className="text-base [&>*:first-child]:!mt-0 break-all"
+    >
       {toJsxRuntime(hast, {
         Fragment: Fragment,
         // @ts-ignore

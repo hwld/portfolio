@@ -3,6 +3,7 @@ import "./globals.css";
 import { Navbar } from "@/components/navbar/navbar";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { PagefindProvider } from "@/components/pagefind-provider";
+import { TocContextProvider } from "@/components/markdown-viewer/toc-provider";
 
 export const metadata: Metadata = {
   title: "hwld",
@@ -23,13 +24,15 @@ export default function RootLayout({
         />
       </head>
       <PagefindProvider>
-        <body
-          className="font-sans min-h-screen bg-background antialiased text-foreground font-normal text-sm"
-          style={{ colorScheme: "dark" }}
-        >
-          {children}
-          <Navbar />
-        </body>
+        <TocContextProvider>
+          <body
+            className="font-sans min-h-screen bg-background antialiased text-foreground font-normal text-sm"
+            style={{ colorScheme: "dark" }}
+          >
+            {children}
+            <Navbar />
+          </body>
+        </TocContextProvider>
       </PagefindProvider>
       <GoogleAnalytics gaId="G-V2PYBBQFQ8" />
     </html>

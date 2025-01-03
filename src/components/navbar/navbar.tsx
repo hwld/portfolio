@@ -6,10 +6,13 @@ import { AnimatePresence, motion } from "framer-motion";
 import { SearchBoxTrigger } from "../search/search-box";
 import { SearchButtonLink } from "../search/search-button";
 import { Routes } from "@/routes";
+import { MobileTocButton } from "../markdown-viewer/mobile-toc-button";
 
 export const Navbar: React.FC = () => {
   const isMobile = useMediaQuery("(max-width: 700px)");
+  const isMobileTocVisible = useMediaQuery("(max-width: 1200px)") ?? false;
 
+  // 準備中は何も表示しない
   if (isMobile === undefined) {
     return;
   }
@@ -17,20 +20,22 @@ export const Navbar: React.FC = () => {
   return (
     <AnimatePresence mode="popLayout">
       <motion.div
-        className={"fixed bottom-4 left-[50vw] flex gap-2 select-none"}
+        className={"fixed bottom-4 left-[50vw] select-none"}
         initial={{ opacity: 0, y: 10, x: "-50%" }}
         animate={{ opacity: 1, y: 0, x: "-50%" }}
       >
         {isMobile ? (
-          <>
+          <div className="grid grid-cols-[min-content,1fr,min-content] gap-1">
+            <MobileTocButton />
             <MobileNavbar />
             <SearchButtonLink href={Routes.search()} />
-          </>
+          </div>
         ) : (
-          <>
+          <div className="gap-2 grid-cols-[min-content,1fr,min-content] grid">
+            {isMobileTocVisible ? <MobileTocButton /> : null}
             <DesktopNavbar />
             <SearchBoxTrigger />
-          </>
+          </div>
         )}
       </motion.div>
     </AnimatePresence>

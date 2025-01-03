@@ -5,29 +5,24 @@ import {
   useClick,
   useDismiss,
   useInteractions,
-  FloatingPortal,
   offset,
-  FloatingOverlay,
   size,
   autoUpdate,
+  FloatingFocusManager,
 } from "@floating-ui/react";
-import { TbChevronDown } from "@react-icons/all-files/tb/TbChevronDown";
-import clsx from "clsx";
+import { TbMenu2 } from "@react-icons/all-files/tb/TbMenu2";
+import { TbX } from "@react-icons/all-files/tb/TbX";
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useState } from "react";
 import { flushSync } from "react-dom";
-import {
-  mobileToCAvailableHeight,
-  mobileToCAvailableWidth,
-} from "./mobile-toc";
+import { useToc } from "./toc-provider";
+import { Toc } from "./toc";
 
-type Props = {
-  children: ReactNode;
-};
+export const MobileTocButton: React.FC = () => {
+  const { tocHAst } = useToc();
 
-export const MobileTocButton: React.FC<Props> = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isButtonVisible, setIsButtonVisible] = useState(true);
+  const ButtonIcon = isOpen ? TbX : TbMenu2;
 
   const handleClickAnchor = (e: React.MouseEvent) => {
     if (e.target instanceof HTMLAnchorElement) {
@@ -36,19 +31,17 @@ export const MobileTocButton: React.FC<Props> = ({ children }) => {
   };
 
   const [availableHeight, setAvailableHeight] = useState("0px");
-  const [availableWidth, setAvailableWidth] = useState("0px");
 
   const { refs, floatingStyles, context } = useFloating({
     open: isOpen,
     onOpenChange: setIsOpen,
-    placement: "bottom-end",
+    placement: "top-start",
     middleware: [
       offset(8),
       size({
-        apply: ({ availableHeight, availableWidth }) => {
+        apply: ({ availableHeight }) => {
           flushSync(() => {
             setAvailableHeight(`${availableHeight}px`);
-            setAvailableWidth(`${availableWidth}px`);
           });
         },
       }),
@@ -64,79 +57,47 @@ export const MobileTocButton: React.FC<Props> = ({ children }) => {
     dismiss,
   ]);
 
-  const lastScrollY = useRef(0);
-  useEffect(() => {
-    const handleScroll = () => {
-      // 上にスクロールしたらボタンを表示
-      if (window.scrollY < lastScrollY.current) {
-        setIsButtonVisible(true);
-      }
-
-      // 下にスクロールしたらボタンを非表示
-      if (window.scrollY > lastScrollY.current && !isOpen) {
-        setIsButtonVisible(false);
-      }
-
-      lastScrollY.current = window.scrollY;
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, [isOpen, setIsButtonVisible]);
+  if (!tocHAst) {
+    return <div className="size-10" />;
+  }
 
   return (
     <>
-      <AnimatePresence initial={false}>
-        {isButtonVisible ? (
-          <motion.button
-            ref={refs.setReference}
-            {...getReferenceProps()}
-            className="h-8 border bg-background border-border-strong px-3 grid place-items-center grid-cols-[auto_1fr] items-center gap-1 hover:bg-background-hover transition-colors rounded-full text-foreground-strong"
-            initial={{ opacity: 0, y: -5 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -5 }}
-            transition={{ duration: 0.2 }}
-          >
-            <span className="text-sm">目次</span>
-            <TbChevronDown
-              className={clsx(
-                "size-5 transition-transform",
-                isOpen ? "-rotate-180" : ""
-              )}
-            />
-          </motion.button>
-        ) : null}
-      </AnimatePresence>
       <AnimatePresence>
         {isOpen ? (
-          <FloatingPortal>
-            <FloatingOverlay>
-              <div
-                ref={refs.setFloating}
-                {...getFloatingProps()}
-                style={{
-                  ...floatingStyles,
-                  [mobileToCAvailableHeight as string]: availableHeight,
-                  [mobileToCAvailableWidth as string]: availableWidth,
-                }}
+          <FloatingFocusManager context={context}>
+            <div
+              ref={refs.setFloating}
+              {...getFloatingProps()}
+              style={floatingStyles}
+              className="w-full"
+            >
+              <motion.div
+                onClick={handleClickAnchor}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 20 }}
+                className="w-full bg-navbar-background border border-navbar-border rounded-lg shadow-xl overflow-hidden text-navbar-foreground flex flex-col"
+                style={{ maxHeight: `calc(${availableHeight} - 16px)` }}
               >
-                <motion.div
-                  onClick={handleClickAnchor}
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                  transition={{ duration: 0.2 }}
-                  className="h-full"
-                >
-                  {children}
-                </motion.div>
-              </div>
-            </FloatingOverlay>
-          </FloatingPortal>
+                <div className="p-2 text-xs flex items-center border-b border-navbar-border">
+                  目次
+                </div>
+                <div className="p-2 overflow-auto">
+                  <Toc hAst={tocHAst} />
+                </div>
+              </motion.div>
+            </div>
+          </FloatingFocusManager>
         ) : null}
       </AnimatePresence>
+      <button
+        ref={refs.setReference}
+        {...getReferenceProps()}
+        className="size-10 border bg-navbar-background border-navbar-border grid place-items-center hover:bg-navbar-background-hover transition-colors rounded-full text-navbar-foreground"
+      >
+        <ButtonIcon className="size-5" />
+      </button>
     </>
   );
 };

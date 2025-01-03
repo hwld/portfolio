@@ -1,6 +1,6 @@
 "use client";
-
 import { DATA_PREV_HEADING_ID } from "@/lib/unified";
+import { MAKRDOWN_VIEWER_ID } from "./consts";
 import clsx from "clsx";
 import {
   createContext,
@@ -12,13 +12,18 @@ import {
   useRef,
   type RefObject,
 } from "react";
+import { type Root } from "hast";
 
 type TocContext = {
+  tocHAst: Root | undefined;
+  setTocHAst: (hAst: Root | undefined) => void;
+
   activeLink: string | undefined;
   active: (href: string | undefined) => void;
 
   isScrollingRef: RefObject<boolean>;
 };
+
 const TocContext = createContext<TocContext | undefined>(undefined);
 
 export const useToc = () => {
@@ -30,9 +35,11 @@ export const useToc = () => {
   return ctx;
 };
 
-export const TocContextProvider: React.FC<
-  { contentId: string } & PropsWithChildren
-> = ({ contentId, children }) => {
+export const TocContextProvider: React.FC<PropsWithChildren> = ({
+  children,
+}) => {
+  const [tocHAst, setTocHAst] = useState<Root | undefined>();
+
   const [activeLink, setActiveLink] = useState<string | undefined>();
 
   // スクロール状態の変更
@@ -57,12 +64,16 @@ export const TocContextProvider: React.FC<
 
   // スクロールに応じてアクティブなリンクの変更
   useEffect(() => {
-    const content = document.querySelector(`#${contentId}`);
-    if (!content) {
+    if (!tocHAst) {
       return;
     }
 
-    const headings = content.querySelectorAll("h1, h2, h3, h4, h5, h6");
+    const viewer = document.querySelector(`#${MAKRDOWN_VIEWER_ID}`);
+    if (!viewer) {
+      return;
+    }
+
+    const headings = viewer.querySelectorAll("h1, h2, h3, h4, h5, h6");
 
     const observer = new IntersectionObserver(
       (entries) => {
@@ -105,7 +116,7 @@ export const TocContextProvider: React.FC<
     return () => {
       observer.disconnect();
     };
-  }, [contentId]);
+  }, [tocHAst]);
 
   // リンクのクリックでアクティブなリンクを変更
   useEffect(() => {
@@ -122,6 +133,8 @@ export const TocContextProvider: React.FC<
   return (
     <TocContext.Provider
       value={{
+        tocHAst,
+        setTocHAst,
         activeLink,
         active: setActiveLink,
         isScrollingRef,
@@ -148,6 +161,24 @@ export const Anchor = (props: ComponentPropsWithoutRef<"a">) => {
       {...props}
     />
   );
+};
+
+/**
+ *  サーバーコンポーネントではHAstをセットできないため、クライアントコンポーネントとして用意する。
+ *  これをサーバーコンポーネントで使う。
+ */
+export const TocHAstSetter: React.FC<{ hAst: Root }> = ({ hAst }) => {
+  const { setTocHAst } = useToc();
+
+  useEffect(() => {
+    setTocHAst(hAst);
+
+    return () => {
+      setTocHAst(undefined);
+    };
+  }, [hAst, setTocHAst]);
+
+  return null;
 };
 
 // ToCのリンクが見えるようにスクロールする

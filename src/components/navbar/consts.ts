@@ -17,7 +17,7 @@ export type PageLink = {
   activeIcon: IconType;
 };
 
-export const desktopNavbarPageLinks: PageLink[] = [
+export const navbarPageLinks: PageLink[] = [
   {
     path: Routes.home(),
     title: "home",
@@ -39,7 +39,7 @@ export const desktopNavbarPageLinks: PageLink[] = [
 ];
 
 export const allPageLinks: PageLink[] = [
-  ...desktopNavbarPageLinks,
+  ...navbarPageLinks,
   {
     path: Routes.search(),
     title: "search",
