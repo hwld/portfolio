@@ -2,16 +2,18 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { NavbarPageData, navbarPages } from "@/app/pages";
-import { TbBrandX } from "@react-icons/all-files/tb/TbBrandX";
-import { TbBrandGithub } from "@react-icons/all-files/tb/TbBrandGithub";
 import clsx from "clsx";
 import Link from "next/link";
 import { forwardRef } from "react";
 import { tv } from "tailwind-variants";
 import { IconType } from "@react-icons/all-files";
-import { navbarBaseClass } from "./navbar";
+import { navbarBaseClass, navbarSocialLinks } from "./consts";
 
-type HoverCardInfo = {
+/**
+ * 現在のパスに対応するNavItemへのマーカー。
+ * NavItemがホバーされるとホバーされたNavItemに移動し、ホバーが解除されると現在のパスのNavItemに戻る。
+ */
+type ActiveMarker = {
   targetPath: string | undefined;
   style: {
     x: number;
@@ -22,108 +24,68 @@ type HoverCardInfo = {
 };
 
 export const DesktopNavbar: React.FC = () => {
-  const currentUrl = usePathname();
-  const pathNodeMapRef = useRef<Map<string, HTMLAnchorElement>>();
-  const getPathNodeMap = () => {
-    if (!pathNodeMapRef.current) {
-      pathNodeMapRef.current = new Map<string, HTMLAnchorElement>();
-    }
-    return pathNodeMapRef.current;
-  };
+  const currentPath = usePathname();
+  const navbarRef = useRef<HTMLDivElement>(null);
 
-  const pathName = usePathname();
+  // pathとNavItem要素のマッピングを保持する
+  const pathNavItemMap = useRef<Map<string, HTMLAnchorElement>>(new Map());
 
-  const [hoverCardInfo, setHoverCardInfo] = useState<HoverCardInfo>();
-
-  const handlePointerEnterItem = (
-    e: React.PointerEvent,
-    targetPath?: string
-  ) => {
-    if (!barRef.current || e.pointerType !== "mouse") {
-      return;
-    }
-
-    const rect = e.currentTarget.getBoundingClientRect();
-    const barRect = barRef.current.getBoundingClientRect();
-    setHoverCardInfo({
-      targetPath,
-      style: {
-        x: rect.x - barRect.x,
-        y: rect.y - barRect.y,
-        width: rect.width,
-        height: rect.height,
-      },
-    });
-  };
-
-  const handleMouseLeaveBar = () => {
-    const map = getPathNodeMap();
-    const rect = map.get(pathName)?.getBoundingClientRect();
-    const barRect = barRef.current?.getBoundingClientRect();
-    if (!rect || !barRect) {
-      setHoverCardInfo(undefined);
-      return;
-    }
-
-    setHoverCardInfo({
-      targetPath: pathName,
-      style: {
-        x: rect.x - barRect.x,
-        y: rect.y - barRect.y,
-        width: rect.width,
-        height: rect.height,
-      },
-    });
-  };
-
-  const setNavbarItemRef = (
-    node: HTMLAnchorElement | null,
-    page: NavbarPageData
-  ) => {
-    const map = getPathNodeMap();
+  const setNavbarItemRef = (node: HTMLAnchorElement | null, path: string) => {
     if (node) {
-      map.set(page.url, node);
+      pathNavItemMap.current.set(path, node);
     } else {
-      map.delete(page.url);
+      pathNavItemMap.current.delete(path);
     }
   };
 
-  useEffect(() => {
-    const map = getPathNodeMap();
-    const node = map.get(pathName);
-    if (node && barRef.current) {
-      const barRect = barRef.current.getBoundingClientRect();
-      const rect = node.getBoundingClientRect();
+  const [activeMarker, setActiveMarker] = useState<ActiveMarker>();
 
-      setHoverCardInfo({
-        targetPath: pathName,
+  const moveActiveMarker = (targetPath: string) => {
+    const navbarRect = navbarRef.current?.getBoundingClientRect();
+    if (!navbarRect) {
+      return;
+    }
+
+    const navItem = pathNavItemMap.current.get(targetPath);
+
+    if (navItem) {
+      const navItemRect = navItem.getBoundingClientRect();
+      setActiveMarker({
+        targetPath,
         style: {
-          x: rect.x - barRect.x,
-          y: rect.y - barRect.y,
-          width: rect.width,
-          height: rect.height,
+          x: navItemRect.x - navbarRect.x,
+          y: navItemRect.y - navbarRect.y,
+          width: navItemRect.width,
+          height: navItemRect.height,
         },
       });
     } else {
-      setHoverCardInfo(undefined);
+      setActiveMarker(undefined);
     }
-  }, [pathName]);
+  };
 
-  const barRef = useRef<HTMLDivElement>(null);
+  const handleNavbarMouseLeave = () => {
+    moveActiveMarker(currentPath);
+  };
+
+  useEffect(() => {
+    moveActiveMarker(currentPath);
+  }, [currentPath]);
+
   return (
     <>
       <div
-        ref={barRef}
+        ref={navbarRef}
         className={clsx(navbarBaseClass, "p-1 flex items-center gap-[2px]")}
-        onMouseLeave={handleMouseLeaveBar}
+        onMouseLeave={handleNavbarMouseLeave}
       >
         <AnimatePresence>
-          {hoverCardInfo && (
+          {activeMarker && (
             <motion.div
               className="absolute bg-zinc-100 rounded-full pointer-events-none size-10 top-0 left-0"
               transition={{ type: "spring", duration: 0.55 }}
-              initial={{ ...hoverCardInfo.style, opacity: 0 }}
-              animate={{ ...hoverCardInfo.style, opacity: 1 }}
+              initial={{ ...activeMarker.style, opacity: 0 }}
+              animate={{ ...activeMarker.style, opacity: 1 }}
               exit={{ opacity: 0, transition: { duration: 0.1 } }}
             />
           )}
@@ -131,12 +93,12 @@ export const DesktopNavbar: React.FC = () => {
         {navbarPages.map((page) => {
           return (
             <NavbarItem
-              ref={(node) => setNavbarItemRef(node, page)}
+              ref={(node) => setNavbarItemRef(node, page.url)}
               key={page.title}
               page={page}
-              active={page.url === currentUrl}
-              hoverCardInfo={hoverCardInfo}
-              onPointerEnter={handlePointerEnterItem}
+              isCurrentPage={page.url === currentPath}
+              activeMarker={activeMarker}
+              onMoveActiveMarker={moveActiveMarker}
             >
               {page.title}
             </NavbarItem>
@@ -144,22 +106,20 @@ export const DesktopNavbar: React.FC = () => {
         })}
         <div className="h-2/3 bg-zinc-500 w-[1px] mx-1" />
         <div className="flex gap-1">
-          <NavbarSocialLinkItem
-            uniquePath="x-lintk"
-            label="Xへのリンク"
-            icon={TbBrandX}
-            href="https://x.com/016User"
-            hoverCardInfo={hoverCardInfo}
-            onPointerEnter={handlePointerEnterItem}
-          />
-          <NavbarSocialLinkItem
-            uniquePath="github-link"
-            label="GitHubへのリンク"
-            icon={TbBrandGithub}
-            href="https://github.com/hwld"
-            hoverCardInfo={hoverCardInfo}
-            onPointerEnter={handlePointerEnterItem}
-          />
+          {navbarSocialLinks.map((link) => {
+            return (
+              <NavbarSocialLinkItem
+                ref={(node) => setNavbarItemRef(node, link.uniquePath)}
+                key={link.uniquePath}
+                uniquePath={link.uniquePath}
+                label={link.label}
+                icon={link.icon}
+                href={link.href}
+                activeMarker={activeMarker}
+                onMoveActiveMarker={moveActiveMarker}
+              />
+            );
+          })}
         </div>
       </div>
     </>
@@ -172,7 +132,7 @@ const navbarItem = tv({
     social: "size-8 grid place-items-center rounded-full shrink-0",
   },
   variants: {
-    isHovering: { true: "", false: "" },
+    isActive: { true: "", false: "" },
   },
   compoundSlots: [
     {
@@ -181,7 +141,7 @@ const navbarItem = tv({
     },
     {
       slots: ["page", "social"],
-      isHovering: true,
+      isActive: true,
       className: "text-zinc-900",
     },
   ],
@@ -190,21 +150,22 @@ const navbarItem = tv({
 type NavbarItemProps = {
   page: NavbarPageData;
   children: string;
-  active?: boolean;
-  hoverCardInfo?: HoverCardInfo;
-  onPointerEnter?: (event: React.PointerEvent, targetPath?: string) => void;
+  isCurrentPage?: boolean;
+  activeMarker?: ActiveMarker;
+  onMoveActiveMarker?: (targetPath: string) => void;
 };
 
 export const NavbarItem = forwardRef<HTMLAnchorElement, NavbarItemProps>(
   function NavbarItem(
-    { page, children, active = false, hoverCardInfo, onPointerEnter },
+    { page, children, isCurrentPage = false, activeMarker, onMoveActiveMarker },
     ref
   ) {
-    const Icon = active ? page.activeIcon : page.icon;
-    const isHovering = hoverCardInfo?.targetPath === page.url;
+    const isActive = activeMarker?.targetPath === page.url;
+    const itemClass = navbarItem({ isActive }).page();
+    const Icon = isCurrentPage ? page.activeIcon : page.icon;
 
-    const handlePointerEnter = (e: React.PointerEvent) => {
-      onPointerEnter?.(e, page.url);
+    const handlePointerEnter = () => {
+      onMoveActiveMarker?.(page.url);
     };
 
     return (
@@ -212,7 +173,7 @@ export const NavbarItem = forwardRef<HTMLAnchorElement, NavbarItemProps>(
         ref={ref}
         href={page.url}
         onPointerEnter={handlePointerEnter}
-        className={navbarItem({ isHovering }).page()}
+        className={itemClass}
       >
         <Icon className="size-5" />
         <div className="leading-none pb-[3px]">{children}</div>
@@ -225,34 +186,35 @@ type NavbarSocialLinkItemProps = {
   uniquePath: string;
   icon: IconType;
   href: string;
-  onPointerEnter: (event: React.PointerEvent, targetPath?: string) => void;
+  activeMarker?: ActiveMarker;
+  onMoveActiveMarker: (targetPath: string) => void;
   label: string;
-  hoverCardInfo?: HoverCardInfo;
 };
 
-export const NavbarSocialLinkItem: React.FC<NavbarSocialLinkItemProps> = ({
-  uniquePath,
-  label,
-  href,
-  icon: Icon,
-  onPointerEnter,
-  hoverCardInfo,
-}) => {
-  const isHovering = hoverCardInfo?.targetPath === uniquePath;
+export const NavbarSocialLinkItem = forwardRef<
+  HTMLAnchorElement,
+  NavbarSocialLinkItemProps
+>(function NavbarSocialLinkItem(
+  { uniquePath, label, href, icon: Icon, onMoveActiveMarker, activeMarker },
+  ref
+) {
+  const isActive = activeMarker?.targetPath === uniquePath;
+  const itemClass = navbarItem({ isActive }).social();
 
-  const handlePointerEnter = (e: React.PointerEvent) => {
-    onPointerEnter(e, uniquePath);
+  const handlePointerEnter = () => {
+    onMoveActiveMarker(uniquePath);
   };
 
   return (
     <a
+      ref={ref}
       aria-label={label}
       target="_blank"
       href={href}
-      className={navbarItem({ isHovering }).social()}
+      className={itemClass}
       onPointerEnter={handlePointerEnter}
     >
       <Icon className="size-5" />
     </a>
   );
-};
+});

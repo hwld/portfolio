@@ -5,9 +5,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { tv } from "tailwind-variants";
-import { TbBrandX } from "@react-icons/all-files/tb/TbBrandX";
-import { TbBrandGithub } from "@react-icons/all-files/tb/TbBrandGithub";
-import { SocialLinkItem } from "./social-link-item";
 import { getDetailPageTitle } from "@/lib/get-detail-page-title";
 import type { IconType } from "@react-icons/all-files";
 import {
@@ -19,7 +16,7 @@ import {
   useInteractions,
 } from "@floating-ui/react";
 import clsx from "clsx";
-import { navbarBaseClass } from "./navbar";
+import { navbarBaseClass, navbarSocialLinks } from "./consts";
 
 export const MobileNavbar: React.FC = () => {
   const currentPath = usePathname();
@@ -73,16 +70,16 @@ export const MobileNavbar: React.FC = () => {
                 <div className="flex gap-4 items-center justify-between px-2">
                   <p className="text-zinc-300">social link</p>
                   <div className="flex gap-1 items-center">
-                    <SocialLinkItem
-                      label="Xへのリンク"
-                      icon={TbBrandX}
-                      href="https://x.com/016User"
-                    />
-                    <SocialLinkItem
-                      label="GitHubへのリンク"
-                      icon={TbBrandGithub}
-                      href="https://github.com/hwld"
-                    />
+                    {navbarSocialLinks.map((link) => {
+                      return (
+                        <SocialLinkItem
+                          key={link.uniquePath}
+                          label={link.label}
+                          icon={link.icon}
+                          href={link.href}
+                        />
+                      );
+                    })}
                   </div>
                 </div>
               </motion.div>
@@ -174,5 +171,30 @@ const NavbarItem: React.FC<{
     <Link href={page.url} className={itemClass} onClick={onClick}>
       {content}
     </Link>
+  );
+};
+
+type SocialLinkItemProps = {
+  icon: IconType;
+  href: string;
+  label: string;
+};
+
+export const SocialLinkItem: React.FC<SocialLinkItemProps> = ({
+  icon: Icon,
+  href,
+  label,
+}) => {
+  return (
+    <a
+      aria-label={label}
+      target="_blank"
+      href={href}
+      className={clsx(
+        "size-8 grid place-items-center rounded-full shrink-0 hover:text-zinc-100 transition-colors hover:bg-zinc-700"
+      )}
+    >
+      <Icon className="size-5" />
+    </a>
   );
 };

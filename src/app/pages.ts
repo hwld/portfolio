@@ -9,6 +9,7 @@ import { TbSearch } from "@react-icons/all-files/tb/TbSearch";
 import { Routes } from "@/routes";
 
 type Page = {
+  // TODO: urlじゃなくてpathとかにする
   url: string;
   title: string;
   icon: IconType;

@@ -7,9 +7,6 @@ import { SearchBoxTrigger } from "../search/search-box";
 import { SearchButtonLink } from "../search/search-button";
 import { Routes } from "@/routes";
 
-export const navbarBaseClass =
-  "h-10 w-full bg-zinc-900 border shadow-xl shadow-black/30 border-zinc-500 rounded-full text-zinc-100";
-
 export const Navbar: React.FC = () => {
   const isMobile = useMediaQuery("(max-width: 700px)");
 
