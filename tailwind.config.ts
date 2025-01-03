@@ -20,6 +20,21 @@ const config: Config = {
     },
     extend: {
       colors: {
+        background: {
+          DEFAULT: colors.zinc[900],
+          muted: colors.zinc[700],
+          hover: colors.zinc[800],
+        },
+        foreground: {
+          DEFAULT: colors.zinc[300],
+          strong: colors.zinc[50],
+          muted: colors.zinc[400],
+        },
+        border: {
+          DEFAULT: colors.zinc[700],
+          strong: colors.zinc[500],
+        },
+
         navbar: {
           background: {
             DEFAULT: colors.zinc[900],

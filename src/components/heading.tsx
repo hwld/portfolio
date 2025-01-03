@@ -4,7 +4,7 @@ type Props = { subTitle: string; children: string };
 export const Heading: React.FC<Props> = ({ subTitle, children }) => {
   return (
     <h2 id={subTitle}>
-      <div className="text-zinc-400 text-xs">{subTitle}</div>
+      <div className="text-foreground-muted text-xs">{subTitle}</div>
       <a
         className="flex items-center gap-1 text-lg w-fit"
         href={`#${subTitle}`}

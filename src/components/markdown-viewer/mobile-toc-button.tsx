@@ -93,16 +93,16 @@ export const MobileTocButton: React.FC<Props> = ({ children }) => {
           <motion.button
             ref={refs.setReference}
             {...getReferenceProps()}
-            className="h-8 bg-zinc-800 border border-zinc-500 px-2 rounded grid place-items-center grid-cols-[auto_1fr] items-center gap-1 text-zinc-300"
+            className="h-8 border bg-background border-border-strong px-3 grid place-items-center grid-cols-[auto_1fr] items-center gap-1 hover:bg-background-hover transition-colors rounded-full text-foreground-strong"
             initial={{ opacity: 0, y: -5 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -5 }}
             transition={{ duration: 0.2 }}
           >
-            <span className="text-sm mb-[2px]">目次</span>
+            <span className="text-sm">目次</span>
             <TbChevronDown
               className={clsx(
-                "size-5 transition-transform mt-[2px]",
+                "size-5 transition-transform",
                 isOpen ? "-rotate-180" : ""
               )}
             />

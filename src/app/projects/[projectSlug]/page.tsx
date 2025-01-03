@@ -49,13 +49,15 @@ const ProjectDetailPage: React.FC<PageProps> = ({ params }) => {
       <div className="flex flex-col gap-4">
         <ProjectThumbnail src={project.imageSrc} />
         <div>
-          <div className="text-sm text-zinc-400 flex gap-1 items-center">
+          <div className="text-sm text-foreground-muted flex gap-1 items-center">
             <TbCode size={18} />
             {`${project.createdAt.getFullYear()}年${
               project.createdAt.getMonth() + 1
             }月〜`}
           </div>
-          <h1 className="text-3xl font-bold">{project.title}</h1>
+          <h1 className="text-3xl font-bold text-foreground-strong">
+            {project.title}
+          </h1>
         </div>
         <div className="flex gap-2">
           {project.projectUrl && (
@@ -73,7 +75,7 @@ const ProjectDetailPage: React.FC<PageProps> = ({ params }) => {
             />
           )}
         </div>
-        <div className="text-sm text-zinc-400">{project.summary}</div>
+        <div className="text-sm text-foreground-muted">{project.summary}</div>
       </div>
       <MarkdownViewerWithToc markdown={markdown} />
     </DetailLayout>
@@ -92,7 +94,7 @@ const IconLink: React.FC<{ icon: IconType; href: string; label: string }> = ({
       target="_blank"
       aria-label={label}
       href={href}
-      className="size-7 grid place-items-center border border-zinc-500 rounded transition-colors hover:bg-zinc-700"
+      className="size-8 grid place-items-center border border-border-strong rounded transition-colors hover:bg-background-hover hover:text-foreground-strong"
     >
       <Icon size={18} />
     </a>

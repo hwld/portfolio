@@ -44,11 +44,11 @@ export const SearchPageContent: React.FC = () => {
           return (
             <div
               key={r.id}
-              className="border border-zinc-600 p-4 flex flex-col gap-4 rounded-lg"
+              className="border border-border p-4 flex flex-col gap-4 rounded-lg"
             >
               <div className="grid grid-cols-[auto_1fr] gap-1 items-start">
-                <p className="text-zinc-400 leading-6">Page:</p>
-                <TextLink href={r.url}>
+                <p className="text-foreground-muted leading-6">Page:</p>
+                <TextLink size="lg" href={r.url}>
                   {r.meta?.title ?? "不明なタイトル"}
                 </TextLink>
               </div>

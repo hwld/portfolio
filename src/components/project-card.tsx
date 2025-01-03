@@ -7,7 +7,7 @@ type Props = { project: Project };
 export const ProjectCard: React.FC<Props> = ({ project }) => {
   return (
     <Link
-      className="border border-zinc-700 bg-black/20 rounded-lg shrink-0 p-3 flex flex-col overflow-hidden transition-colors group relative justify-between gap-2 shadow"
+      className="border border-border rounded-lg shrink-0 p-3 flex flex-col overflow-hidden transition-colors group relative justify-between gap-2 shadow"
       href={`/projects/${project.slug}`}
     >
       <div className="space-y-2">
@@ -17,13 +17,13 @@ export const ProjectCard: React.FC<Props> = ({ project }) => {
           <div>{project.summary}</div>
         </div>
       </div>
-      <div className="text-xs flex gap-1 text-zinc-400 items-center">
+      <div className="text-xs flex gap-1 text-foreground-muted items-center">
         <TbCode size={16} />
         {`${project.createdAt.getFullYear()}年${
           project.createdAt.getMonth() + 1
         }月`}
       </div>
-      <div className="absolute inset-0 group-hover:bg-zinc-500/20 transition-colors" />
+      <div className="absolute inset-0 group-hover:bg-white/10 transition-colors" />
     </Link>
   );
 };

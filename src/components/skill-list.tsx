@@ -56,7 +56,7 @@ const SkillCard: React.FC<{ skill: Skill }> = ({
     <a
       href={link}
       target="_blank"
-      className="flex flex-col border p-4 rounded-lg items-center gap-1 size-[150px] justify-center border-zinc-700 bg-black/20 shadow hover:bg-white/5 transition-colors"
+      className="flex flex-col group border p-4 rounded-lg items-center gap-1 size-[150px] justify-center border-border shadow hover:bg-background-hover transition-colors"
     >
       <Image
         src={`/techs-logo/${imgFile}`}
@@ -64,9 +64,12 @@ const SkillCard: React.FC<{ skill: Skill }> = ({
         height={80}
         alt={`${name}-logo`}
       />
-      <div className="font-bold flex items-center gap-1">
+      <div className="font-bold flex items-center gap-1 group-hover:text-foreground-strong transition-colors">
         {name}
-        <TbExternalLink size={14} className="text-zinc-400" />
+        <TbExternalLink
+          size={14}
+          className="text-foreground-muted group-hover:text-foreground-strong transition-colors"
+        />
       </div>
     </a>
   );

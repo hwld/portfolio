@@ -86,6 +86,7 @@ const Div = (props: ComponentPropsWithoutRef<"div">) => {
   }
 };
 
+// コードブロックのみで使われることを想定している
 const Pre = ({
   className,
   style,
@@ -101,12 +102,13 @@ const Pre = ({
       <pre
         {...props}
         style={{ ...bgRemovedStyle }}
-        className="px-5 py-6 rounded-md overflow-auto focus-visible:outline-none border border-zinc-700 bg-zinc-500/5"
+        className="px-5 py-6 rounded-md overflow-auto focus-visible:outline-none border border-border bg-zinc-500/5"
       />
     </div>
   );
 };
 
+// コードブロックとコードスパンで使用される
 const Code = ({
   className,
   ...props
@@ -122,7 +124,7 @@ const Code = ({
     <>
       {lang && (
         <>
-          <div className="text-xs absolute right-2 top-2 rounded text-zinc-400 select-none">
+          <div className="text-xs absolute right-2 top-2 rounded text-foreground-muted select-none">
             {lang}
           </div>
           {/* codeブロックかをlangの有無で確認してる */}
@@ -132,7 +134,7 @@ const Code = ({
       <code
         id={codeId}
         className={clsx(
-          "[:not(pre)>&]:bg-zinc-700 [:not(pre)>&]:text-zinc-300 [:not(pre)>&]:px-[6px] [:not(pre)>&]:py-[3px] [:not(pre)>&]:mx-1 [:not(pre)>&]:rounded break-all",
+          "[:not(pre)>&]:bg-background-muted [:not(pre)>&]:text-foreground [:not(pre)>&]:px-[6px] [:not(pre)>&]:py-[3px] [:not(pre)>&]:mx-1 [:not(pre)>&]:rounded break-all",
           className
         )}
         {...props}
@@ -150,7 +152,7 @@ const P = ({ children }: PropsWithChildren) => {
 };
 
 const headingClass = tv({
-  base: "text-zinc-200 flex items-center font-bold mb-6 group gap-0",
+  base: "text-foreground-strong flex items-center font-bold mb-6 group gap-0",
   variants: {
     tag: {
       h1: "text-3xl mt-12",
@@ -239,7 +241,7 @@ const Img = ({ src, alt }: ComponentPropsWithoutRef<"img">) => {
 const Ul = ({ children }: PropsWithChildren) => {
   return (
     <ul
-      className="pl-5 list-disc marker:text-zinc-500 group group-has-[ul]:!mt-0 group-has-[ol]:!mt-0"
+      className="pl-5 list-disc marker:text-foreground-muted group group-has-[ul]:!mt-0 group-has-[ol]:!mt-0"
       style={{ marginTop: defaultMargin }}
     >
       {children}
@@ -250,7 +252,7 @@ const Ul = ({ children }: PropsWithChildren) => {
 const Ol = ({ children }: PropsWithChildren) => {
   return (
     <ol
-      className="list-decimal marker:text-zinc-400 pl-5 group group-has-[ol]:!mt-0 group-has-[ul]:!mt-0"
+      className="list-decimal marker:text-foreground-muted pl-5 group group-has-[ol]:!mt-0 group-has-[ul]:!mt-0"
       style={{ marginTop: defaultMargin }}
     >
       {children}
@@ -263,12 +265,14 @@ const Li = ({ children }: PropsWithChildren) => {
 };
 
 const Strong = ({ children }: PropsWithChildren) => {
-  return <strong className="font-bold text-zinc-200">{children}</strong>;
+  return (
+    <strong className="font-bold text-foreground-strong">{children}</strong>
+  );
 };
 
 const Hr = ({ children }: PropsWithChildren) => {
   return (
-    <hr className="border-zinc-600" style={{ marginTop: defaultMargin }}>
+    <hr className="border-border" style={{ marginTop: defaultMargin }}>
       {children}
     </hr>
   );
@@ -277,7 +281,7 @@ const Hr = ({ children }: PropsWithChildren) => {
 const BlockQuote = ({ children }: PropsWithChildren) => {
   return (
     <blockquote
-      className="text-zinc-300/80 px-4 py-1 relative border-l-2 border-zinc-400 [&>p:first-child]:!mt-0"
+      className="text-foreground/80 px-4 py-1 relative border-l-2 border-border-strong [&>p:first-child]:!mt-0"
       style={{ marginBlock: defaultMargin }}
     >
       {children}

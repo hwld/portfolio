@@ -24,7 +24,7 @@ export default function RootLayout({
       </head>
       <PagefindProvider>
         <body
-          className={`font-sans min-h-screen bg-zinc-900 antialiased text-zinc-300 font-normal text-sm`}
+          className="font-sans min-h-screen bg-background antialiased text-foreground font-normal text-sm"
           style={{ colorScheme: "dark" }}
         >
           {children}

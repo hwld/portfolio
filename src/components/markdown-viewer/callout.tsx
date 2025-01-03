@@ -64,7 +64,7 @@ export const MaybeCalloutRelatedDiv = ({
 
 const calloutClass = tv({
   slots: {
-    root: "grid grid-cols-[auto_1fr] gap-2 p-4 border rounded-md text-zinc-100",
+    root: "grid grid-cols-[auto_1fr] gap-2 p-4 border rounded-md text-foreground-strong",
     icon: "",
   },
   variants: {

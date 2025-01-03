@@ -3,8 +3,8 @@ import { forwardRef, type PropsWithChildren } from "react";
 import { tv, type VariantProps } from "tailwind-variants";
 
 const link = tv({
-  base: "text-base underline underline-offset-4 transition-colors hover:text-zinc-400 w-fit",
-  variants: { size: { md: "text-base", sm: "text-sm" } },
+  base: "text-base underline underline-offset-4 transition-colors hover:text-foreground-strong w-fit",
+  variants: { size: { md: "text-base", sm: "text-sm", lg: "text-lg" } },
   defaultVariants: { size: "md" },
 });
 

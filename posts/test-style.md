@@ -95,6 +95,10 @@ Header6のセクション
 ## コードブロック
 
 ```ts
-console.log('hello');
-console.log('world');
+console.log("hello");
+console.log("world");
 ```
+
+## コードスパン
+
+`console.log("hello")`

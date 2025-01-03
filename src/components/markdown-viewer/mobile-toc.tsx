@@ -22,7 +22,7 @@ export const MobileToc: React.FC<Props> = ({ hAst, mobileBreakPointPx }) => {
     <div className="fixed" style={{ top: margin, right: margin }}>
       <MobileTocButton>
         <div
-          className="flex flex-col py-4 rounded-lg h-fit bg-zinc-800 border border-zinc-500 shadow-xl w-full"
+          className="flex flex-col py-4 rounded-lg h-fit bg-background border border-border-strong shadow-xl w-full"
           style={{
             maxHeight: `calc(var(${mobileToCAvailableHeight}) - ${margin})`,
             maxWidth: `calc(var(${mobileToCAvailableWidth}) - ${margin})`,

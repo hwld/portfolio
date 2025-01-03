@@ -67,7 +67,7 @@ const ProfileBasicInfo: React.FC<{
 }> = ({ icon: Icon, title, children }) => {
   return (
     <div className="grid grid-cols-[110px_1fr] w-full">
-      <div className="flex gap-1 items-center text-zinc-400">
+      <div className="flex gap-1 items-center text-foreground-muted">
         <Icon size={18} />
         {title}
       </div>

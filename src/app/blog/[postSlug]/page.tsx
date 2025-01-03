@@ -53,13 +53,15 @@ const PostDetailPage: React.FC<PageProps> = async ({ params }) => {
   return (
     <DetailLayout>
       <div className="flex flex-col gap-2">
-        <div className="text-zinc-400 flex text-sm items-center gap-1">
+        <div className="text-foreground-muted flex text-sm items-center gap-1">
           <TbClock className="size-4" />
           {`${post.createdAt.getFullYear()}年 ${
             post.createdAt.getMonth() + 1
           }月 ${post.createdAt.getDate()}日`}
         </div>
-        <h1 className="text-3xl font-bold">{post.title}</h1>
+        <h1 className="text-3xl font-bold text-foreground-strong">
+          {post.title}
+        </h1>
       </div>
       <MarkdownViewerWithToc markdown={markdown} />
     </DetailLayout>
