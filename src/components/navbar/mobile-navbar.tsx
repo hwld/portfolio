@@ -16,7 +16,7 @@ import {
   useInteractions,
 } from "@floating-ui/react";
 import clsx from "clsx";
-import { navbarBaseClass, navbarSocialLinks } from "./consts";
+import { navbarSocialLinks } from "./consts";
 
 export const MobileNavbar: React.FC = () => {
   const currentPath = usePathname();
@@ -49,7 +49,7 @@ export const MobileNavbar: React.FC = () => {
               style={floatingStyles}
             >
               <motion.div
-                className="bg-zinc-900 border border-zinc-500 rounded-lg p-2 flex flex-col gap-1 shadow-xl shadow-black/30 text-zinc-100"
+                className="bg-navbar-background border border-navbar-border text-navbar-foreground rounded-lg p-2 flex flex-col gap-1 shadow-xl shadow-black/30"
                 initial={{ opacity: 0, y: 20, scale: 0.95 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 20, scale: 0.95 }}
@@ -66,9 +66,9 @@ export const MobileNavbar: React.FC = () => {
                     />
                   );
                 })}
-                <div className="w-full bg-zinc-500 h-[1px]" />
+                <div className="w-full bg-navbar-border h-[1px]" />
                 <div className="flex gap-4 items-center justify-between px-2">
-                  <p className="text-zinc-300">social link</p>
+                  <p className="text-navbar-foreground-muted">social link</p>
                   <div className="flex gap-1 items-center">
                     {navbarSocialLinks.map((link) => {
                       return (
@@ -90,10 +90,7 @@ export const MobileNavbar: React.FC = () => {
       <button
         ref={refs.setReference}
         {...getReferenceProps()}
-        className={clsx(
-          navbarBaseClass,
-          "items-center place-items-start grid grid-cols-[1fr_auto] gap-4 px-4 z-10"
-        )}
+        className="h-10 w-full bg-navbar-background border shadow-xl shadow-black/30 border-navbar-border rounded-full text-navbar-foreground items-center place-items-start grid grid-cols-[1fr_auto] gap-4 px-4 z-10"
       >
         <CurrentPageTitle currentPath={currentPath} />
         <motion.div animate={isOpen ? { rotate: -90 } : { rotate: 0 }}>
@@ -143,8 +140,8 @@ const item = tv({
   base: "px-2 h-8 grid grid-cols-[auto_1fr] items-center gap-2 rounded transition-colors",
   variants: {
     active: {
-      true: "text-zinc-900 bg-zinc-100",
-      false: "hover:text-zinc-200 hover:bg-zinc-700",
+      true: "text-navbar-background bg-navbar-foreground",
+      false: "hover:bg-navbar-background-hover",
     },
   },
 });
@@ -191,7 +188,7 @@ export const SocialLinkItem: React.FC<SocialLinkItemProps> = ({
       target="_blank"
       href={href}
       className={clsx(
-        "size-8 grid place-items-center rounded-full shrink-0 hover:text-zinc-100 transition-colors hover:bg-zinc-700"
+        "size-8 grid place-items-center rounded-full shrink-0 transition-colors hover:bg-navbar-background-hover"
       )}
     >
       <Icon className="size-5" />

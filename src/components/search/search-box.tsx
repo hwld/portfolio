@@ -95,14 +95,14 @@ export const SearchBox = forwardRef<
     <div ref={ref} className="w-full" {...props}>
       <Command shouldFilter={false} className="focus-visible:outline-none">
         <motion.div
-          className="bg-zinc-900 rounded-lg overflow-hidden shadow-xl border border-zinc-500 h-[500px] grid grid-rows-[auto_1fr_auto] text-zinc-100"
+          className="bg-navbar-background rounded-lg overflow-hidden shadow-xl border border-navbar-border h-[500px] grid grid-rows-[auto_1fr_auto] text-navbar-foreground"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 20 }}
         >
-          <div className="p-2 text-xs flex items-center justify-between border-b border-zinc-500">
+          <div className="p-2 text-xs flex items-center justify-between border-b border-navbar-border">
             <p>ページ検索</p>
-            <p className="text-zinc-400">Cmd + K</p>
+            <p className="text-navbar-foreground-muted">Cmd + K</p>
           </div>
           <Command.List className="overflow-auto flex flex-col scroll-py-2 relative">
             <Command.Empty className="absolute inset-0 grid place-items-center">
@@ -129,10 +129,12 @@ export const SearchBox = forwardRef<
               return (
                 <div
                   key={r.id}
-                  className="border-b border-zinc-600 p-2 flex flex-col gap-2"
+                  className="border-b border-navbar-border-muted p-2 flex flex-col gap-2"
                 >
                   <div className="grid grid-cols-[auto_1fr] gap-1 items-start">
-                    <p className="text-zinc-400 leading-6">Page:</p>
+                    <p className="text-navbar-foreground-muted leading-6">
+                      Page:
+                    </p>
                     <Command.Item
                       asChild
                       value={r.id}
@@ -176,7 +178,7 @@ export const SearchBox = forwardRef<
               );
             })}
           </Command.List>
-          <div className="border-t border-zinc-500 p-2">
+          <div className="border-t border-navbar-border-muted p-2">
             <Command.Input asChild>
               <SearchInput query={query} onChangeQuery={search} />
             </Command.Input>

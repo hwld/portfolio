@@ -2,12 +2,11 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { NavbarPageData, navbarPages } from "@/app/pages";
-import clsx from "clsx";
 import Link from "next/link";
 import { forwardRef } from "react";
 import { tv } from "tailwind-variants";
 import { IconType } from "@react-icons/all-files";
-import { navbarBaseClass, navbarSocialLinks } from "./consts";
+import { navbarSocialLinks } from "./consts";
 
 /**
  * 現在のパスに対応するNavItemへのマーカー。
@@ -76,13 +75,13 @@ export const DesktopNavbar: React.FC = () => {
     <>
       <div
         ref={navbarRef}
-        className={clsx(navbarBaseClass, "p-1 flex items-center gap-[2px]")}
+        className="bg-navbar-background border border-navbar-border text-navbar-foreground h-10 w-full shadow-xl p-1 flex items-center gap-[2px] rounded-full shadow-black/30"
         onMouseLeave={handleNavbarMouseLeave}
       >
         <AnimatePresence>
           {activeMarker && (
             <motion.div
-              className="absolute bg-zinc-100 rounded-full pointer-events-none size-10 top-0 left-0"
+              className="absolute bg-navbar-foreground rounded-full pointer-events-none size-10 top-0 left-0"
               transition={{ type: "spring", duration: 0.55 }}
               initial={{ ...activeMarker.style, opacity: 0 }}
               animate={{ ...activeMarker.style, opacity: 1 }}
@@ -104,7 +103,7 @@ export const DesktopNavbar: React.FC = () => {
             </NavbarItem>
           );
         })}
-        <div className="h-2/3 bg-zinc-500 w-[1px] mx-1" />
+        <div className="h-2/3 bg-navbar-border w-[1px] mx-1" />
         <div className="flex gap-1">
           {navbarSocialLinks.map((link) => {
             return (
@@ -142,7 +141,7 @@ const navbarItem = tv({
     {
       slots: ["page", "social"],
       isActive: true,
-      className: "text-zinc-900",
+      className: "text-navbar-background",
     },
   ],
 });

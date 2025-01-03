@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import colors from "tailwindcss/colors";
 
 const config: Config = {
   content: [
@@ -16,6 +17,25 @@ const config: Config = {
         "Meiryo",
         "sans-serif",
       ],
+    },
+    extend: {
+      colors: {
+        navbar: {
+          background: {
+            DEFAULT: colors.zinc[900],
+            hover: colors.zinc[700],
+            muted: colors.zinc[600],
+          },
+          foreground: {
+            DEFAULT: colors.zinc[100],
+            muted: colors.zinc[400],
+          },
+          border: {
+            DEFAULT: colors.zinc[500],
+            muted: colors.zinc[600],
+          },
+        },
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],
