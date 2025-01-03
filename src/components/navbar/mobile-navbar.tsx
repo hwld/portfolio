@@ -1,4 +1,3 @@
-import { navbarPages, type NavbarPageData, pages } from "@/app/pages";
 import { TbChevronRight } from "@react-icons/all-files/tb/TbChevronRight";
 import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
@@ -16,7 +15,7 @@ import {
   useInteractions,
 } from "@floating-ui/react";
 import clsx from "clsx";
-import { navbarSocialLinks } from "./consts";
+import { allPageLinks, PageLink, navbarSocialLinks } from "./consts";
 
 export const MobileNavbar: React.FC = () => {
   const currentPath = usePathname();
@@ -54,11 +53,11 @@ export const MobileNavbar: React.FC = () => {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 20, scale: 0.95 }}
               >
-                {navbarPages.map((p) => {
+                {allPageLinks.map((page) => {
                   return (
                     <NavbarItem
-                      key={p.url}
-                      page={p}
+                      key={page.path}
+                      page={page}
                       currentPath={currentPath}
                       onClick={() => {
                         setIsOpen(false);
@@ -104,7 +103,7 @@ export const MobileNavbar: React.FC = () => {
 const getCurrentPage = (
   currentPath: string
 ): { Icon: IconType; title: string } | undefined => {
-  const page = pages.find((p) => p.url === currentPath);
+  const page = allPageLinks.find((p) => p.path === currentPath);
   if (page) {
     return { Icon: page.activeIcon, title: page.title };
   }
@@ -147,11 +146,11 @@ const item = tv({
 });
 
 const NavbarItem: React.FC<{
-  page: NavbarPageData;
+  page: PageLink;
   currentPath: string;
   onClick: () => void;
 }> = ({ page, currentPath, onClick }) => {
-  const active = page.url === currentPath;
+  const active = page.path === currentPath;
   const Icon = active ? page.activeIcon : page.icon;
   const itemClass = item({ active });
 
@@ -165,7 +164,7 @@ const NavbarItem: React.FC<{
   return active ? (
     <div className={itemClass}>{content}</div>
   ) : (
-    <Link href={page.url} className={itemClass} onClick={onClick}>
+    <Link href={page.path} className={itemClass} onClick={onClick}>
       {content}
     </Link>
   );

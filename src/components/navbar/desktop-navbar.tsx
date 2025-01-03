@@ -1,12 +1,11 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
-import { NavbarPageData, navbarPages } from "@/app/pages";
 import Link from "next/link";
 import { forwardRef } from "react";
 import { tv } from "tailwind-variants";
 import { IconType } from "@react-icons/all-files";
-import { navbarSocialLinks } from "./consts";
+import { desktopNavbarPageLinks, PageLink, navbarSocialLinks } from "./consts";
 
 /**
  * 現在のパスに対応するNavItemへのマーカー。
@@ -89,13 +88,13 @@ export const DesktopNavbar: React.FC = () => {
             />
           )}
         </AnimatePresence>
-        {navbarPages.map((page) => {
+        {desktopNavbarPageLinks.map((page) => {
           return (
             <NavbarItem
-              ref={(node) => setNavbarItemRef(node, page.url)}
+              ref={(node) => setNavbarItemRef(node, page.path)}
               key={page.title}
               page={page}
-              isCurrentPage={page.url === currentPath}
+              isCurrentPage={page.path === currentPath}
               activeMarker={activeMarker}
               onMoveActiveMarker={moveActiveMarker}
             >
@@ -147,7 +146,7 @@ const navbarItem = tv({
 });
 
 type NavbarItemProps = {
-  page: NavbarPageData;
+  page: PageLink;
   children: string;
   isCurrentPage?: boolean;
   activeMarker?: ActiveMarker;
@@ -159,18 +158,18 @@ export const NavbarItem = forwardRef<HTMLAnchorElement, NavbarItemProps>(
     { page, children, isCurrentPage = false, activeMarker, onMoveActiveMarker },
     ref
   ) {
-    const isActive = activeMarker?.targetPath === page.url;
+    const isActive = activeMarker?.targetPath === page.path;
     const itemClass = navbarItem({ isActive }).page();
     const Icon = isCurrentPage ? page.activeIcon : page.icon;
 
     const handlePointerEnter = () => {
-      onMoveActiveMarker?.(page.url);
+      onMoveActiveMarker?.(page.path);
     };
 
     return (
       <Link
         ref={ref}
-        href={page.url}
+        href={page.path}
         onPointerEnter={handlePointerEnter}
         className={itemClass}
       >
