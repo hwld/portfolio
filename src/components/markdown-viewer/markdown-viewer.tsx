@@ -12,10 +12,11 @@ import remarkParse from "remark-parse";
 import remarkCallout from "@r4ai/remark-callout";
 import remarkRehype from "remark-rehype";
 import remarkGfm from "remark-gfm";
+import rehypeSectionize from "@hbsnow/rehype-sectionize";
 import { unified } from "unified";
 import { CodeCopyButton } from "./code-copy-button";
 import rehypeSlug from "rehype-slug";
-import { HEADING_ID_PREFIX, rehypeAddPrevHeadingId } from "@/lib/unified";
+import { HEADING_ID_PREFIX } from "@/lib/unified";
 import { tv, type VariantProps } from "tailwind-variants";
 import Link from "next/link";
 import { MaybeCalloutRelatedDiv } from "./callout";
@@ -30,8 +31,8 @@ export const MarkdownViewer: React.FC<Props> = async ({ children }) => {
     .use(remarkCallout)
     .use(remarkRehype)
     .use(rehypeSlug, { prefix: HEADING_ID_PREFIX })
-    .use(rehypeShiki, { theme: "github-dark-default", addLanguageClass: true })
-    .use(rehypeAddPrevHeadingId);
+    .use(rehypeSectionize)
+    .use(rehypeShiki, { theme: "github-dark-default", addLanguageClass: true });
 
   const mdast = processor.parse(children);
 

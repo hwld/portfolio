@@ -1,7 +1,7 @@
 import { toJsxRuntime } from "hast-util-to-jsx-runtime";
 import { Fragment, type ComponentPropsWithoutRef } from "react";
 import { jsx, jsxs } from "react/jsx-runtime";
-import { Anchor } from "./toc-provider";
+import { TocAnchor } from "./toc-provider";
 import { type Root } from "hast";
 
 type Props = { hAst: Root };
@@ -14,7 +14,7 @@ export const Toc: React.FC<Props> = ({ hAst }) => {
     jsx,
     // @ts-ignore
     jsxs,
-    components: { ul: Ul, a: Anchor },
+    components: { ul: Ul, a: TocAnchor },
   });
 };
 

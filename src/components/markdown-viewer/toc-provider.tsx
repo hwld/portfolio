@@ -1,5 +1,4 @@
 "use client";
-import { DATA_PREV_HEADING_ID } from "@/lib/unified";
 import { MAKRDOWN_VIEWER_ID } from "./consts";
 import clsx from "clsx";
 import {
@@ -9,19 +8,12 @@ import {
   type ComponentPropsWithoutRef,
   useEffect,
   useState,
-  useRef,
-  type RefObject,
 } from "react";
 import { type Root } from "hast";
 
 type TocContext = {
   tocHAst: Root | undefined;
   setTocHAst: (hAst: Root | undefined) => void;
-
-  activeLink: string | undefined;
-  active: (href: string | undefined) => void;
-
-  isScrollingRef: RefObject<boolean>;
 };
 
 const TocContext = createContext<TocContext | undefined>(undefined);
@@ -40,29 +32,6 @@ export const TocContextProvider: React.FC<PropsWithChildren> = ({
 }) => {
   const [tocHAst, setTocHAst] = useState<Root | undefined>();
 
-  const [activeLink, setActiveLink] = useState<string | undefined>();
-
-  // スクロール状態の変更
-  const isScrollingRef = useRef(false);
-  useEffect(() => {
-    const handleScroll = () => {
-      isScrollingRef.current = true;
-    };
-    const handleScrollEnd = () => {
-      isScrollingRef.current = false;
-    };
-
-    document.addEventListener("scroll", handleScroll);
-    document.addEventListener("scrollend", handleScrollEnd);
-
-    return () => {
-      document.removeEventListener("scroll", handleScroll);
-      document.removeEventListener("scrollend", handleScrollEnd);
-      isScrollingRef.current = false;
-    };
-  }, []);
-
-  // スクロールに応じてアクティブなリンクの変更
   useEffect(() => {
     if (!tocHAst) {
       return;
@@ -73,44 +42,33 @@ export const TocContextProvider: React.FC<PropsWithChildren> = ({
       return;
     }
 
-    const headings = viewer.querySelectorAll("h1, h2, h3, h4, h5, h6");
+    const headingSections = viewer.querySelectorAll(".heading");
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!isScrollingRef.current) {
-            return;
-          }
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        // セクションの最初のheading要素を取得する
+        const heading = entry.target.querySelector("h1, h2, h3, h4, h5, h6");
+        const id = heading?.getAttribute("id");
+        if (!id) {
+          return;
+        }
 
-          const headingHref = `#${encodeURIComponent(entry.target.id)}`;
+        const headingHref = `#${encodeURIComponent(id)}`;
+        const tocLink = document.querySelector(
+          `.${tocAnchorClass}[href="${headingHref}"]`
+        );
 
-          if (!entry.isIntersecting && entry.boundingClientRect.top < 0) {
-            // headingが上から外に出ていった場合はリンクをアクティブにする
-            setActiveLink(headingHref);
-            scrollTocAnchorIntoView(headingHref);
-            return;
-          }
+        if (entry.isIntersecting) {
+          tocLink?.classList.add("text-sky-400");
+          tocLink?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        } else {
+          tocLink?.classList.remove("text-sky-400");
+        }
+      });
+    });
 
-          if (!entry.isIntersecting && entry.boundingClientRect.top > 0) {
-            // headingが下から外に出ていった場合は前のリンクをアクティブにする
-            const prevId = entry.target.getAttribute(DATA_PREV_HEADING_ID);
-            if (!prevId) {
-              setActiveLink("");
-              return;
-            }
-
-            const prevHeadingHref = `#${encodeURIComponent(prevId)}`;
-            setActiveLink(prevHeadingHref);
-            scrollTocAnchorIntoView(prevHeadingHref);
-            return;
-          }
-        });
-      },
-      { root: null, rootMargin: "0px 0px -95% 0px", threshold: 0 }
-    );
-
-    headings.forEach((heading) => {
-      observer.observe(heading);
+    headingSections.forEach((section) => {
+      observer.observe(section);
     });
 
     return () => {
@@ -118,26 +76,11 @@ export const TocContextProvider: React.FC<PropsWithChildren> = ({
     };
   }, [tocHAst]);
 
-  // リンクのクリックでアクティブなリンクを変更
-  useEffect(() => {
-    const handleHashChange = () => {
-      setActiveLink(window.location.hash);
-    };
-
-    window.addEventListener("hashchange", handleHashChange);
-    return () => {
-      window.removeEventListener("hashchange", handleHashChange);
-    };
-  }, []);
-
   return (
     <TocContext.Provider
       value={{
         tocHAst,
         setTocHAst,
-        activeLink,
-        active: setActiveLink,
-        isScrollingRef,
       }}
     >
       {children}
@@ -147,16 +90,12 @@ export const TocContextProvider: React.FC<PropsWithChildren> = ({
 
 const tocAnchorClass = "toc-anchor";
 
-export const Anchor = (props: ComponentPropsWithoutRef<"a">) => {
-  const { activeLink } = useToc();
-  const isActive = activeLink === props.href;
-
+export const TocAnchor = (props: ComponentPropsWithoutRef<"a">) => {
   return (
     <a
       className={clsx(
         tocAnchorClass,
-        "min-h-8 py-1 px-2 flex rounded items-center hover:bg-white/20 transition-colors break-all text-sm my-1",
-        isActive ? "text-sky-400" : ""
+        "min-h-8 py-1 px-2 flex rounded items-center hover:bg-white/20 transition-colors break-all text-sm my-1"
       )}
       {...props}
     />
@@ -179,16 +118,4 @@ export const TocHAstSetter: React.FC<{ hAst: Root }> = ({ hAst }) => {
   }, [hAst, setTocHAst]);
 
   return null;
-};
-
-// ToCのリンクが見えるようにスクロールする
-const scrollTocAnchorIntoView = (href: string) => {
-  const anchorElement = document.querySelector(
-    `.${tocAnchorClass}[href='${href}']`
-  );
-
-  anchorElement?.scrollIntoView({
-    behavior: "smooth",
-    block: "nearest",
-  });
 };
