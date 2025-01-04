@@ -103,7 +103,7 @@ const MobileToc: React.FC<{ hAst: Root }> = ({ hAst }) => {
     });
 
     const bottomMost = getBottomElement(
-      activeAnchors.filter((anchor) => anchor !== null)
+      activeAnchors.filter((anchor): anchor is Element => anchor !== null)
     );
 
     window.setTimeout(() => {
