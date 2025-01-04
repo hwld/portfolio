@@ -8,8 +8,12 @@ import { tv } from "tailwind-variants";
 const CALLOUT_TYPE = ["info", "warning", "column"] as const;
 type CalloutType = (typeof CALLOUT_TYPE)[number];
 
-const isCalloutType = (type: any): type is CalloutType =>
-  CALLOUT_TYPE.includes(type as CalloutType);
+const parseCalloutType = (type: any): CalloutType => {
+  if (!CALLOUT_TYPE.includes(type)) {
+    throw new Error(`CalloutTypeに "${type}" は存在しません`);
+  }
+  return type as CalloutType;
+};
 
 /**
  * コールアウト関連のdiv要素に付与されている属性
@@ -31,26 +35,16 @@ export const MaybeCalloutRelatedDiv = ({
   CalloutDivProps & { defaultMargin: string }) => {
   // コールアウトのルート要素
   if (props["data-callout-type"]) {
-    if (!isCalloutType(props["data-callout-type"])) {
-      throw new Error(
-        `CalloutTypeに "${props["data-callout-type"]}" は存在しません`
-      );
-    }
+    const calloutType = parseCalloutType(props["data-callout-type"]);
 
     return (
-      <Callout
-        {...props}
-        type={props["data-callout-type"]}
-        defaultMargin={defaultMargin}
-      />
+      <Callout {...props} type={calloutType} defaultMargin={defaultMargin} />
     );
   }
 
   if (props["data-callout-title"]) {
-    const calloutType = props.children?.toString().toLowerCase();
-    if (!isCalloutType(calloutType)) {
-      throw new Error(`CalloutTypeに "${calloutType}" は存在しません`);
-    }
+    const maybeCalloutType = props.children?.toString().toLowerCase();
+    const calloutType = parseCalloutType(maybeCalloutType);
 
     return <CalloutIcon type={calloutType} {...props} />;
   }

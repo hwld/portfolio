@@ -315,4 +315,4 @@ export const featuredProjects = projects
       }
     }
   })
-  .filter((project): project is FeaturedProject => Boolean(project));
+  .filter((project) => project !== false);
