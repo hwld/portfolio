@@ -2,13 +2,13 @@ import { Routes } from "@/routes";
 import { IconType } from "@react-icons/all-files";
 import { TbBrandGithub } from "@react-icons/all-files/tb/TbBrandGithub";
 import { TbBrandX } from "@react-icons/all-files/tb/TbBrandX";
-import { TbHome } from "@react-icons/all-files/tb/TbHome";
-import { TbHomeFilled } from "@react-icons/all-files/tb/TbHomeFilled";
 import { TbSearch } from "@react-icons/all-files/tb/TbSearch";
 import { TbStack2 } from "@react-icons/all-files/tb/TbStack2";
 import { TbStack2Filled } from "@react-icons/all-files/tb/TbStack2Filled";
-import { TbWriting } from "@react-icons/all-files/tb/TbWriting";
-import { TbWritingFilled } from "../writing-filled-icon";
+import { TbUser } from "@react-icons/all-files/tb/TbUser";
+import { TbUserFilled } from "@react-icons/all-files/tb/TbUserFilled";
+import { TbBallpen } from "@react-icons/all-files/tb/TbBallpen";
+import { TbBallpenFilled } from "@react-icons/all-files/tb/TbBallpenFilled";
 
 export type PageLink = {
   path: string;
@@ -21,8 +21,8 @@ export const navbarPageLinks: PageLink[] = [
   {
     path: Routes.home(),
     title: "home",
-    icon: TbHome as IconType,
-    activeIcon: TbHomeFilled as IconType,
+    icon: TbUser as IconType,
+    activeIcon: TbUserFilled as IconType,
   },
   {
     path: Routes.projects(),
@@ -33,8 +33,8 @@ export const navbarPageLinks: PageLink[] = [
   {
     path: Routes.blog(),
     title: "blog",
-    icon: TbWriting as IconType,
-    activeIcon: TbWritingFilled as IconType,
+    icon: TbBallpen as IconType,
+    activeIcon: TbBallpenFilled as IconType,
   },
 ];
 
