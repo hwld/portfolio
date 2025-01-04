@@ -25,8 +25,9 @@ import { useSearchPage } from "./use-search-page";
 import { NavbarSheet, NavbarSheetHeader } from "../navbar/sheet";
 import { NavbarButton } from "../navbar/button";
 import { TbSearch } from "@react-icons/all-files/tb/TbSearch";
+import { PagefindSearchAllResult } from "@/lib/pagefind";
 
-export const SearchBoxTrigger: React.FC = () => {
+export const SearchSheetTrigger: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const { refs, floatingStyles, context } = useFloating({
@@ -59,7 +60,7 @@ export const SearchBoxTrigger: React.FC = () => {
 
   return (
     <div>
-      <SearchBox
+      <SearchSheet
         isOpen={isOpen}
         floatingContext={context}
         {...getFloatingProps()}
@@ -76,14 +77,14 @@ export const SearchBoxTrigger: React.FC = () => {
   );
 };
 
-type SearchBoxProps = {
+type SearchSheetProps = {
   onClose: () => void;
   isOpen: boolean;
   floatingContext: FloatingContext;
 } & ComponentPropsWithoutRef<"div">;
 
-export const SearchBox = forwardRef<HTMLDivElement, SearchBoxProps>(
-  function SearchBox({ onClose, isOpen, floatingContext, ...props }, ref) {
+export const SearchSheet = forwardRef<HTMLDivElement, SearchSheetProps>(
+  function SearchSheet({ onClose, isOpen, floatingContext, ...props }, ref) {
     const [query, setQuery] = useState("");
     const { isSearching, results, search } = useSearchPage({
       defaultQuery: query,
@@ -91,8 +92,11 @@ export const SearchBox = forwardRef<HTMLDivElement, SearchBoxProps>(
     });
 
     const router = useRouter();
-    const handleSelectCommandItem = (url: string) => {
+    const handleMovePage = (url: string) => {
       router.push(url);
+    };
+
+    const handleBeforeMovePage = () => {
       onClose();
     };
 
@@ -142,54 +146,12 @@ export const SearchBox = forwardRef<HTMLDivElement, SearchBoxProps>(
               </Command.Empty>
               {results.map((r) => {
                 return (
-                  <div
+                  <SearchResult
                     key={r.id}
-                    className="border-b border-navbar-border-muted p-2 flex flex-col gap-2"
-                  >
-                    <div className="grid grid-cols-[auto_1fr] gap-1 items-start">
-                      <p className="text-navbar-foreground-muted leading-6">
-                        Page:
-                      </p>
-                      <Command.Item
-                        asChild
-                        value={r.id}
-                        onSelect={() => handleSelectCommandItem(r.url)}
-                        className="w-fit data-[selected=true]:text-sky-400"
-                      >
-                        <TextLink href={r.url} onClick={onClose}>
-                          {r.meta?.title ?? "不明なタイトル"}
-                        </TextLink>
-                      </Command.Item>
-                    </div>
-                    <div className="ml-2 flex flex-col gap-2">
-                      {r.sub_results.map((sub, i) => {
-                        return (
-                          <Command.Item
-                            key={i}
-                            value={`${r.id}-${sub.url}`}
-                            onSelect={() => handleSelectCommandItem(sub.url)}
-                            className="grid grid-cols-[auto_1fr] grid-rows-[auto_1fr] gap-1 group items-center data-[selected=true]:bg-white/10 p-1 rounded cursor-pointer"
-                          >
-                            <MdOutlineSubdirectoryArrowRight className="size-4" />
-                            <TextLink
-                              size="sm"
-                              href={sub.url}
-                              onClick={onClose}
-                              className="group-data-[selected=true]:text-sky-400"
-                            >
-                              {sub.title}
-                            </TextLink>
-                            <p
-                              className="col-start-2 break-all"
-                              dangerouslySetInnerHTML={{
-                                __html: sub.excerpt,
-                              }}
-                            />
-                          </Command.Item>
-                        );
-                      })}
-                    </div>
-                  </div>
+                    result={r}
+                    onMovePage={handleMovePage}
+                    onBeforeMovePage={handleBeforeMovePage}
+                  />
                 );
               })}
             </Command.List>
@@ -204,3 +166,70 @@ export const SearchBox = forwardRef<HTMLDivElement, SearchBoxProps>(
     );
   }
 );
+
+type SearchResultProps = {
+  result: PagefindSearchAllResult;
+  onMovePage: (url: string) => void;
+  onBeforeMovePage: () => void;
+};
+
+const SearchResult: React.FC<SearchResultProps> = ({
+  result,
+  onMovePage,
+  onBeforeMovePage,
+}) => {
+  const handleSelect = (url: string) => {
+    onMovePage(url);
+    onBeforeMovePage();
+  };
+
+  const handleLinkClick = () => {
+    onBeforeMovePage();
+  };
+
+  return (
+    <div className="border-b border-navbar-border-muted p-2 flex flex-col gap-2">
+      <div className="grid grid-cols-[auto_1fr] gap-1 items-start">
+        <p className="text-navbar-foreground-muted leading-6">Page:</p>
+        <Command.Item
+          asChild
+          value={result.id}
+          onSelect={handleSelect}
+          className="w-fit data-[selected=true]:text-sky-400"
+        >
+          <TextLink href={result.url} onClick={handleLinkClick}>
+            {result.meta?.title ?? "不明なタイトル"}
+          </TextLink>
+        </Command.Item>
+      </div>
+      <div className="ml-2 flex flex-col gap-2">
+        {result.sub_results.map((sub, i) => {
+          return (
+            <Command.Item
+              key={i}
+              value={`${result.id}-${sub.url}`}
+              onSelect={() => handleSelect(sub.url)}
+              className="grid grid-cols-[auto_1fr] grid-rows-[auto_1fr] gap-1 group items-center data-[selected=true]:bg-white/10 p-1 rounded cursor-pointer"
+            >
+              <MdOutlineSubdirectoryArrowRight className="size-4" />
+              <TextLink
+                size="sm"
+                href={sub.url}
+                onClick={handleLinkClick}
+                className="group-data-[selected=true]:text-sky-400"
+              >
+                {sub.title}
+              </TextLink>
+              <p
+                className="col-start-2 break-all"
+                dangerouslySetInnerHTML={{
+                  __html: sub.excerpt,
+                }}
+              />
+            </Command.Item>
+          );
+        })}
+      </div>
+    </div>
+  );
+};

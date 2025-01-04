@@ -3,7 +3,7 @@ import { useMediaQuery } from "@mantine/hooks";
 import { DesktopNavbar } from "./desktop-navbar";
 import { MobileNavbar } from "./mobile-navbar";
 import { AnimatePresence, motion } from "framer-motion";
-import { SearchBoxTrigger } from "../search/search-box";
+import { SearchSheetTrigger } from "../search/search-sheet";
 import { Routes } from "@/routes";
 import { MobileTocButton } from "../markdown-viewer/mobile-toc-button";
 import { NavbarButtonLink } from "./button";
@@ -39,7 +39,7 @@ export const Navbar: React.FC = () => {
           <div className="gap-2 grid-cols-[min-content,1fr,min-content] grid">
             {isMobileTocVisible ? <MobileTocButton /> : null}
             <DesktopNavbar />
-            <SearchBoxTrigger />
+            <SearchSheetTrigger />
           </div>
         )}
       </motion.div>
