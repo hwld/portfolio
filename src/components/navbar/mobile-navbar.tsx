@@ -127,7 +127,7 @@ const CurrentPageTitle: React.FC<{ currentPath: string }> = ({
   return (
     <div className="grid items-center grid-cols-[auto_1fr] gap-1">
       <Icon className="size-5" />
-      <p className="pb-[2px] whitespace-nowrap truncate">{title}</p>
+      <p className="whitespace-nowrap truncate">{title}</p>
     </div>
   );
 };

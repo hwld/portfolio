@@ -5,8 +5,8 @@ import { TbBrandX } from "@react-icons/all-files/tb/TbBrandX";
 import { TbSearch } from "@react-icons/all-files/tb/TbSearch";
 import { TbStack2 } from "@react-icons/all-files/tb/TbStack2";
 import { TbStack2Filled } from "@react-icons/all-files/tb/TbStack2Filled";
-import { TbUser } from "@react-icons/all-files/tb/TbUser";
-import { TbUserFilled } from "@react-icons/all-files/tb/TbUserFilled";
+import { TbHome } from "@react-icons/all-files/tb/TbHome";
+import { TbHomeFilled } from "@react-icons/all-files/tb/TbHomeFilled";
 import { TbBallpen } from "@react-icons/all-files/tb/TbBallpen";
 import { TbBallpenFilled } from "@react-icons/all-files/tb/TbBallpenFilled";
 
@@ -21,8 +21,8 @@ export const navbarPageLinks: PageLink[] = [
   {
     path: Routes.home(),
     title: "home",
-    icon: TbUser as IconType,
-    activeIcon: TbUserFilled as IconType,
+    icon: TbHome as IconType,
+    activeIcon: TbHomeFilled as IconType,
   },
   {
     path: Routes.projects(),
