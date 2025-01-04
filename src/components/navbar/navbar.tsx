@@ -4,9 +4,10 @@ import { DesktopNavbar } from "./desktop-navbar";
 import { MobileNavbar } from "./mobile-navbar";
 import { AnimatePresence, motion } from "framer-motion";
 import { SearchBoxTrigger } from "../search/search-box";
-import { SearchButtonLink } from "../search/search-button";
 import { Routes } from "@/routes";
 import { MobileTocButton } from "../markdown-viewer/mobile-toc-button";
+import { NavbarButtonLink } from "./button";
+import { TbSearch } from "@react-icons/all-files/tb/TbSearch";
 
 export const Navbar: React.FC = () => {
   const isMobile = useMediaQuery("(max-width: 700px)");
@@ -28,7 +29,11 @@ export const Navbar: React.FC = () => {
           <div className="grid grid-cols-[min-content,1fr,min-content] gap-1">
             <MobileTocButton />
             <MobileNavbar />
-            <SearchButtonLink href={Routes.search()} />
+            <NavbarButtonLink
+              icon={TbSearch}
+              label="ページ検索ボタン"
+              href={Routes.search()}
+            />
           </div>
         ) : (
           <div className="gap-2 grid-cols-[min-content,1fr,min-content] grid">

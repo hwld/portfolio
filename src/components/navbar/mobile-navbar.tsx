@@ -1,5 +1,5 @@
 import { TbChevronRight } from "@react-icons/all-files/tb/TbChevronRight";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
@@ -7,7 +7,6 @@ import { tv } from "tailwind-variants";
 import { getDetailPageTitle } from "@/lib/get-detail-page-title";
 import type { IconType } from "@react-icons/all-files";
 import {
-  FloatingFocusManager,
   offset,
   useClick,
   useDismiss,
@@ -21,6 +20,7 @@ import {
   navbarSocialLinks,
   navbarPageLinks,
 } from "./consts";
+import { NavbarSheet, NavbarSheetBody } from "./sheet";
 
 export const MobileNavbar: React.FC = () => {
   const currentPath = usePathname();
@@ -43,58 +43,50 @@ export const MobileNavbar: React.FC = () => {
 
   return (
     <div className="w-[200px]">
-      <AnimatePresence>
-        {isOpen && (
-          <FloatingFocusManager context={context}>
-            <div
-              className="w-full"
-              ref={refs.setFloating}
-              {...getFloatingProps()}
-              style={floatingStyles}
-            >
-              <motion.div
-                className="bg-navbar-background border border-navbar-border text-navbar-foreground rounded-lg p-2 flex flex-col gap-1 shadow-xl shadow-black/30"
-                initial={{ opacity: 0, y: 20, scale: 0.95 }}
-                animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: 20, scale: 0.95 }}
-              >
-                {navbarPageLinks.map((page) => {
+      <NavbarSheet
+        ref={refs.setFloating}
+        isOpen={isOpen}
+        floatingContext={context}
+        {...getFloatingProps()}
+        style={floatingStyles}
+      >
+        <NavbarSheetBody>
+          <div className="flex flex-col gap-1">
+            {navbarPageLinks.map((page) => {
+              return (
+                <NavbarItem
+                  key={page.path}
+                  page={page}
+                  currentPath={currentPath}
+                  onClick={() => {
+                    setIsOpen(false);
+                  }}
+                />
+              );
+            })}
+            <div className="w-full bg-navbar-border h-[1px]" />
+            <div className="flex gap-4 items-center justify-between px-2">
+              <p className="text-navbar-foreground-muted">social link</p>
+              <div className="flex gap-1 items-center">
+                {navbarSocialLinks.map((link) => {
                   return (
-                    <NavbarItem
-                      key={page.path}
-                      page={page}
-                      currentPath={currentPath}
-                      onClick={() => {
-                        setIsOpen(false);
-                      }}
+                    <SocialLinkItem
+                      key={link.uniquePath}
+                      label={link.label}
+                      icon={link.icon}
+                      href={link.href}
                     />
                   );
                 })}
-                <div className="w-full bg-navbar-border h-[1px]" />
-                <div className="flex gap-4 items-center justify-between px-2">
-                  <p className="text-navbar-foreground-muted">social link</p>
-                  <div className="flex gap-1 items-center">
-                    {navbarSocialLinks.map((link) => {
-                      return (
-                        <SocialLinkItem
-                          key={link.uniquePath}
-                          label={link.label}
-                          icon={link.icon}
-                          href={link.href}
-                        />
-                      );
-                    })}
-                  </div>
-                </div>
-              </motion.div>
+              </div>
             </div>
-          </FloatingFocusManager>
-        )}
-      </AnimatePresence>
+          </div>
+        </NavbarSheetBody>
+      </NavbarSheet>
       <button
         ref={refs.setReference}
         {...getReferenceProps()}
-        className="h-10 w-full bg-navbar-background border shadow-xl shadow-black/30 border-navbar-border rounded-full text-navbar-foreground items-center place-items-start grid grid-cols-[1fr_auto] gap-4 px-4 z-10"
+        className="h-10 w-full bg-navbar-background border shadow-navbar border-navbar-border rounded-full text-navbar-foreground items-center place-items-start grid grid-cols-[1fr_auto] gap-4 px-4 z-10"
       >
         <CurrentPageTitle currentPath={currentPath} />
         <motion.div animate={isOpen ? { rotate: -90 } : { rotate: 0 }}>

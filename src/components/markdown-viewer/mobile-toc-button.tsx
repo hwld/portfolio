@@ -8,15 +8,19 @@ import {
   offset,
   size,
   autoUpdate,
-  FloatingFocusManager,
 } from "@floating-ui/react";
 import { TbMenu2 } from "@react-icons/all-files/tb/TbMenu2";
 import { TbX } from "@react-icons/all-files/tb/TbX";
-import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { flushSync } from "react-dom";
 import { useToc } from "./toc-provider";
 import { Toc } from "./toc";
+import {
+  NavbarSheet,
+  NavbarSheetBody,
+  NavbarSheetHeader,
+} from "../navbar/sheet";
+import { NavbarButton } from "../navbar/button";
 
 export const MobileTocButton: React.FC = () => {
   const { tocHAst } = useToc();
@@ -63,41 +67,25 @@ export const MobileTocButton: React.FC = () => {
 
   return (
     <>
-      <AnimatePresence>
-        {isOpen ? (
-          <FloatingFocusManager context={context}>
-            <div
-              ref={refs.setFloating}
-              {...getFloatingProps()}
-              style={floatingStyles}
-              className="w-full"
-            >
-              <motion.div
-                onClick={handleClickAnchor}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 20 }}
-                className="w-full bg-navbar-background border border-navbar-border rounded-lg shadow-xl overflow-hidden text-navbar-foreground flex flex-col"
-                style={{ maxHeight: `calc(${availableHeight} - 16px)` }}
-              >
-                <div className="p-2 text-xs flex items-center border-b border-navbar-border">
-                  目次
-                </div>
-                <div className="p-2 overflow-auto">
-                  <Toc hAst={tocHAst} />
-                </div>
-              </motion.div>
-            </div>
-          </FloatingFocusManager>
-        ) : null}
-      </AnimatePresence>
-      <button
+      <NavbarSheet
+        ref={refs.setFloating}
+        isOpen={isOpen}
+        floatingContext={context}
+        style={floatingStyles}
+        onClick={handleClickAnchor}
+        {...getFloatingProps()}
+        maxHeight={`calc(${availableHeight} - 16px)`}
+      >
+        <NavbarSheetHeader>目次</NavbarSheetHeader>
+        <NavbarSheetBody>
+          <Toc hAst={tocHAst} />
+        </NavbarSheetBody>
+      </NavbarSheet>
+      <NavbarButton
         ref={refs.setReference}
         {...getReferenceProps()}
-        className="size-10 border bg-navbar-background border-navbar-border grid place-items-center hover:bg-navbar-background-hover transition-colors rounded-full text-navbar-foreground"
-      >
-        <ButtonIcon className="size-5" />
-      </button>
+        icon={ButtonIcon}
+      />
     </>
   );
 };

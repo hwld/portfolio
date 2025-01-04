@@ -73,7 +73,7 @@ export const DesktopNavbar: React.FC = () => {
   return (
     <div
       ref={navbarRef}
-      className="bg-navbar-background border border-navbar-border text-navbar-foreground h-10 w-full shadow-xl p-1 flex items-center gap-[2px] rounded-full shadow-black/30 relative"
+      className="bg-navbar-background border border-navbar-border text-navbar-foreground h-10 w-full p-1 flex items-center gap-[2px] rounded-full relative shadow-navbar"
       onMouseLeave={handleNavbarMouseLeave}
     >
       <AnimatePresence>
