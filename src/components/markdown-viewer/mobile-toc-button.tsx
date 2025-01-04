@@ -11,9 +11,9 @@ import {
 } from "@floating-ui/react";
 import { TbMenu2 } from "@react-icons/all-files/tb/TbMenu2";
 import { TbX } from "@react-icons/all-files/tb/TbX";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { flushSync } from "react-dom";
-import { useToc } from "./toc-provider";
+import { tocAnchorClass, useToc } from "./toc-provider";
 import { Toc } from "./toc";
 import {
   NavbarSheet,
@@ -21,6 +21,7 @@ import {
   NavbarSheetHeader,
 } from "../navbar/sheet";
 import { NavbarButton } from "../navbar/button";
+import { Root } from "hast";
 
 export const MobileTocButton: React.FC = () => {
   const { tocHAst } = useToc();
@@ -78,7 +79,7 @@ export const MobileTocButton: React.FC = () => {
       >
         <NavbarSheetHeader>目次</NavbarSheetHeader>
         <NavbarSheetBody>
-          <Toc hAst={tocHAst} />
+          <MobileToc hAst={tocHAst} />
         </NavbarSheetBody>
       </NavbarSheet>
       <NavbarButton
@@ -88,4 +89,47 @@ export const MobileTocButton: React.FC = () => {
       />
     </>
   );
+};
+
+const mobileTocClass = "mobile-toc";
+
+const MobileToc: React.FC<{ hAst: Root }> = ({ hAst }) => {
+  const { activeHrefs } = useToc();
+
+  useEffect(() => {
+    const toc = document.querySelector(`.${mobileTocClass}`);
+    const activeAnchors = activeHrefs.map((href) => {
+      return toc?.querySelector(`.${tocAnchorClass}[href="${href}"]`) || null;
+    });
+
+    const bottomMost = getBottomElement(
+      activeAnchors.filter((anchor) => anchor !== null)
+    );
+
+    window.setTimeout(() => {
+      bottomMost?.scrollIntoView({ block: "end" });
+    }, 0);
+  }, [activeHrefs]);
+
+  return (
+    <div className={mobileTocClass}>
+      <Toc hAst={hAst} />
+    </div>
+  );
+};
+
+/**
+ * 要素の配列から一番下にある要素を取得する
+ */
+const getBottomElement = (elements: Element[]): Element | null => {
+  return elements.reduce<Element | null>((bottomMost, el) => {
+    if (
+      el.getBoundingClientRect().bottom >
+      (bottomMost?.getBoundingClientRect().bottom || -Infinity)
+    ) {
+      return el;
+    } else {
+      return bottomMost;
+    }
+  }, null);
 };

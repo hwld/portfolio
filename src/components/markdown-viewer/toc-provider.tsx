@@ -8,7 +8,6 @@ import {
   type ComponentPropsWithoutRef,
   useEffect,
   useState,
-  useCallback,
 } from "react";
 import { type Root } from "hast";
 
@@ -16,7 +15,7 @@ type TocContext = {
   tocHAst: Root | undefined;
   setTocHAst: (hAst: Root | undefined) => void;
 
-  isLinkActive: (href: string) => boolean;
+  activeHrefs: string[];
 };
 
 const TocContext = createContext<TocContext | undefined>(undefined);
@@ -79,19 +78,12 @@ export const TocContextProvider: React.FC<PropsWithChildren> = ({
     };
   }, [tocHAst]);
 
-  const isLinkActive = useCallback(
-    (href: string) => {
-      return activeHrefs.includes(href);
-    },
-    [activeHrefs]
-  );
-
   return (
     <TocContext.Provider
       value={{
         tocHAst,
         setTocHAst,
-        isLinkActive,
+        activeHrefs,
       }}
     >
       {children}
@@ -99,12 +91,12 @@ export const TocContextProvider: React.FC<PropsWithChildren> = ({
   );
 };
 
-const tocAnchorClass = "toc-anchor";
+export const tocAnchorClass = "toc-anchor";
 
 export const TocAnchor = (props: ComponentPropsWithoutRef<"a">) => {
-  const { isLinkActive } = useToc();
+  const { activeHrefs } = useToc();
 
-  const isActive = isLinkActive(props.href ?? "");
+  const isActive = props.href ? activeHrefs.includes(props.href) : false;
 
   return (
     <a
