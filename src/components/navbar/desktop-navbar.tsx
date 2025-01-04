@@ -79,7 +79,7 @@ export const DesktopNavbar: React.FC = () => {
       <AnimatePresence>
         {activeMarker && (
           <motion.div
-            className="absolute bg-navbar-foreground rounded-full pointer-events-none top-0 left-0"
+            className="absolute bg-navbar-foreground rounded-full pointer-events-none -top-[1px] -left-[1px]"
             transition={{ type: "spring", duration: 0.55 }}
             initial={{ ...activeMarker.style, opacity: 0 }}
             animate={{ ...activeMarker.style, opacity: 1 }}
@@ -172,7 +172,7 @@ export const NavbarItem = forwardRef<HTMLAnchorElement, NavbarItemProps>(
         className={itemClass}
       >
         <Icon className="size-5" />
-        <div className="leading-none pb-[3px]">{children}</div>
+        <div>{children}</div>
       </Link>
     );
   }
