@@ -46,5 +46,5 @@ export const NavbarSheetHeader: React.FC<PropsWithChildren> = ({
 };
 
 export const NavbarSheetBody: React.FC<PropsWithChildren> = ({ children }) => {
-  return <div className="p-2 overflow-auto">{children}</div>;
+  return <div className="p-2 overflow-auto scroll-p-2">{children}</div>;
 };
