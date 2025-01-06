@@ -65,7 +65,7 @@ Pages Routerを前提としてコードを読んでいます。
 リクエストがあると、最終的に`NextServer.handleCatchallRenderRequest`関数が呼ばれ、
 [APIリクエスト](https://github.com/vercel/next.js/blob/3c01e3a9a17e5cc8d060b87e57d30ef544fe5dcd/packages/next/src/server/next-server.ts#L1004)と[ページコンポーネント](https://github.com/vercel/next.js/blob/3c01e3a9a17e5cc8d060b87e57d30ef544fe5dcd/packages/next/src/server/next-server.ts#L1008)のリクエストの分岐があるように見えました。
 
-> [!info]
+> [!note]
 > ちなみに、App Routerの[Route Handlers](https://nextjs.org/docs/app/building-your-application/routing/route-handlers)は、
 > ページコンポーネントの分岐に進み、コンポーネントと同じように処理されます。Route Handlersはビルドで生成されるjsファイルの`routeModule`に、実際のハンドラの関数を持つ[AppRouteRouteModuleクラス](https://github.com/vercel/next.js/blob/2f43ba59e54cc45630638d1e1632ec81ee05b8f0/packages/next/src/server/route-modules/app-route/module.ts#L160)
 > を埋め込みます。

@@ -1,11 +1,10 @@
 import { IconType } from "@react-icons/all-files";
 import { TbAlertTriangle } from "@react-icons/all-files/tb/TbAlertTriangle";
 import { TbInfoCircle } from "@react-icons/all-files/tb/TbInfoCircle";
-import { TbUserCircle } from "@react-icons/all-files/tb/TbUserCircle";
 import { ComponentPropsWithoutRef } from "react";
 import { tv } from "tailwind-variants";
 
-const CALLOUT_TYPE = ["info", "warning", "column"] as const;
+const CALLOUT_TYPE = ["note", "warning"] as const;
 type CalloutType = (typeof CALLOUT_TYPE)[number];
 
 const parseCalloutType = (type: any): CalloutType => {
@@ -63,25 +62,20 @@ const calloutClass = tv({
   },
   variants: {
     type: {
-      info: {
+      note: {
         root: "bg-blue-500/10 border-blue-500/30",
         icon: "mt-[2px] size-6 text-blue-400",
-      },
-      column: {
-        root: "bg-green-500/10 border-green-500/30",
-        icon: "mt-[2px] size-6 text-green-400",
       },
       warning: {
         root: "bg-orange-500/10 border-orange-500/30",
         icon: "mt-[3px] size-6 text-orange-400",
       },
-    },
+    } satisfies Record<CalloutType, unknown>,
   },
 });
 
 const CALLOUT_ICON: { [K in CalloutType]: IconType } = {
-  info: TbInfoCircle,
-  column: TbUserCircle,
+  note: TbInfoCircle,
   warning: TbAlertTriangle,
 };
 

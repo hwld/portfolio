@@ -3,7 +3,7 @@ title: Reactのrender関数とコンポーネントの違い
 createdAt: 2024-11-16
 ---
 
-> [!info]
+> [!note]
 > この投稿はReact 18を前提にしています。
 > また、関数コンポーネントのことを指してコンポーネントと書いています。
 
@@ -175,7 +175,7 @@ render関数で`SlowMount`がアンマウントされないのは、アンマウ
 ReactはJSXの`<Counter />`という記法や`createElement`関数によってコンポーネントからReact要素を生成し、最終的に画面に描画します。
 コンポーネント以外でも、`div`や`p`などのHTMLタグからReact要素を生成し、画面に描画することもできます。
 
-> [!info]
+> [!note]
 > JSXである`<Component />`というコードは、TypeScriptやBabelといったツールによって`_jsx(Component, ...)`というコードに変換されます。
 > React 17以前では上にある`createElement`が使われていましたが、[パフォーマンス改善や簡略化](https://github.com/reactjs/rfcs/blob/createlement-rfc/text/0000-create-element-changes.md#motivation)のために`_jsx`が使われるようになりました。
 
