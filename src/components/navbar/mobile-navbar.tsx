@@ -21,6 +21,7 @@ import {
   navbarPageLinks,
 } from "./consts";
 import { NavbarSheet, NavbarSheetBody } from "./sheet";
+import { useContentInfo } from "../content/provider";
 
 export const MobileNavbar: React.FC = () => {
   const currentPath = usePathname();
@@ -97,15 +98,21 @@ export const MobileNavbar: React.FC = () => {
   );
 };
 
-const getCurrentPage = (
+const useCurrentPage = (
   currentPath: string
 ): { Icon: IconType; title: string } | undefined => {
+  const { blogPostInfos, projectInfos } = useContentInfo();
+
   const page = allPageLinks.find((p) => p.path === currentPath);
   if (page) {
     return { Icon: page.activeIcon, title: page.title };
   }
 
-  const title = getDetailPageTitle(currentPath);
+  const title = getDetailPageTitle({
+    path: currentPath,
+    blogPostInfos,
+    projectInfos,
+  });
   if (title) {
     return { Icon: title.icon, title: title.label };
   }
@@ -113,10 +120,11 @@ const getCurrentPage = (
   return undefined;
 };
 
+// TODO: refactor？
 const CurrentPageTitle: React.FC<{ currentPath: string }> = ({
   currentPath,
 }) => {
-  const currentPage = getCurrentPage(currentPath);
+  const currentPage = useCurrentPage(currentPath);
 
   if (!currentPage) {
     return <div>不明なページ</div>;

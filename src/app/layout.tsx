@@ -4,13 +4,15 @@ import { Navbar } from "@/components/navbar/navbar";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { PagefindProvider } from "@/components/pagefind-provider";
 import { TocContextProvider } from "@/components/markdown-viewer/toc-provider";
+import { ContentInfosContextProvider } from "@/components/content/provider";
+import { blogPostInfos, projectInfos } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "hwld",
   description: "hwld portfolio",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -24,15 +26,17 @@ export default function RootLayout({
         />
       </head>
       <PagefindProvider>
-        <TocContextProvider>
-          <body
-            className="font-sans min-h-screen bg-background antialiased text-foreground font-normal text-sm"
-            style={{ colorScheme: "dark" }}
-          >
-            {children}
-            <Navbar />
-          </body>
-        </TocContextProvider>
+        <ContentInfosContextProvider value={{ blogPostInfos, projectInfos }}>
+          <TocContextProvider>
+            <body
+              className="font-sans min-h-screen bg-background antialiased text-foreground font-normal text-sm"
+              style={{ colorScheme: "dark" }}
+            >
+              {children}
+              <Navbar />
+            </body>
+          </TocContextProvider>
+        </ContentInfosContextProvider>
       </PagefindProvider>
       <GoogleAnalytics gaId="G-V2PYBBQFQ8" />
     </html>

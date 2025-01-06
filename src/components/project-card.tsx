@@ -1,9 +1,10 @@
-import { Project } from "@/data/projects";
 import Link from "next/link";
 import { ProjectThumbnail } from "./project-thumbnail";
 import { TbCode } from "@react-icons/all-files/tb/TbCode";
+import { ProjectInfo } from "./content/type";
 
-type Props = { project: Project };
+type Props = { project: ProjectInfo };
+
 export const ProjectCard: React.FC<Props> = ({ project }) => {
   return (
     <Link

@@ -1,6 +1,6 @@
 ---
 title: Reactのrender関数とコンポーネントの違い
-createdAt: 2024-11-06
+createdAt: 2024-11-16
 ---
 
 > [!info]

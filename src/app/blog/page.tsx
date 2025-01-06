@@ -1,6 +1,7 @@
+import { BlogPostInfo } from "@/components/content/type";
 import { SummaryLayout } from "@/components/layout/summary-layout";
 import { TextLink } from "@/components/link";
-import { posts, type Post } from "@/data/posts";
+import { blogPostInfos } from "@/lib/content";
 import { Routes } from "@/routes";
 import type { Metadata } from "next";
 
@@ -12,7 +13,7 @@ export default function BlogPage() {
   return (
     <SummaryLayout width="narrow" pageSubTitle="blog" pageTitle="ブログ">
       <div className="grid w-full grid-cols-1 gap-4">
-        {[...posts]
+        {[...blogPostInfos]
           .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
           .map((p) => {
             return <PostItem key={p.slug} post={p} />;
@@ -22,7 +23,7 @@ export default function BlogPage() {
   );
 }
 
-const PostItem: React.FC<{ post: Post }> = ({ post }) => {
+const PostItem: React.FC<{ post: BlogPostInfo }> = ({ post }) => {
   return (
     <div
       key={post.title}

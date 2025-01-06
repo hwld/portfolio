@@ -1,25 +1,17 @@
-import { projects } from "@/data/projects";
 import { ProjectThumbnail } from "@/components/project-thumbnail";
 import { type IconType } from "@react-icons/all-files/lib";
 import { TbBrandGithub } from "@react-icons/all-files/tb/TbBrandGithub";
 import { TbCode } from "@react-icons/all-files/tb/TbCode";
 import { TbLink } from "@react-icons/all-files/tb/TbLink";
 import { Metadata } from "next";
-import { getMarkdown, getMarkdownSlugs } from "@/lib/markdown";
+import { getContent, getContentSlugs, projectInfos } from "@/lib/content";
 import { MarkdownViewerWithToc } from "@/components/markdown-viewer/with-toc";
 import { DetailLayout } from "@/components/layout/detail-layout";
 
 type Params = { projectSlug: string };
 
 export const generateStaticParams = async (): Promise<Params[]> => {
-  const projectMarkdownSlugs = getMarkdownSlugs("projects");
-
-  return projects.map((project) => {
-    if (!projectMarkdownSlugs.includes(project.slug)) {
-      throw new Error(`${project.slug}.mdが存在しません。`);
-    }
-    return { projectSlug: project.slug };
-  });
+  return getContentSlugs("projects").map((projectSlug) => ({ projectSlug }));
 };
 
 type PageProps = { params: Params };
@@ -27,9 +19,9 @@ type PageProps = { params: Params };
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
-  const project = projects.find((p) => p.slug === params.projectSlug);
+  const project = projectInfos.find((info) => info.slug === params.projectSlug);
   if (!project) {
-    throw new Error("プロジェクトが存在しない");
+    throw new Error(`プロジェクトが存在しない: ${params.projectSlug}`);
   }
 
   return {
@@ -38,11 +30,11 @@ export async function generateMetadata({
 }
 
 const ProjectDetailPage: React.FC<PageProps> = ({ params }) => {
-  const project = projects.find((p) => p.slug === params.projectSlug);
+  const project = projectInfos.find((p) => p.slug === params.projectSlug);
   if (!project) {
     throw new Error(`プロジェクトが存在しません: ${params.projectSlug}`);
   }
-  const markdown = getMarkdown("projects", params.projectSlug);
+  const markdown = getContent("projects", params.projectSlug);
 
   return (
     <DetailLayout>

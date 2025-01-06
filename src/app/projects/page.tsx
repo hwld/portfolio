@@ -1,7 +1,7 @@
 import { ProjectCard } from "@/components/project-card";
-import { projects } from "@/data/projects";
 import { Metadata } from "next";
 import { SummaryLayout } from "@/components/layout/summary-layout";
+import { projectInfos } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "projects - hwld",
@@ -21,7 +21,7 @@ const ProjectsPage: React.FC = () => {
       }
     >
       <div className="w-full grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-4">
-        {[...projects]
+        {[...projectInfos]
           .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
           .map((project) => {
             return <ProjectCard key={project.title} project={project} />;

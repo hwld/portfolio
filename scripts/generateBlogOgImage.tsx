@@ -1,13 +1,14 @@
 /* eslint-disable @next/next/no-head-element */
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
-import { Post, posts } from "@/data/posts";
 import puppeteer from "puppeteer";
 import { renderToStaticMarkup } from "react-dom/server";
 import { readFileSync } from "fs";
 import path from "path";
+import { BlogPostInfo } from "@/components/content/type";
+import { blogPostInfos } from "@/lib/content";
 
-const BlogOgImage: React.FC<{ post: Post; avatar: string }> = ({
+const BlogOgImage: React.FC<{ post: BlogPostInfo; avatar: string }> = ({
   post,
   avatar,
 }) => {
@@ -73,7 +74,13 @@ const BlogOgImage: React.FC<{ post: Post; avatar: string }> = ({
   );
 };
 
-const generate = async ({ post, avatar }: { post: Post; avatar: string }) => {
+const generate = async ({
+  post,
+  avatar,
+}: {
+  post: BlogPostInfo;
+  avatar: string;
+}) => {
   const browser = await puppeteer.launch({ args: ["--no-sandbox"] });
   const page = await browser.newPage();
   await page.setViewport({ width: 1200, height: 630 });
@@ -96,7 +103,7 @@ const main = async () => {
     path.join(__dirname, "../public/avatar.png")
   ).toString("base64");
 
-  Promise.all(posts.map((p) => generate({ post: p, avatar })));
+  Promise.all(blogPostInfos.map((p) => generate({ post: p, avatar })));
 };
 
 main();

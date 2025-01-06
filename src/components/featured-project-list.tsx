@@ -1,21 +1,25 @@
 import { FeaturedProjectCard } from "./featured-project-card/card";
 import { Separator } from "./separator";
-import { featuredProjects } from "@/data/projects";
 import React from "react";
 import { Heading } from "./heading";
 import { TextLink } from "./link";
 import { Routes } from "@/routes";
+import { projectInfos } from "@/lib/content";
 
 export const FeaturedProjectList: React.FC = () => {
+  const featuredProjectInfos = projectInfos.filter(
+    (i) => i.detailedDesc !== undefined
+  );
+
   return (
     <div className="flex flex-col gap-6">
       <Heading subTitle="projects">作ったもの</Heading>
       <div className="flex flex-col gap-8 sm:gap-6 ">
-        {featuredProjects.map((p, i) => {
+        {featuredProjectInfos.map((p, i) => {
           return (
             <React.Fragment key={p.title}>
               <FeaturedProjectCard project={p} />
-              {i < featuredProjects.length - 1 && <Separator />}
+              {i < featuredProjectInfos.length - 1 && <Separator />}
             </React.Fragment>
           );
         })}

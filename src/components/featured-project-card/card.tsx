@@ -1,16 +1,16 @@
 import { FeaturedProjectTagCard } from "./tag-card";
-import { FeaturedProject } from "@/data/projects";
 import { ProjectThumbnail } from "../project-thumbnail";
 import Link from "next/link";
 import { TextLink } from "../link";
 import { Routes } from "@/routes";
+import { ProjectInfo } from "../content/type";
 
 type Props = {
-  project: FeaturedProject;
+  project: ProjectInfo;
 };
 
 export const FeaturedProjectCard: React.FC<Props> = ({
-  project: { title, desc, tagLabels, imageSrc, slug },
+  project: { title, detailedDesc, tags, imageSrc, slug },
 }) => {
   return (
     <div className="gap-4 grid sm:grid-cols-[250px_1fr]">
@@ -22,11 +22,11 @@ export const FeaturedProjectCard: React.FC<Props> = ({
           <TextLink href={Routes.project(slug)} className="text-lg">
             {title}
           </TextLink>
-          <div>{desc}</div>
+          <div className="whitespace-pre-wrap">{detailedDesc}</div>
         </div>
         <div className="text-xs flex gap-1 items-center flex-wrap">
-          {tagLabels.map((label) => {
-            return <FeaturedProjectTagCard tagLabel={label} key={label} />;
+          {tags.map((tag) => {
+            return <FeaturedProjectTagCard tag={tag} key={tag} />;
           })}
         </div>
       </div>

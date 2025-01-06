@@ -1,5 +1,4 @@
-import { posts } from "@/data/posts";
-import { getMarkdown, getMarkdownSlugs } from "@/lib/markdown";
+import { blogPostInfos, getContent, getContentSlugs } from "@/lib/content";
 import type { Metadata } from "next";
 import { TbClock } from "@react-icons/all-files/tb/TbClock";
 import { MarkdownViewerWithToc } from "@/components/markdown-viewer/with-toc";
@@ -9,15 +8,7 @@ import { appUrl } from "@/routes";
 type Params = { postSlug: string };
 
 export const generateStaticParams = async (): Promise<Params[]> => {
-  const postMarkdownSlugs = getMarkdownSlugs("posts");
-
-  return posts.map((p) => {
-    if (!postMarkdownSlugs.includes(p.slug)) {
-      throw new Error(`${p.slug}.mdが存在しません`);
-    }
-
-    return { postSlug: p.slug };
-  });
+  return getContentSlugs("blog").map((postSlug) => ({ postSlug }));
 };
 
 type PageProps = { params: Params };
@@ -25,9 +16,9 @@ type PageProps = { params: Params };
 export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
-  const post = posts.find((p) => p.slug === params.postSlug);
+  const post = blogPostInfos.find((info) => info.slug === params.postSlug);
   if (!post) {
-    throw new Error("投稿が存在しません");
+    throw new Error(`投稿が存在しない: ${params.postSlug}`);
   }
 
   const title = `${post.title} - hwld`;
@@ -43,12 +34,12 @@ export async function generateMetadata({
 }
 
 const PostDetailPage: React.FC<PageProps> = async ({ params }) => {
-  const post = posts.find((p) => p.slug === params.postSlug);
+  const post = blogPostInfos.find((p) => p.slug === params.postSlug);
   if (!post) {
     throw new Error(`ポストが存在しません: ${params.postSlug}`);
   }
 
-  const markdown = getMarkdown("posts", params.postSlug);
+  const markdown = getContent("blog", params.postSlug);
 
   return (
     <DetailLayout>
