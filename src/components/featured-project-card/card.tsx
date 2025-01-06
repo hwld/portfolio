@@ -13,7 +13,7 @@ export const FeaturedProjectCard: React.FC<Props> = ({
   project: { title, detailedDesc, tags, imageSrc, slug },
 }) => {
   return (
-    <div className="gap-4 grid sm:grid-cols-[250px_1fr]">
+    <div className="gap-4 grid sm:grid-cols-[250px_1fr] grid-rows-1">
       <Link href={`/projects/${slug}`} className="group">
         <ProjectThumbnail src={imageSrc} interactive />
       </Link>
