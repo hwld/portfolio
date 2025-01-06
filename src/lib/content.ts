@@ -10,7 +10,8 @@ import {
 
 type ContentType = "projects" | "blog";
 
-const contentDir = (dir: ContentType) => path.join(process.cwd(), dir);
+const contentDir = (dir: ContentType) =>
+  path.join(process.cwd(), "content", dir);
 
 const getContentPaths = (type: ContentType): string[] => {
   const dir = contentDir(type);

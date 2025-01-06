@@ -7,8 +7,8 @@
 
 ## projects 追加の手順
 
-1. `/projects`にmarkdownを追加
+1. `/content/projects`にmarkdownを追加
 
 ## blog 追加の手順
 
-1. `/blog`にmarkdownを追加
+1. `/content/blog`にmarkdownを追加
