@@ -1,3 +1,12 @@
+---
+title: evodo/graphql
+createdAt: 2023-10-14
+tags: []
+imageSrc: /screenshots/evodo-graphql.png
+summary: GraphQLを使用したTodoリストです。
+githubUrl: https://github.com/hwld/evodo-graphql
+---
+
 ## 概要
 
 GraphQLを試すために作ったTodoリストです。  

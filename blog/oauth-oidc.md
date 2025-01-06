@@ -1,3 +1,7 @@
+---
+title: OAuthとOIDCを認証の観点でまとめる
+createdAt: 2024-11-26
+---
 
 > [!info]
 > OAuthは認証のための技術ではありませんが、OAuthが認証に利用されたり、

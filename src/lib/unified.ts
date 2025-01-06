@@ -3,11 +3,15 @@ import { toc } from "mdast-util-toc";
 import { unified } from "unified";
 import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
+import matter from "gray-matter";
 
 export const getTocHAst = async (markdown: string) => {
+  // front matterを除去する
+  const { content } = matter(markdown);
+
   const processor = unified().use(remarkParse).use(remarkToc).use(remarkRehype);
 
-  const mdast = processor.parse(markdown);
+  const mdast = processor.parse(content);
   const hast = await processor.run(mdast);
 
   return hast;

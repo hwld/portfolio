@@ -21,10 +21,14 @@ import { tv, type VariantProps } from "tailwind-variants";
 import Link from "next/link";
 import { MaybeCalloutRelatedDiv } from "./callout";
 import { MAKRDOWN_VIEWER_ID } from "./consts";
+import matter from "gray-matter";
 
 type Props = { children: string };
 
 export const MarkdownViewer: React.FC<Props> = async ({ children }) => {
+  // front matterを除去する
+  const { content } = matter(children);
+
   const processor = unified()
     .use(remarkParse)
     .use(remarkGfm)
@@ -34,12 +38,12 @@ export const MarkdownViewer: React.FC<Props> = async ({ children }) => {
     .use(rehypeSectionize)
     .use(rehypeShiki, { theme: "github-dark-default", addLanguageClass: true });
 
-  const mdast = processor.parse(children);
+  const mdast = processor.parse(content);
 
   // shikiはrunを使用する必要があるが、ReactMarkdownはrunSyncを実行するので、
   // ReactMarkdownは使用しない
   // https://github.com/remarkjs/react-markdown/issues/680
-  const hast = await processor.run(mdast, children);
+  const hast = await processor.run(mdast, content);
 
   return (
     <div

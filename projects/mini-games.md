@@ -1,3 +1,12 @@
+---
+title: mini-games
+createdAt: 2022-01-20
+tags: []
+imageSrc: /screenshots/mini-games.png
+summary: Reactで実装したいろんなミニゲームです。
+githubUrl: https://github.com/hwld/mini-games
+---
+
 ## 概要
 
 Reactで様々なミニゲームを作ったプロジェクトです。  

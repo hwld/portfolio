@@ -1,3 +1,13 @@
+---
+title: zero-one-ui/todoist
+createdAt: 2024-07-28
+tags: []
+imageSrc: /screenshots/zou-todoist.png
+summary: TodoistクローンWebアプリです。TreeViewのDnDをフルスクラッチで実装しています。
+projectUrl: https://zero-one-ui.web.app/todoist/inbox
+githubUrl: https://github.com/hwld/zero-one-ui/tree/main/src/app/todoist
+---
+
 ## 概要
 
 [zero-one-ui](/projects/zero-one-ui)プロジェクトで作ったUIです。  

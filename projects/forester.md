@@ -1,3 +1,12 @@
+---
+title: forester
+createdAt: 2022-06-13
+tags: []
+imageSrc: /screenshots/forester.png
+summary: Remixを使ったTwitterのクローンアプリです。
+githubUrl: https://github.com/hwld/forester
+---
+
 ## 概要
 
 Remixを試すために作ったTwitterのクローンアプリです。  

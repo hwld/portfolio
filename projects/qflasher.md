@@ -1,3 +1,13 @@
+---
+title: qflasher
+createdAt: 2021-09-01
+tags: []
+imageSrc: /screenshots/qflasher.png
+summary: 効率的な反復学習ができるWebで動く単語帳です。
+projectUrl: https://q-flasher.web.app/
+githubUrl: https://github.com/hwld/qflasher
+---
+
 ## 概要
 
 効率的な反復学習が可能なWebで動く単語帳です。  

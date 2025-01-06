@@ -1,3 +1,13 @@
+---
+title: react-notes
+createdAt: 2020-02-20
+tags: []
+imageSrc: /screenshots/react-notes.png
+summary: gweton-webをReactでリライトしたものです。Reactを初めて使ったWebアプリです。
+projectUrl: https://react-s1te.web.app
+githubUrl: https://github.com/hwld/react-notes
+---
+
 ## 概要
 
 JavaScriptとVue.jsで作った[gweton-web](/projects/gweton-web)を、

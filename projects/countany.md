@@ -1,3 +1,13 @@
+---
+title: countany
+createdAt: 2020-10-24
+tags: []
+imageSrc: /screenshots/countany.png
+summary: Next.jsを使用したカウンターを自由に作成できるWebアプリです。一定期間アクセスがないとDBが落ちてログインできなくなります。
+projectUrl: https://countany.vercel.app/
+githubUrl: https://github.com/hwld/countany
+---
+
 ## 概要
 
 Next.jsを使用して作った、数を数えるカウンターを複数作ることのできるWebアプリです。  

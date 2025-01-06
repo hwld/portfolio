@@ -1,3 +1,12 @@
+---
+title: actix-web-todo
+createdAt: 2021-05-06
+tags: []
+imageSrc: /screenshots/actix-web-todo.png
+summary: バックエンドをRustで書いたTodoリストです。バックエンドはシンプルなCRUDだけで、結局ずっとフロントエンドを触っていました。
+githubUrl: https://github.com/hwld/actix-web-todo
+---
+
 ## 概要
 
 Rustを少し学んだ後に作った、バックエンドをRustで書いたTodoリストです。  

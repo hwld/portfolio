@@ -1,3 +1,13 @@
+---
+title: zero-one-ui/github-projects
+createdAt: 2024-03-27
+tags: []
+imageSrc: /screenshots/zou-github-projects.png
+summary: GitHub Projectsの見た目をできるだけそのままに作ったクローンアプリです。機能もそれなりに実装しています。
+projectUrl: https://zero-one-ui.web.app/github-project
+githubUrl: https://github.com/hwld/zero-one-ui/tree/main/src/app/github-project
+---
+
 ## 概要
 
 [zero-one-ui](/projects/zero-one-ui)プロジェクトで作ったUIです。  

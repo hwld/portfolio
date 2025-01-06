@@ -1,3 +1,17 @@
+---
+title: evodo/openapi
+createdAt: 2023-12-13
+tags: [TypeScript, React, hono, Prisma, lucia, shadcn-ui]
+imageSrc: /screenshots/evodo-openapi.png
+summary: フロントとバックエンドが分離されている状態で、APIアクセスを型安全にするためのOpenAPIを試したくて作ったTodoリストアプリです。
+projectUrl: https://evodo-openapi.pages.dev/
+githubUrl: https://github.com/hwld/evodo-openapi
+detailedDesc: |-
+    テーブル形式で表示されたTodoリストのWebアプリです。
+    型安全なAPIアクセスに興味があり、OpenAPIを試してみたくて作りました。
+    フロントエンドとバックエンドでドメインが異なっており、ブラウザによってはログイン状態が維持されないかもしれません。
+---
+
 ## 概要
 
 OpenAPIを試すために作ったTodoリストです。  

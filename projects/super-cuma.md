@@ -1,3 +1,12 @@
+---
+title: super-cuma
+createdAt: 2022-07-28
+tags: []
+imageSrc: /screenshots/super-cuma.png
+summary: RemixとCakePHP4で顧客管理アプリを書き比べたものです。
+githubUrl: https://github.com/hwld/super-cuma-project
+---
+
 ## 概要
 
 顧客管理Webアプリを、CakePHP4とRemixで書き比べるためのプロジェクトです。  

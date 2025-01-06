@@ -1,3 +1,12 @@
+---
+title: nnnotify
+createdAt: 2024-08-27
+tags: []
+imageSrc: /screenshots/nnnotify.png
+summary: Server-sent Eventsを利用した、ユーザー毎のリアルタイム通知のデモアプリです。
+githubUrl: https://github.com/hwld/nnnotify
+---
+
 ## 概要
 
 SSEを利用して、ユーザー毎にリアルタイムで通知を送ることのできるデモ用のWebアプリです。

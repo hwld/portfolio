@@ -1,3 +1,12 @@
+---
+title: evodo-axum
+createdAt: 2024-01-16
+tags: []
+imageSrc: /screenshots/evodo-axum.png
+summary: axumをつかったノードベースUIのTodoリストです。サブタスクやタスクのブロックなどを実装しています。
+githubUrl: https://github.com/hwld/evodo-axum
+---
+
 ## 概要
 
 RustのaxumとノードベースUIを試すために作ったTodoリスト(?)です。  

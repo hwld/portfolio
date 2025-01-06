@@ -1,3 +1,12 @@
+---
+title: housing-loan-simulator
+createdAt: 2022-09-20
+tags: []
+imageSrc: /screenshots/housing-loan-simulator.png
+summary: 住宅ローンの料金を計算するWebアプリです。結果を画像として出力する機能も実装しています。
+githubUrl: https://github.com/hwld/housing-loan-simulator"
+---
+
 ## 概要
 
 Reactで作った住宅ローンシミュレータです。  

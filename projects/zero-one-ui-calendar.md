@@ -1,3 +1,13 @@
+---
+title: zero-one-ui/calendar
+createdAt: 2024-04-21
+tags: []
+imageSrc: /screenshots/zou-calendar.png
+summary: カレンダー部分をフルスクラッチで書いたWebカレンダーです。ドラッグ&ドロップによるイベント作成や移動など、様々な機能を実装しています。
+projectUrl: https://zero-one-ui.web.app/calendar
+githubUrl: https://github.com/hwld/zero-one-ui/tree/main/src/app/calendar
+---
+
 ## 概要
 
 [zero-one-ui](/projects/zero-one-ui)プロジェクトで作ったUIです。  

@@ -1,3 +1,12 @@
+---
+title: gweton-web
+createdAt: 2019-10-22
+tags: []
+imageSrc: /screenshots/gweton-web.png
+summary: シンプルなメモ帳で、初めて作ったWebアプリです。この頃はVue.jsを使用していました。
+githubUrl: https://github.com/hwld/gweton-web
+---
+
 ## 概要
 
 もともとXamarin.Formsというクロスプラットフォームアプリ開発フレームワークを使って作っていたシンプルなメモ帳アプリを、

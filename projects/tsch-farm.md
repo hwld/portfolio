@@ -1,3 +1,13 @@
+---
+title: tsch-farm
+createdAt: 2024-09-03
+tags: []
+imageSrc: /screenshots/tsch-farm.png
+summary: monaco-editorを使って作った、type-challengesを快適に解くためのWebアプリです。
+projectUrl: https://tsch-farm.pages.dev/
+githubUrl: https://github.com/hwld/tsch-farm
+---
+
 ## 概要
 
 [type-challenges](https://github.com/type-challenges/type-challenges/blob/main/README.ja.md)を快適に解くためのWebアプリです。
