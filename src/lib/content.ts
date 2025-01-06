@@ -12,7 +12,7 @@ type ContentType = "projects" | "blog";
 
 const contentDir = (dir: ContentType) => path.join(process.cwd(), dir);
 
-export const getContentPaths = (type: ContentType): string[] => {
+const getContentPaths = (type: ContentType): string[] => {
   const dir = contentDir(type);
 
   const files = fs.readdirSync(dir);
@@ -31,7 +31,7 @@ export const getContentPaths = (type: ContentType): string[] => {
   });
 };
 
-export const getContentSlug = (contentPath: string): string => {
+const getContentSlug = (contentPath: string): string => {
   return path.basename(contentPath, path.extname(contentPath));
 };
 
@@ -45,7 +45,7 @@ export const getContent = (type: ContentType, slug: string): string => {
   return fs.readFileSync(mdFilePath).toString();
 };
 
-export const getBlogPostInfos = (): BlogPostInfo[] => {
+const getBlogPostInfos = (): BlogPostInfo[] => {
   const paths = getContentPaths("blog");
 
   const infos = paths.map((postPath): BlogPostInfo => {
@@ -66,7 +66,7 @@ export const getBlogPostInfos = (): BlogPostInfo[] => {
   return infos;
 };
 
-export const getProjectInfos = (): ProjectInfo[] => {
+const getProjectInfos = (): ProjectInfo[] => {
   const paths = getContentPaths("projects");
 
   const infos = paths.map((projectPath): ProjectInfo => {

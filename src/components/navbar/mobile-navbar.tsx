@@ -181,7 +181,7 @@ type SocialLinkItemProps = {
   label: string;
 };
 
-export const SocialLinkItem: React.FC<SocialLinkItemProps> = ({
+const SocialLinkItem: React.FC<SocialLinkItemProps> = ({
   icon: Icon,
   href,
   label,

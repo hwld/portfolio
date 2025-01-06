@@ -151,7 +151,7 @@ type NavbarItemProps = {
   onMoveActiveMarker?: (targetPath: string) => void;
 };
 
-export const NavbarItem = forwardRef<HTMLAnchorElement, NavbarItemProps>(
+const NavbarItem = forwardRef<HTMLAnchorElement, NavbarItemProps>(
   function NavbarItem(
     { page, children, isCurrentPage = false, activeMarker, onMoveActiveMarker },
     ref
@@ -187,7 +187,7 @@ type NavbarSocialLinkItemProps = {
   label: string;
 };
 
-export const NavbarSocialLinkItem = forwardRef<
+const NavbarSocialLinkItem = forwardRef<
   HTMLAnchorElement,
   NavbarSocialLinkItemProps
 >(function NavbarSocialLinkItem(

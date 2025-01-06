@@ -18,7 +18,7 @@ const parseCalloutType = (type: any): CalloutType => {
 /**
  * コールアウト関連のdiv要素に付与されている属性
  */
-export type CalloutDivProps = {
+type CalloutDivProps = {
   "data-callout"?: true;
   "data-callout-type"?: string;
   "data-callout-title"?: true;

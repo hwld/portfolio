@@ -83,7 +83,7 @@ type SearchSheetProps = {
   floatingContext: FloatingContext;
 } & ComponentPropsWithoutRef<"div">;
 
-export const SearchSheet = forwardRef<HTMLDivElement, SearchSheetProps>(
+const SearchSheet = forwardRef<HTMLDivElement, SearchSheetProps>(
   function SearchSheet({ onClose, isOpen, floatingContext, ...props }, ref) {
     const [query, setQuery] = useState("");
     const { isSearching, results, search } = useSearchPage({

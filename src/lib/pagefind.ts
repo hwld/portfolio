@@ -2,7 +2,7 @@
 
 import { removeHtmlExtension } from "./utils";
 
-export type RawPagefind = {
+type RawPagefind = {
   options: (options: PagefindIndexOptions) => Promise<void>;
   init: () => Promise<void>;
   search: (
@@ -87,7 +87,7 @@ const transferSearchAllResults = async (
 // https://github.com/CloudCannon/pagefind/blob/main/pagefind_web_js/types/index.d.ts
 
 /** Global index options that can be passed to pagefind.options() */
-export type PagefindIndexOptions = {
+type PagefindIndexOptions = {
   /** Overrides the URL path that Pagefind uses to load its search bundle */
   basePath?: string;
   /** Appends the given baseURL to all search results. May be a path, or a full domain */
@@ -123,7 +123,7 @@ export type PagefindIndexOptions = {
   ranking?: PagefindRankingWeights;
 };
 
-export type PagefindRankingWeights = {
+type PagefindRankingWeights = {
   /**
             Controls page ranking based on similarity of terms to the search query (in length).
             Increasing this number means pages rank higher when they contain words very close to the query,
@@ -155,7 +155,7 @@ export type PagefindRankingWeights = {
 };
 
 /** Options that can be passed to pagefind.search() */
-export type PagefindSearchOptions = {
+type PagefindSearchOptions = {
   /** If set, this call will load all assets but return before searching. Prefer using pagefind.preload() instead */
   preload?: boolean;
   /** Add more verbose console logging for this search query */
@@ -167,10 +167,10 @@ export type PagefindSearchOptions = {
 };
 
 /** Filter counts returned from pagefind.filters(), and alongside results from pagefind.search() */
-export type PagefindFilterCounts = Record<string, Record<string, number>>;
+type PagefindFilterCounts = Record<string, Record<string, number>>;
 
 /** The main results object returned from a call to pagefind.search() */
-export type PagefindSearchResults = {
+type PagefindSearchResults = {
   /** All pages that match the search query and filters provided */
   results: PagefindSearchResult[];
   /** How many results would there have been if you had omitted the filters */
@@ -188,7 +188,7 @@ export type PagefindSearchResults = {
 };
 
 /** A single result from a search query, before actual data has been loaded */
-export type PagefindSearchResult = {
+type PagefindSearchResult = {
   /** Pagefind's internal ID for this page, unique across the site */
   id: string;
   /** Pagefind's internal score for your query matching this page, that is used when ranking these results */
@@ -205,7 +205,7 @@ export type PagefindSearchResult = {
 };
 
 /** The useful data Pagefind provides for a search result */
-export type PagefindSearchFragment = {
+type PagefindSearchFragment = {
   /** Pagefind's processed URL for this page. Will include the baseUrl if configured */
   url: string;
   /** Pagefind's unprocessed URL for this page */
@@ -245,7 +245,7 @@ export type PagefindSearchFragment = {
 };
 
 /** Data for a matched section within a page */
-export type PagefindSubResult = {
+type PagefindSubResult = {
   /**
    * Title of this sub result — derived from the heading content.
    *
@@ -279,7 +279,7 @@ export type PagefindSubResult = {
 };
 
 /** Information about a matching word on a page */
-export type PagefindWordLocation = {
+type PagefindWordLocation = {
   /** The weight that this word was originally tagged as */
   weight: number;
   /**
@@ -299,7 +299,7 @@ export type PagefindWordLocation = {
 };
 
 /** Raw data about elements with IDs that Pagefind encountered when indexing the page */
-export type PagefindSearchAnchor = {
+type PagefindSearchAnchor = {
   /** What element type was this anchor? e.g. `h1`, `div` */
   element: string;
   /** The raw id="..." attribute contents of the element */
