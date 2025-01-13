@@ -66,6 +66,6 @@ export const navbarSocialLinks: SocialLink[] = [
     label: "GitHubへのリンク",
     uniquePath: "github-link",
     icon: TbBrandGithub,
-    href: "https://gtihub.com/hwld",
+    href: "https://github.com/hwld",
   },
 ];
