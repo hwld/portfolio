@@ -34,9 +34,9 @@ Markdownが存在しなかったり、存在しないプロジェクトのMarkdo
 
 ### コードハイライト
 
-ページ内のコードブロックは、[shiki](https://shiki.style/)を使用して構文ハイライトを効かせています。  
+ページ内のコードブロックは、[shiki](https://shiki.style/)を使用して構文ハイライトを効かせています。
 初めはMarkdownの表示にreact-markdownを使用していたのですが、shikiのプラグインを使用することができなかったので、
-unified/remark/rehypeなどを使用してJSXに変換しています。  
+unified/remark/rehypeなどを使用してJSXに変換しています。
 
 ```ts
 const processor = unified()
