@@ -1,8 +1,6 @@
-import { ArticleInfo } from "@/components/content/type";
+import { ArticleItem } from "@/components/article-item";
 import { SummaryLayout } from "@/components/layout/summary-layout";
-import { TextLink } from "@/components/link";
 import { articleInfos } from "@/lib/content";
-import { Routes } from "@/routes";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -22,26 +20,3 @@ export default function BlogPage() {
     </SummaryLayout>
   );
 }
-
-const ArticleItem: React.FC<{ article: ArticleInfo }> = ({ article }) => {
-  return (
-    <div
-      key={article.title}
-      className="grid grid-rows-[auto_1fr] md:grid-rows-1 grid-cols-1 md:grid-cols-[auto_1fr] gap-0 md:gap-4 items-start"
-    >
-      <div className="flex items-center text-center text-foreground-muted tabular-nums leading-6">
-        {article.createdAt.getFullYear()}・
-        <div className="w-[2ch] tabular-nums">
-          {article.createdAt.getMonth() + 1}
-        </div>
-        ・
-        <div className="w-[2ch] tabular-nums">
-          {article.createdAt.getDate()}
-        </div>
-      </div>
-      <TextLink href={Routes.blogDetail(article.slug)}>
-        {article.title}
-      </TextLink>
-    </div>
-  );
-};
