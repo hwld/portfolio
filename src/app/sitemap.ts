@@ -1,4 +1,4 @@
-import { blogPostInfos, projectInfos } from "@/lib/content";
+import { articleInfos, projectInfos } from "@/lib/content";
 import { appUrl, Routes } from "@/routes";
 import type { MetadataRoute } from "next";
 
@@ -6,7 +6,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     { url: appUrl },
     ...createSitemapEntries(projectInfos, Routes.project),
-    ...createSitemapEntries(blogPostInfos, Routes.blogDetail),
+    ...createSitemapEntries(articleInfos, Routes.blogDetail),
   ];
 }
 

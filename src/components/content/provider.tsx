@@ -1,10 +1,10 @@
 "use client";
 import { createContext, ReactNode, useContext } from "react";
-import { BlogPostInfo, ProjectInfo } from "./type";
+import { ArticleInfo, ProjectInfo } from "./type";
 
 type ContentInfosContext = {
   projectInfos: ProjectInfo[];
-  blogPostInfos: BlogPostInfo[];
+  articleInfos: ArticleInfo[];
 };
 
 const ContentInfosContext = createContext<ContentInfosContext | undefined>(

@@ -6,8 +6,8 @@ const ContentInfoSchema = z.object({
   createdAt: z.date(),
 });
 
-export const BlogPostInfoSchema = ContentInfoSchema;
-export type BlogPostInfo = z.infer<typeof BlogPostInfoSchema>;
+export const ArticleInfoSchema = ContentInfoSchema;
+export type ArticleInfo = z.infer<typeof ArticleInfoSchema>;
 
 const ProjectTag = z.union([
   z.literal("TypeScript"),

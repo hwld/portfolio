@@ -101,7 +101,7 @@ export const MobileNavbar: React.FC = () => {
 const useCurrentPage = (
   currentPath: string
 ): { Icon: IconType; title: string } | undefined => {
-  const { blogPostInfos, projectInfos } = useContentInfo();
+  const { articleInfos, projectInfos } = useContentInfo();
 
   const page = allPageLinks.find((p) => p.path === currentPath);
   if (page) {
@@ -110,7 +110,7 @@ const useCurrentPage = (
 
   const title = getDetailPageTitle({
     path: currentPath,
-    blogPostInfos,
+    articleInfos,
     projectInfos,
   });
   if (title) {

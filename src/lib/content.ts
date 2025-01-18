@@ -2,8 +2,8 @@ import path from "node:path";
 import fs from "node:fs";
 import matter from "gray-matter";
 import {
-  BlogPostInfo,
-  BlogPostInfoSchema,
+  ArticleInfo,
+  ArticleInfoSchema,
   ProjectInfo,
   ProjectInfoSchema,
 } from "@/components/content/type";
@@ -46,22 +46,22 @@ export const getContent = (type: ContentType, slug: string): string => {
   return fs.readFileSync(mdFilePath).toString();
 };
 
-const getBlogPostInfos = (): BlogPostInfo[] => {
+const getArticleInfos = (): ArticleInfo[] => {
   const paths = getContentPaths("blog");
 
-  const infos = paths.map((postPath): BlogPostInfo => {
+  const infos = paths.map((articlePath): ArticleInfo => {
     const textData = fs
-      .readFileSync(path.join(contentDir("blog"), postPath))
+      .readFileSync(path.join(contentDir("blog"), articlePath))
       .toString();
 
     const { data } = matter(textData);
 
-    const result = BlogPostInfoSchema.omit({ slug: true }).safeParse(data);
+    const result = ArticleInfoSchema.omit({ slug: true }).safeParse(data);
     if (result.error) {
-      throw new Error(`${postPath}: ${result.error}`);
+      throw new Error(`${articlePath}: ${result.error}`);
     }
 
-    return { ...result.data, slug: getContentSlug(postPath) };
+    return { ...result.data, slug: getContentSlug(articlePath) };
   });
 
   return infos;
@@ -91,7 +91,7 @@ const getProjectInfos = (): ProjectInfo[] => {
 /**
  * サーバー(ビルド環境)以外では使用できない
  */
-export const blogPostInfos = getBlogPostInfos();
+export const articleInfos = getArticleInfos();
 
 /**
  * サーバー(ビルド環境)以外では使用できない

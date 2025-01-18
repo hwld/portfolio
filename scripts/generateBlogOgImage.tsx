@@ -5,11 +5,11 @@ import puppeteer from "puppeteer";
 import { renderToStaticMarkup } from "react-dom/server";
 import { readFileSync } from "fs";
 import path from "path";
-import { BlogPostInfo } from "@/components/content/type";
-import { blogPostInfos } from "@/lib/content";
+import { ArticleInfo } from "@/components/content/type";
+import { articleInfos } from "@/lib/content";
 
-const BlogOgImage: React.FC<{ post: BlogPostInfo; avatar: string }> = ({
-  post,
+const BlogOgImage: React.FC<{ article: ArticleInfo; avatar: string }> = ({
+  article,
   avatar,
 }) => {
   return (
@@ -66,7 +66,7 @@ const BlogOgImage: React.FC<{ post: BlogPostInfo; avatar: string }> = ({
           <div
             style={{ fontWeight: "bold", fontSize: "50px", overflow: "hidden" }}
           >
-            {post.title}
+            {article.title}
           </div>
         </div>
       </body>
@@ -75,10 +75,10 @@ const BlogOgImage: React.FC<{ post: BlogPostInfo; avatar: string }> = ({
 };
 
 const generate = async ({
-  post,
+  article,
   avatar,
 }: {
-  post: BlogPostInfo;
+  article: ArticleInfo;
   avatar: string;
 }) => {
   const browser = await puppeteer.launch({ args: ["--no-sandbox"] });
@@ -86,14 +86,14 @@ const generate = async ({
   await page.setViewport({ width: 1200, height: 630 });
 
   const markup = renderToStaticMarkup(
-    <BlogOgImage post={post} avatar={avatar} />
+    <BlogOgImage article={article} avatar={avatar} />
   );
   const fullHtml = `<!DOCTYPE html>${markup}`;
   await page.setContent(fullHtml, { waitUntil: "load" });
   await page.evaluate(async () => {
     await document.fonts.ready;
   });
-  await page.screenshot({ path: `./public/images/ogp/${post.slug}.png` });
+  await page.screenshot({ path: `./public/images/ogp/${article.slug}.png` });
 
   await browser.close();
 };
@@ -103,7 +103,7 @@ const main = async () => {
     path.join(__dirname, "../public/avatar.png")
   ).toString("base64");
 
-  Promise.all(blogPostInfos.map((p) => generate({ post: p, avatar })));
+  Promise.all(articleInfos.map((p) => generate({ article: p, avatar })));
 };
 
 main();

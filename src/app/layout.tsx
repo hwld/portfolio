@@ -5,7 +5,7 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 import { PagefindProvider } from "@/components/pagefind-provider";
 import { TocContextProvider } from "@/components/markdown-viewer/toc-provider";
 import { ContentInfosContextProvider } from "@/components/content/provider";
-import { blogPostInfos, projectInfos } from "@/lib/content";
+import { articleInfos, projectInfos } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "hwld",
@@ -26,7 +26,9 @@ export default async function RootLayout({
         />
       </head>
       <PagefindProvider>
-        <ContentInfosContextProvider value={{ blogPostInfos, projectInfos }}>
+        <ContentInfosContextProvider
+          value={{ articleInfos: articleInfos, projectInfos }}
+        >
           <TocContextProvider>
             <body
               className="font-sans min-h-screen bg-background antialiased text-foreground font-normal text-sm"
