@@ -56,7 +56,7 @@ const getArticleInfos = (): ArticleInfo[] => {
 
     const { data } = matter(textData);
 
-    const result = ArticleInfoSchema.omit({ slug: true }).safeParse(data);
+    const result = ArticleInfoSchema.safeParse(data);
     if (result.error) {
       throw new Error(`${articlePath}: ${result.error}`);
     }
@@ -77,7 +77,7 @@ const getProjectInfos = (): ProjectInfo[] => {
 
     const { data } = matter(textData);
 
-    const result = ProjectInfoSchema.omit({ slug: true }).safeParse(data);
+    const result = ProjectInfoSchema.safeParse(data);
     if (result.error) {
       throw new Error(`${projectPath}: ${result.error}`);
     }

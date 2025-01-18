@@ -7,13 +7,13 @@ import { Routes } from "@/routes";
 import { projectInfos } from "@/lib/content";
 
 export const FeaturedProjectList: React.FC = () => {
-  const featuredProjectInfos = projectInfos.filter(
-    (i) => i.detailedDesc !== undefined
-  );
+  const featuredProjectInfos = projectInfos
+    .filter((i) => i.type === "featured")
+    .sort((a, b) => a.featuredOrder - b.featuredOrder);
 
   return (
     <div className="flex flex-col gap-6">
-      <Heading subTitle="projects">作ったもの</Heading>
+      <Heading subTitle="projects">お気に入りのプロジェクト</Heading>
       <div className="flex flex-col gap-8 sm:gap-6 ">
         {featuredProjectInfos.map((p, i) => {
           return (

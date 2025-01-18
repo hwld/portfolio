@@ -3,14 +3,14 @@ import { ProjectThumbnail } from "../project-thumbnail";
 import Link from "next/link";
 import { TextLink } from "../link";
 import { Routes } from "@/routes";
-import { ProjectInfo } from "../content/type";
+import { FeaturedProjectInfo } from "../content/type";
 
 type Props = {
-  project: ProjectInfo;
+  project: FeaturedProjectInfo;
 };
 
 export const FeaturedProjectCard: React.FC<Props> = ({
-  project: { title, detailedDesc, tags, imageSrc, slug },
+  project: { title, featuredDesc, tags, imageSrc, slug },
 }) => {
   return (
     <div className="gap-4 grid sm:grid-cols-[250px_1fr] grid-rows-1">
@@ -22,7 +22,7 @@ export const FeaturedProjectCard: React.FC<Props> = ({
           <TextLink href={Routes.project(slug)} className="text-lg">
             {title}
           </TextLink>
-          <div className="whitespace-pre-wrap">{detailedDesc}</div>
+          <div className="whitespace-pre-wrap">{featuredDesc}</div>
         </div>
         <div className="text-xs flex gap-1 items-center flex-wrap">
           {tags.map((tag) => {

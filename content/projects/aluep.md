@@ -1,4 +1,5 @@
 ---
+type: featured
 title: aluep
 createdAt: 2022-11-08
 tags: [TypeScript, Next.js, Prisma, NextAuth, Mantine]
@@ -6,10 +7,11 @@ imageSrc: /screenshots/aluep.png
 summary: Next.jsを使ってフロントエンド、バックエンドともにTypeScriptを使って作ったアプリです。開発のお題を投稿・検索できます。
 projectUrl: https://aluep-rx7ks4nz3a-an.a.run.app/
 githubUrl: https://github.com/hwld/aluep
-detailedDesc: |-
+featuredDesc: |-
   作るものが思いつかない人のための、アプリ開発のお題を投稿・検索できるWebアプリです。
   そこそこの規模のWebアプリケーションの開発がしたくて作りました。
   Cloud Runを使っているのですが、コールドスタートのためレスポンスに数秒かかることがあります。
+featuredOrder: 2 
 ---
 
 ## 概要

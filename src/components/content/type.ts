@@ -1,13 +1,12 @@
 import { z } from "zod";
 
 const ContentInfoSchema = z.object({
-  slug: z.string(),
   title: z.string(),
   createdAt: z.date(),
 });
 
 export const ArticleInfoSchema = ContentInfoSchema;
-export type ArticleInfo = z.infer<typeof ArticleInfoSchema>;
+export type ArticleInfo = z.infer<typeof ArticleInfoSchema> & { slug: string };
 
 const ProjectTag = z.union([
   z.literal("TypeScript"),
@@ -36,16 +35,33 @@ export const projectTagLinkMap: Map<ProjectTag, string> = new Map([
   ["tailwindcss", "https://tailwindcss.com/"],
 ]);
 
-export const ProjectInfoSchema = ContentInfoSchema.merge(
+const ProjectInfoBaseSchema = ContentInfoSchema.merge(
   z.object({
     tags: z.array(ProjectTag),
     imageSrc: z.string().optional(),
     summary: z.string(),
     projectUrl: z.string().optional(),
     githubUrl: z.string().optional(),
-
-    // このフィールドが存在するプロジェクトはホーム画面に表示する
-    detailedDesc: z.string().optional(),
   })
 );
-export type ProjectInfo = z.infer<typeof ProjectInfoSchema>;
+
+const NormalProjectInfoSchema = ProjectInfoBaseSchema.merge(
+  z.object({ type: z.literal("normal").optional() })
+);
+
+const FeaturedProjectInfoSchema = ProjectInfoBaseSchema.merge(
+  z.object({
+    type: z.literal("featured"),
+    featuredDesc: z.string(),
+    featuredOrder: z.number(),
+  })
+);
+export type FeaturedProjectInfo = z.infer<typeof FeaturedProjectInfoSchema> & {
+  slug: string;
+};
+
+export const ProjectInfoSchema = NormalProjectInfoSchema.or(
+  FeaturedProjectInfoSchema
+);
+
+export type ProjectInfo = z.infer<typeof ProjectInfoSchema> & { slug: string };

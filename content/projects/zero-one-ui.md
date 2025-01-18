@@ -1,4 +1,5 @@
 ---
+type: featured
 title: zero-one-ui
 createdAt: 2023-11-13
 tags: [TypeScript, React, tailwindcss]
@@ -6,10 +7,11 @@ imageSrc: /screenshots/zou.png
 summary: Reactを使って、パーツレベルから画面全体のレイアウトまで、さまざまなUIを作るためのプロジェクトです。
 projectUrl: https://zero-one-ui.web.app
 githubUrl: https://github.com/hwld/zero-one-ui
-detailedDesc: |-
+featuredDesc: |-
   Reactで様々なUIを作るためのプロジェクトです。
   非同期通信のシミュレーションのため、mswを使ってローカルにAPIサーバーを立てています。
   `/`キーで表示されるメニューのUIがお気に入りです。
+featuredOrder: 1
 ---
 
 ## 概要
