@@ -39,36 +39,67 @@ CLIには問題を繰り返し解くような機能は含まれていないの�
 - Deno
 - TypeScript
 - zod
+- [deno-dom](https://jsr.io/@b-fuze/deno-dom)
 - [Cliffy](https://cliffy.io/)
-- [neverthrow](https://github.com/supermacro/neverthrow)
 
 ## 実装の詳細
 
-### CLIの初期化
+### HTMLのパースによるデータの抽出
 
-CLIを実行すると、まず`docker compose up -d`コマンドを実行して、プロジェクトのディレクトリに含まれる`compose.yml`をもとにPostgreSQLを立ち上げます。
-その後設定ファイルから問題が含まれるディレクトリや使用するエディタのコマンドなどを読み込みます。
+このプロジェクトがもとにしているデータサイエンス100本ノックでは、問題文や回答例のSQL、回答例の実行結果は[HTMLとして提供されています](https://github.com/The-Japan-DataScientist-Society/100knocks-preprocess/tree/master/docker/doc/answer)。
+このHTMLには規則性があり、問題ごとのデータが取得しやすそうだったので、deno-domというライブラリを使用してデータをJSONに変換してファイルに保存するスクリプトを書いています。
 
-設定ファイルはjsonで書かれており、それを読み込んで`zod`で作成した設定ファイルのスキーマをもとにパースします。
-設定データはグローバルに使用したかったためシングルトンで実装したのですが、テストのことを考えるとDIコンテナのような仕組みがあったほうが良いかもしれません。
-Node.jsに実装されている`AsyncLocalStorage`なども使えると思います。
+現時点ではデータサイエンス100本ノックのうち、実行結果がランダムになる問題や複数のSQLの実行を要求する問題には対応しておらず、問題数は74です。
+前者は難しいかもしれませんが、後者は回答例のSQLをくっつけて一つのSQLにすることで対応できるかもしれません。
 
-設定ファイルには使用するエディタのコマンドや、２つのファイルを比較して表示するためのオプションなどを設定できます。
-デフォルトだと僕が普段使っているVSCode Insidersのコマンドである`code-insiders`が設定されていて、比較するためのオプションは`-d`になっています。
-2つのファイルを比較して表示する機能は、不正解だった場合に書いたSQLの実行結果が保存されているファイルと解答データを開くために使用しています。
+### AsyncLocalStorageを使用したコンテキスト管理
 
-設定を取得するためには、exportされている`Config`クラスのインスタンスを使用します。
+CLIの設定ファイルや、上の項目で保存したファイルから読み取ったデータの管理は[AsyncLocalStorage](https://nodejs.org/api/async_context.html#class-asynclocalstorage)で行っています。CLIの起動時に設定ファイルや問題データが書き込まれたファイルから読み取ったデータをAsyncLocalStorageに保存することで、プログラムの様々な箇所から読み取ることができ、テスト用のコンテキストを用意することでグローバル変数を使用するよりも安全にテストを行うことができます。
+
+例えば設定データの管理の実装は以下のようになっています。
 
 ```ts
-export const config = new Config();
 
-config.load();
-config.get("editorCommand");
-config.get("diffOption");
-config.get("100knocksDir")
+// --- コンテキストの定義 --- 
+
+const configContext = new AsyncLocalStorage<Config>();
+
+async function loadConfig(): Promise<Config> {
+    // 設定ファイルから設定データを読み込む
+}
+
+export async function withConfigContext(callback: () => void) {
+    const config = await loadConfig();
+    configContext.run(config, callback);
+}
+
+export function getConfig(): Config {
+    const config = configContext.getStore();
+    if (!config) {
+        logger.error("Config context not found");
+        Deno.exit(1);
+    }
+    return config;
+}
+
+// --- 使用方法 ---
+
+async function main() {
+    const config = loadConfig();
+
+    // メインの処理...
+}
+
+withConfigContext(main);
 ```
 
-`zod`でスキーマを定義しているため、`Config.get()`で指定できる設定は補完が効きます。
+このようなコードで、main関数内のすべての関数で`loadConifg()`を呼び出して設定データにアクセスすることができますし、
+`withConfigContext()`のような関数を他にも定義してラップしていくことで様々な種類のデータを管理できます。
+
+グローバル変数ではないので、上のコードで言うと`configContext`を`export`しなければ他のファイルから勝手にデータが書き換えられてしまうことも防げます。
+また、`withConfigContext()`を使用せずに、`configContext.run()`にダミーのデータを渡すことでテストも行いやすくなると思います。
+例えば上のコードで言うと`main()`のテストを実行する際にI/Oを減らすために、
+ファイルからデータを読み取る`loadConfg()`を使用せず、静的なデータを`configContext.run()`に渡すなどが考えられます。
 
 ### コマンドのパースと実行
 
@@ -105,10 +136,8 @@ while(true) {
 このライブラリはワンショット型のCLIを想定しているみたいで、コマンドのパースに失敗すると`Deno.exit()`が呼ばれます。
 このプロジェクトではエラーが起きてもできるだけ次のコマンドの入力を受け付けるようにしたかったため、`.noExit()`で抑制しています。
 
-エラーハンドリングは、想定していないエラーや復旧できなそうなエラーには例外を使用し、それ以外のエラーは[neverthrow](https://github.com/supermacro/neverthrow)の`Result`を使用しています。
-
-neverthrowには様々なAPIがあるのですが、`Result`クラスと`Result.isErr()`・`Result.isOk()`、Resultクラスを生成するための`ok()`と`err()`のみを使用しています。
-無理に関数型のような書き方はせずに、関数の戻り値にエラーを含めて絞り込みができるようにするための機能をシンプルに使用しています。
+エラーハンドリングは、想定していないエラーや復旧できなそうなエラーには例外を使用し、それ以外のエラーは自作の`Result`を使用しています。
+関数型ではなく手続き型で書くことを許容しているので、シンプルな`Result`型と、`Result`型の値を生成する`Result.ok()`・`Result.err()`という関数、判定のための`isErr()`という関数だけを作っています。
 
 ### SQLの実行と結果の比較
 
