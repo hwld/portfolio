@@ -47,14 +47,14 @@ CLIには問題を繰り返し解くような機能は含まれていないの�
 ### HTMLのパースによるデータの抽出
 
 このプロジェクトがもとにしているデータサイエンス100本ノックでは、問題文や回答例のSQL、回答例の実行結果は[HTMLとして提供されています](https://github.com/The-Japan-DataScientist-Society/100knocks-preprocess/tree/master/docker/doc/answer)。
-このHTMLには規則性があり、問題ごとのデータが取得しやすそうだったので、deno-domというライブラリを使用してデータをJSONに変換してファイルに保存するスクリプトを書いています。
+このHTMLには規則性があり問題ごとのデータが取得しやすそうだったので、deno-domというライブラリを使用してデータをJSONに変換してファイルに保存するスクリプトを書いています。
 
-現時点ではデータサイエンス100本ノックのうち、実行結果がランダムになる問題や複数のSQLの実行を要求する問題には対応しておらず、問題数は74です。
+現時点ではデータサイエンス100本ノックのうち実行結果がランダムになる問題や複数のSQLの実行を要求する問題には対応しておらず、問題数は74です。
 前者は難しいかもしれませんが、後者は回答例のSQLをくっつけて一つのSQLにすることで対応できるかもしれません。
 
 ### AsyncLocalStorageを使用したコンテキスト管理
 
-CLIの設定ファイルや、上の項目で保存したファイルから読み取ったデータの管理は[AsyncLocalStorage](https://nodejs.org/api/async_context.html#class-asynclocalstorage)で行っています。CLIの起動時に設定ファイルや問題データが書き込まれたファイルから読み取ったデータをAsyncLocalStorageに保存することで、プログラムの様々な箇所から読み取ることができ、テスト用のコンテキストを用意することでグローバル変数を使用するよりも安全にテストを行うことができます。
+CLIの設定ファイルや、上の項目で保存したファイルから読み取ったデータの管理は[AsyncLocalStorage](https://nodejs.org/api/async_context.html#class-asynclocalstorage)で行っています。CLIの起動時に設定ファイルや問題データが書き込まれたファイルから読み取ったデータをAsyncLocalStorageに保存することで、プログラムの様々な箇所から読み取ることができ、テスト用のコンテキストを用意することでグローバル変数を使用するよりも容易にテストを行うことができます。
 
 例えば設定データの管理の実装は以下のようになっています。
 
@@ -85,7 +85,7 @@ export function getConfig(): Config {
 // --- 使用方法 ---
 
 async function main() {
-    const config = loadConfig();
+    const config = getConfig();
 
     // メインの処理...
 }
@@ -93,7 +93,7 @@ async function main() {
 withConfigContext(main);
 ```
 
-このようなコードで、main関数内のすべての関数で`loadConifg()`を呼び出して設定データにアクセスすることができますし、
+このようなコードで、main関数内のすべての関数で`getConifg()`を呼び出して設定データにアクセスすることができますし、
 `withConfigContext()`のような関数を他にも定義してラップしていくことで様々な種類のデータを管理できます。
 
 グローバル変数ではないので、上のコードで言うと`configContext`を`export`しなければ他のファイルから勝手にデータが書き換えられてしまうことも防げます。
