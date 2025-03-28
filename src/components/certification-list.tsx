@@ -32,7 +32,6 @@ export const CertificationList: React.FC = () => {
 
 const Certification: React.FC<{ children: ReactNode; href: string }> = ({
   children,
-  href,
 }) => {
   return (
     <div className="ml-2 flex items-center gap-2">
