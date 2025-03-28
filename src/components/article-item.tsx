@@ -1,6 +1,7 @@
 import { Routes } from "@/routes";
 import { ArticleInfo } from "./content/type";
 import { TextLink } from "./link";
+import { ExternalLink } from "./external-link";
 
 export const ArticleItem: React.FC<{ article: ArticleInfo }> = ({
   article,
@@ -20,9 +21,13 @@ export const ArticleItem: React.FC<{ article: ArticleInfo }> = ({
           {article.createdAt.getDate()}
         </div>
       </div>
-      <TextLink href={Routes.blogDetail(article.slug)}>
-        {article.title}
-      </TextLink>
+      {article.isExternal ? (
+        <ExternalLink href={article.url}>{article.title}</ExternalLink>
+      ) : (
+        <TextLink href={Routes.blogDetail(article.slug)}>
+          {article.title}
+        </TextLink>
+      )}
     </div>
   );
 };

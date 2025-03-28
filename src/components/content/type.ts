@@ -5,7 +5,17 @@ const ContentInfoSchema = z.object({
   createdAt: z.date(),
 });
 
-export const ArticleInfoSchema = ContentInfoSchema;
+const InternalArticleInfoSchema = ContentInfoSchema.merge(
+  z.object({ isExternal: z.literal(false).optional() })
+);
+
+const ExternalArticleInfoSchema = ContentInfoSchema.merge(
+  z.object({ isExternal: z.literal(true), url: z.string().url() })
+);
+
+export const ArticleInfoSchema = InternalArticleInfoSchema.or(
+  ExternalArticleInfoSchema
+);
 export type ArticleInfo = z.infer<typeof ArticleInfoSchema> & { slug: string };
 
 const ProjectTag = z.union([

@@ -8,11 +8,13 @@ import { appUrl } from "@/routes";
 type Params = { articleSlug: string };
 
 export const generateStaticParams = async (): Promise<Params[]> => {
-  return articleInfos.map(
-    (info): Params => ({
-      articleSlug: info.slug,
-    })
-  );
+  return articleInfos
+    .filter((info) => !info.isExternal)
+    .map(
+      (info): Params => ({
+        articleSlug: info.slug,
+      })
+    );
 };
 
 type PageProps = { params: Params };
