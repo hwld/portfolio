@@ -6,7 +6,7 @@ const ContentInfoSchema = z.object({
 });
 
 const InternalArticleInfoSchema = ContentInfoSchema.merge(
-  z.object({ isExternal: z.literal(false).optional() })
+  z.object({ isExternal: z.literal(false).default(false) })
 );
 
 const ExternalArticleInfoSchema = ContentInfoSchema.merge(
@@ -56,7 +56,7 @@ const ProjectInfoBaseSchema = ContentInfoSchema.merge(
 );
 
 const NormalProjectInfoSchema = ProjectInfoBaseSchema.merge(
-  z.object({ type: z.literal("normal").optional() })
+  z.object({ type: z.literal("normal").default("normal") })
 );
 
 const FeaturedProjectInfoSchema = ProjectInfoBaseSchema.merge(
