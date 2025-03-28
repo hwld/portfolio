@@ -4,14 +4,14 @@ import { TbBrandGithub } from "@react-icons/all-files/tb/TbBrandGithub";
 import { TbCode } from "@react-icons/all-files/tb/TbCode";
 import { TbLink } from "@react-icons/all-files/tb/TbLink";
 import { Metadata } from "next";
-import { getContent, getContentSlugs, projectInfos } from "@/lib/content";
+import { getContent, projectInfos } from "@/lib/content";
 import { MarkdownViewerWithToc } from "@/components/markdown-viewer/with-toc";
 import { DetailLayout } from "@/components/layout/detail-layout";
 
 type Params = { projectSlug: string };
 
 export const generateStaticParams = async (): Promise<Params[]> => {
-  return getContentSlugs("projects").map((projectSlug) => ({ projectSlug }));
+  return projectInfos.map((info): Params => ({ projectSlug: info.slug }));
 };
 
 type PageProps = { params: Params };

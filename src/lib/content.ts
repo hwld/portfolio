@@ -36,11 +36,6 @@ const getContentSlug = (contentPath: string): string => {
   return path.basename(contentPath, path.extname(contentPath));
 };
 
-export const getContentSlugs = (type: ContentType): string[] => {
-  const paths = getContentPaths(type);
-  return paths.map(getContentSlug);
-};
-
 export const getContent = (type: ContentType, slug: string): string => {
   const mdFilePath = path.join(contentDir(type), `${slug}.md`);
   return fs.readFileSync(mdFilePath).toString();

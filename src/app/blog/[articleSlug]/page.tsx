@@ -1,4 +1,4 @@
-import { articleInfos, getContent, getContentSlugs } from "@/lib/content";
+import { articleInfos, getContent } from "@/lib/content";
 import type { Metadata } from "next";
 import { TbClock } from "@react-icons/all-files/tb/TbClock";
 import { MarkdownViewerWithToc } from "@/components/markdown-viewer/with-toc";
@@ -8,7 +8,11 @@ import { appUrl } from "@/routes";
 type Params = { articleSlug: string };
 
 export const generateStaticParams = async (): Promise<Params[]> => {
-  return getContentSlugs("blog").map((articleSlug) => ({ articleSlug }));
+  return articleInfos.map(
+    (info): Params => ({
+      articleSlug: info.slug,
+    })
+  );
 };
 
 type PageProps = { params: Params };
