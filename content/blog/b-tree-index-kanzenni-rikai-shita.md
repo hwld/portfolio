@@ -1,4 +1,6 @@
 ---
+isExternal: true
+url: https://zenn.dev/hwld/articles/39cfba7c4d820c
 title: RDBのB-treeインデックスと共にあらんことを
 createdAt: 2024-10-16
 ---

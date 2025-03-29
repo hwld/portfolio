@@ -1,4 +1,6 @@
 ---
+isExternal: true
+url: https://zenn.dev/hwld/articles/df70e12a1a36ef
 title: ブラウザがWebページを表示する仕組みをまとめる
 createdAt: 2024-12-15
 ---

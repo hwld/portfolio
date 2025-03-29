@@ -1,4 +1,6 @@
 ---
+isExternal: true
+url: https://zenn.dev/hwld/articles/562f70edfe51f4
 title: JavaScriptの実行メカニズムをまとめる
 createdAt: 2024-12-10
 ---

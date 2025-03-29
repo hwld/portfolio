@@ -1,4 +1,6 @@
 ---
+isExternal: true
+url: https://zenn.dev/hwld/articles/0af2c0d23432d5
 title: Webサーバーの仕組みをまとめる
 createdAt: 2024-12-05
 ---
