@@ -1,4 +1,6 @@
 ---
+isExternal: true
+url: https://zenn.dev/hwld/articles/2631f523ae2eae
 title: OAuthとOIDCを認証の観点でまとめる
 createdAt: 2024-11-26
 ---
