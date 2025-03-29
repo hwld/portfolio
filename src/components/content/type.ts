@@ -7,11 +7,11 @@ const ContentInfoSchema = z.object({
 
 const InternalArticleInfoSchema = ContentInfoSchema.merge(
   z.object({ isExternal: z.literal(false).default(false) })
-);
+).strict();
 
 const ExternalArticleInfoSchema = ContentInfoSchema.merge(
   z.object({ isExternal: z.literal(true), url: z.string().url() })
-);
+).strict();
 
 export const ArticleInfoSchema = InternalArticleInfoSchema.or(
   ExternalArticleInfoSchema
@@ -57,7 +57,7 @@ const ProjectInfoBaseSchema = ContentInfoSchema.merge(
 
 const NormalProjectInfoSchema = ProjectInfoBaseSchema.merge(
   z.object({ type: z.literal("normal").default("normal") })
-);
+).strict();
 
 const FeaturedProjectInfoSchema = ProjectInfoBaseSchema.merge(
   z.object({
@@ -65,7 +65,7 @@ const FeaturedProjectInfoSchema = ProjectInfoBaseSchema.merge(
     featuredDesc: z.string(),
     featuredOrder: z.number(),
   })
-);
+).strict();
 export type FeaturedProjectInfo = z.infer<typeof FeaturedProjectInfoSchema> & {
   slug: string;
 };
