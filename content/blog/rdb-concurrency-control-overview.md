@@ -1,4 +1,6 @@
 ---
+isExternal: true
+url: https://zenn.dev/hwld/articles/92c7e9cf900a7a
 title: RDBの同時実行制御をまとめる
 createdAt: 2024-10-24
 ---

@@ -1,4 +1,6 @@
 ---
+isExternal: true
+url: https://zenn.dev/hwld/articles/160086b738b78e
 title: 「処理の状況を伝える」Webフロントエンド
 createdAt: 2024-12-31
 ---
