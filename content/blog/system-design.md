@@ -1,4 +1,6 @@
 ---
+isExternal: true
+url: https://zenn.dev/hwld/articles/34a17439a054ef
 title: システム設計の基礎をまとめる
 createdAt: 2025-01-14
 ---

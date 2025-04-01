@@ -1,4 +1,6 @@
 ---
+isExternal: true
+url: https://zenn.dev/hwld/articles/9d4af2e6902171
 title: Next.js コールドスタート問題の調査記録
 createdAt: 2024-11-06
 ---
