@@ -243,8 +243,16 @@ const A = ({ children, href }: ComponentPropsWithoutRef<"a">) => {
 };
 
 const Img = ({ src, alt }: ComponentPropsWithoutRef<"img">) => {
-  // eslint-disable-next-line @next/next/no-img-element
-  return <img src={src} alt={alt} style={{ marginBlock: defaultMargin }} />;
+  return (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
+      src={src}
+      alt={alt}
+      // Imgの次にemが来る場合には、それをキャプションとみなして画像の下のマージンをつけない
+      className="mt-[var(--margin)] [&:not(:has(+em))]:mb-[var(--margin)]"
+      style={{ ["--margin" as string]: defaultMargin }}
+    />
+  );
 };
 
 const Ul = ({ children }: PropsWithChildren) => {
