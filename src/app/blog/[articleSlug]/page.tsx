@@ -7,7 +7,7 @@ import { appUrl } from "@/routes";
 
 type Params = { articleSlug: string };
 
-export const generateStaticParams = async (): Promise<Params[]> => {
+export async function generateStaticParams(): Promise<Params[]> {
   return articleInfos
     .filter((info) => !info.isExternal)
     .map(
@@ -15,13 +15,12 @@ export const generateStaticParams = async (): Promise<Params[]> => {
         articleSlug: info.slug,
       })
     );
-};
+}
 
-type PageProps = { params: Params };
+type PageProps = { params: Promise<Params> };
 
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<Metadata> {
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const params = await props.params;
   const article = articleInfos.find((info) => info.slug === params.articleSlug);
   if (!article) {
     throw new Error(`投稿が存在しない: ${params.articleSlug}`);
@@ -39,7 +38,8 @@ export async function generateMetadata({
   };
 }
 
-const ArticleDetailPage: React.FC<PageProps> = async ({ params }) => {
+const ArticleDetailPage: React.FC<PageProps> = async (props) => {
+  const params = await props.params;
   const article = articleInfos.find((p) => p.slug === params.articleSlug);
   if (!article) {
     throw new Error(`ポストが存在しません: ${params.articleSlug}`);

@@ -90,7 +90,9 @@ export const DesktopNavbar: React.FC = () => {
       {navbarPageLinks.map((page) => {
         return (
           <NavbarItem
-            ref={(node) => setNavbarItemRef(node, page.path)}
+            ref={(node) => {
+              setNavbarItemRef(node, page.path);
+            }}
             key={page.title}
             page={page}
             isCurrentPage={page.path === currentPath}
@@ -106,7 +108,9 @@ export const DesktopNavbar: React.FC = () => {
         {navbarSocialLinks.map((link) => {
           return (
             <NavbarSocialLinkItem
-              ref={(node) => setNavbarItemRef(node, link.uniquePath)}
+              ref={(node) => {
+                setNavbarItemRef(node, link.uniquePath);
+              }}
               key={link.uniquePath}
               uniquePath={link.uniquePath}
               label={link.label}

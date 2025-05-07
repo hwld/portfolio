@@ -10,15 +10,14 @@ import { DetailLayout } from "@/components/layout/detail-layout";
 
 type Params = { projectSlug: string };
 
-export const generateStaticParams = async (): Promise<Params[]> => {
+export async function generateStaticParams(): Promise<Params[]> {
   return projectInfos.map((info): Params => ({ projectSlug: info.slug }));
-};
+}
 
-type PageProps = { params: Params };
+type PageProps = { params: Promise<Params> };
 
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<Metadata> {
+export async function generateMetadata(props: PageProps): Promise<Metadata> {
+  const params = await props.params;
   const project = projectInfos.find((info) => info.slug === params.projectSlug);
   if (!project) {
     throw new Error(`プロジェクトが存在しない: ${params.projectSlug}`);
@@ -29,7 +28,8 @@ export async function generateMetadata({
   };
 }
 
-const ProjectDetailPage: React.FC<PageProps> = ({ params }) => {
+const ProjectDetailPage: React.FC<PageProps> = async (props) => {
+  const params = await props.params;
   const project = projectInfos.find((p) => p.slug === params.projectSlug);
   if (!project) {
     throw new Error(`プロジェクトが存在しません: ${params.projectSlug}`);
