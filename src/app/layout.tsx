@@ -6,6 +6,7 @@ import { PagefindProvider } from "@/components/pagefind-provider";
 import { TocContextProvider } from "@/components/markdown-viewer/toc-provider";
 import { ContentInfosContextProvider } from "@/components/content/provider";
 import { articleInfos, projectInfos } from "@/lib/content";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 
 export const metadata: Metadata = {
   title: "hwld",
@@ -34,7 +35,7 @@ export default async function RootLayout({
               className="font-sans min-h-screen bg-background antialiased text-foreground font-normal text-sm"
               style={{ colorScheme: "dark" }}
             >
-              {children}
+              <NuqsAdapter>{children}</NuqsAdapter>
               <Navbar />
             </body>
           </TocContextProvider>
