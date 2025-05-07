@@ -1,5 +1,5 @@
 import { TbChevronRight } from "@react-icons/all-files/tb/TbChevronRight";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";

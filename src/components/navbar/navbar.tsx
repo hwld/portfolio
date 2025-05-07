@@ -2,7 +2,7 @@
 import { useMediaQuery } from "@mantine/hooks";
 import { DesktopNavbar } from "./desktop-navbar";
 import { MobileNavbar } from "./mobile-navbar";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import { SearchSheetTrigger } from "../search/search-sheet";
 import { Routes } from "@/routes";
 import { MobileTocButton } from "../markdown-viewer/mobile-toc-button";

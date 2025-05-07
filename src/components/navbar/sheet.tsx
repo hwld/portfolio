@@ -1,5 +1,5 @@
 import { FloatingFocusManager } from "@floating-ui/react";
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion } from "motion/react";
 import { ComponentPropsWithoutRef, forwardRef, PropsWithChildren } from "react";
 import { type FloatingContext } from "@floating-ui/react";
 
