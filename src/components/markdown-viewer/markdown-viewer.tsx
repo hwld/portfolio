@@ -7,7 +7,8 @@ import {
   Fragment,
   CSSProperties,
 } from "react";
-import { jsx, jsxs } from "react/jsx-runtime";
+import { jsx as reactJsx, jsxs as reactJsxs } from "react/jsx-runtime";
+import type { Jsx } from "hast-util-to-jsx-runtime";
 import remarkParse from "remark-parse";
 import remarkCallout from "@r4ai/remark-callout";
 import remarkRehype from "remark-rehype";
@@ -22,6 +23,9 @@ import Link from "next/link";
 import { MaybeCalloutRelatedDiv } from "./callout";
 import { MAKRDOWN_VIEWER_ID } from "./consts";
 import matter from "gray-matter";
+
+const jsx = reactJsx as Jsx;
+const jsxs = reactJsxs as Jsx;
 
 type Props = { children: string };
 
@@ -52,9 +56,7 @@ export const MarkdownViewer: React.FC<Props> = async ({ children }) => {
     >
       {toJsxRuntime(hast, {
         Fragment: Fragment,
-        // @ts-ignore
         jsx,
-        // @ts-ignore
         jsxs,
         components: {
           div: Div,

@@ -7,8 +7,8 @@ import { tv } from "tailwind-variants";
 const CALLOUT_TYPE = ["note", "warning"] as const;
 type CalloutType = (typeof CALLOUT_TYPE)[number];
 
-const parseCalloutType = (type: any): CalloutType => {
-  if (!CALLOUT_TYPE.includes(type)) {
+const parseCalloutType = (type: unknown): CalloutType => {
+  if (!CALLOUT_TYPE.includes(type as CalloutType)) {
     throw new Error(`CalloutTypeに "${type}" は存在しません`);
   }
   return type as CalloutType;
