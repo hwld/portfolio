@@ -1,11 +1,8 @@
-import { Jsx, toJsxRuntime } from "hast-util-to-jsx-runtime";
+import { toJsxRuntime } from "hast-util-to-jsx-runtime";
 import { Fragment, type ComponentPropsWithoutRef } from "react";
-import { jsx as reactJsx, jsxs as reactJsxs } from "react/jsx-runtime";
+import { jsx, jsxs } from "react/jsx-runtime";
 import { TocAnchor } from "./toc-provider";
 import { type Root } from "hast";
-
-const jsx = reactJsx as Jsx;
-const jsxs = reactJsxs as Jsx;
 
 type Props = { hAst: Root };
 
