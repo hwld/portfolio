@@ -71,56 +71,58 @@ export const DesktopNavbar: React.FC = () => {
   }, [currentPath]);
 
   return (
-    <div
-      ref={navbarRef}
-      className="bg-navbar-background border border-navbar-border text-navbar-foreground h-10 w-full p-1 flex items-center gap-[2px] rounded-full relative shadow-navbar"
-      onMouseLeave={handleNavbarMouseLeave}
-    >
-      <AnimatePresence>
-        {activeMarker && (
-          <motion.div
-            className="absolute bg-navbar-foreground rounded-full pointer-events-none -top-px -left-px"
-            transition={{ type: "spring", duration: 0.55 }}
-            initial={{ ...activeMarker.style, opacity: 0 }}
-            animate={{ ...activeMarker.style, opacity: 1 }}
-            exit={{ opacity: 0, transition: { duration: 0.1 } }}
-          />
-        )}
-      </AnimatePresence>
-      {navbarPageLinks.map((page) => {
-        return (
-          <NavbarItem
-            ref={(node) => {
-              setNavbarItemRef(node, page.path);
-            }}
-            key={page.title}
-            page={page}
-            isCurrentPage={page.path === currentPath}
-            activeMarker={activeMarker}
-            onMoveActiveMarker={moveActiveMarker}
-          >
-            {page.title}
-          </NavbarItem>
-        );
-      })}
-      <div className="h-2/3 bg-navbar-border w-px mx-1" />
-      <div className="flex gap-1">
-        {navbarSocialLinks.map((link) => {
+    <div className="bg-navbar-background border border-navbar-border text-navbar-foreground h-10 w-full p-1 rounded-full shadow-navbar">
+      <div
+        ref={navbarRef}
+        className="h-full w-full flex items-center gap-[2px] relative"
+        onMouseLeave={handleNavbarMouseLeave}
+      >
+        <AnimatePresence>
+          {activeMarker && (
+            <motion.div
+              className="absolute bg-navbar-foreground rounded-full pointer-events-none"
+              transition={{ type: "spring", duration: 0.55 }}
+              initial={{ ...activeMarker.style, opacity: 0 }}
+              animate={{ ...activeMarker.style, opacity: 1 }}
+              exit={{ opacity: 0, transition: { duration: 0.1 } }}
+            />
+          )}
+        </AnimatePresence>
+        {navbarPageLinks.map((page) => {
           return (
-            <NavbarSocialLinkItem
+            <NavbarItem
               ref={(node) => {
-                setNavbarItemRef(node, link.uniquePath);
+                setNavbarItemRef(node, page.path);
               }}
-              key={link.uniquePath}
-              uniquePath={link.uniquePath}
-              label={link.label}
-              icon={link.icon}
-              href={link.href}
+              key={page.title}
+              page={page}
+              isCurrentPage={page.path === currentPath}
               activeMarker={activeMarker}
               onMoveActiveMarker={moveActiveMarker}
-            />
+            >
+              {page.title}
+            </NavbarItem>
           );
         })}
+        <div className="h-2/3 bg-navbar-border w-px mx-1" />
+        <div className="flex gap-1">
+          {navbarSocialLinks.map((link) => {
+            return (
+              <NavbarSocialLinkItem
+                ref={(node) => {
+                  setNavbarItemRef(node, link.uniquePath);
+                }}
+                key={link.uniquePath}
+                uniquePath={link.uniquePath}
+                label={link.label}
+                icon={link.icon}
+                href={link.href}
+                activeMarker={activeMarker}
+                onMoveActiveMarker={moveActiveMarker}
+              />
+            );
+          })}
+        </div>
       </div>
     </div>
   );
