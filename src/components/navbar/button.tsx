@@ -6,7 +6,7 @@ import { tv } from "tailwind-variants";
 const navbarButton = tv({
   slots: {
     button:
-      "size-10 rounded-full bg-navbar-background text-navbar-foreground border border-navbar-border grid place-items-center transition-colors hover:bg-navbar-background-hover shadow-navbar",
+      "size-11 rounded-full bg-navbar-background text-navbar-foreground border-2 border-navbar-border grid place-items-center transition-colors hover:bg-navbar-background-hover shadow-navbar",
     icon: "size-5",
   },
 });

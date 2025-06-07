@@ -71,7 +71,7 @@ export const DesktopNavbar: React.FC = () => {
   }, [currentPath]);
 
   return (
-    <div className="bg-navbar-background border border-navbar-border text-navbar-foreground h-10 w-full p-1 rounded-full shadow-navbar">
+    <div className="bg-navbar-background border-2 border-navbar-border text-navbar-foreground h-11 w-full p-1 rounded-full shadow-navbar">
       <div
         ref={navbarRef}
         className="h-full w-full flex items-center gap-[2px] relative"
@@ -104,7 +104,7 @@ export const DesktopNavbar: React.FC = () => {
             </NavbarItem>
           );
         })}
-        <div className="h-2/3 bg-navbar-border w-px mx-1" />
+        <div className="h-2/3 bg-navbar-border w-[2px] shrink-0 mx-1" />
         <div className="flex gap-1">
           {navbarSocialLinks.map((link) => {
             return (

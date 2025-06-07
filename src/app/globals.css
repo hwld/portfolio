@@ -5,7 +5,7 @@
   --font-sans: Helvetica Neue, Arial, Hiragino Kaku Gothic ProN, Hiragino Sans,
     Meiryo, sans-serif;
 
-  --color-background: var(--color-zinc-900);
+  --color-background: var(--color-zinc-950);
   --color-background-muted: var(--color-zinc-700);
   --color-background-hover: var(--color-zinc-800);
 
@@ -14,16 +14,17 @@
   --color-foreground-muted: var(--color-zinc-400);
 
   --color-border: var(--color-zinc-700);
-  --color-border-strong: var(--color-zinc-500);
+  --color-border-strong: var(--color-zinc-600);
 
   --color-navbar-background: var(--color-zinc-900);
+  --color-navbar-background-muted: var(--color-zinc-800);
   --color-navbar-background-hover: var(--color-zinc-700);
 
   --color-navbar-foreground: var(--color-zinc-100);
   --color-navbar-foreground-muted: var(--color-zinc-400);
 
-  --color-navbar-border: var(--color-zinc-500);
-  --color-navbar-border-muted: var(--color-zinc-600);
+  /* コントラスト小さくしたのでborderの幅を大きくしたい */
+  --color-navbar-border: var(--color-zinc-700);
 
   --shadow-navbar: 0 20px 25px -5px rgba(0, 0, 0, 0.3),
     0 8px 10px -6px rgba(0, 0, 0, 0.3);
@@ -44,6 +45,11 @@
   ::backdrop,
   ::file-selector-button {
     border-color: var(--color-gray-200, currentcolor);
+  }
+
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
   }
 }
 

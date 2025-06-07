@@ -155,7 +155,7 @@ const SearchSheet = forwardRef<HTMLDivElement, SearchSheetProps>(
                 );
               })}
             </Command.List>
-            <div className="border-t border-navbar-border-muted p-2">
+            <div className="border-t border-navbar-border p-2 bg-navbar-background-muted">
               <Command.Input asChild>
                 <SearchInput query={query} onChangeQuery={search} />
               </Command.Input>
@@ -188,7 +188,7 @@ const SearchResult: React.FC<SearchResultProps> = ({
   };
 
   return (
-    <div className="border-b border-navbar-border-muted p-2 flex flex-col gap-2">
+    <div className="border-b border-navbar-border p-2 flex flex-col gap-2">
       <div className="grid grid-cols-[auto_1fr] gap-1 items-start">
         <p className="text-navbar-foreground-muted leading-6">Page:</p>
         <Command.Item
