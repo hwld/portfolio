@@ -16,7 +16,9 @@
   --color-border: var(--color-zinc-700);
   --color-border-strong: var(--color-zinc-600);
 
-  --color-navbar-background: var(--color-zinc-900);
+  --color-input-background: var(--color-zinc-800);
+
+  --color-navbar-background: var(--color-zinc-950);
   --color-navbar-background-muted: var(--color-zinc-800);
   --color-navbar-background-hover: var(--color-zinc-700);
 

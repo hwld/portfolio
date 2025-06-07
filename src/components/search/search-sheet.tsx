@@ -155,7 +155,7 @@ const SearchSheet = forwardRef<HTMLDivElement, SearchSheetProps>(
                 );
               })}
             </Command.List>
-            <div className="border-t border-navbar-border p-2 bg-navbar-background-muted">
+            <div className="border-t border-navbar-border p-2">
               <Command.Input asChild>
                 <SearchInput query={query} onChangeQuery={search} />
               </Command.Input>
