@@ -26,7 +26,7 @@ export const Navbar: React.FC = () => {
         animate={{ opacity: 1, y: 0, x: "-50%" }}
       >
         {isMobile ? (
-          <div className="grid grid-cols-[min-content,1fr,min-content] gap-1">
+          <div className="grid grid-cols-[min-content_1fr_min-content] gap-1">
             <MobileTocButton />
             <MobileNavbar />
             <NavbarButtonLink
@@ -36,7 +36,7 @@ export const Navbar: React.FC = () => {
             />
           </div>
         ) : (
-          <div className="gap-2 grid-cols-[min-content,1fr,min-content] grid">
+          <div className="gap-2 grid-cols-[min-content_1fr_min-content] grid">
             {isMobileTocVisible ? <MobileTocButton /> : null}
             <DesktopNavbar />
             <SearchSheetTrigger />

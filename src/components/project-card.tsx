@@ -8,7 +8,7 @@ type Props = { project: ProjectInfo };
 export const ProjectCard: React.FC<Props> = ({ project }) => {
   return (
     <Link
-      className="border border-border rounded-lg shrink-0 p-3 flex flex-col overflow-hidden transition-colors group relative justify-between gap-2 shadow"
+      className="border border-border rounded-lg shrink-0 p-3 flex flex-col overflow-hidden transition-colors group relative justify-between gap-2 shadow-sm"
       href={`/projects/${project.slug}`}
     >
       <div className="space-y-2">

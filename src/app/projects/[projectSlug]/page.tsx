@@ -86,7 +86,7 @@ const IconLink: React.FC<{ icon: IconType; href: string; label: string }> = ({
       target="_blank"
       aria-label={label}
       href={href}
-      className="size-8 grid place-items-center border border-border-strong rounded transition-colors hover:bg-background-hover hover:text-foreground-strong"
+      className="size-8 grid place-items-center border border-border-strong rounded-sm transition-colors hover:bg-background-hover hover:text-foreground-strong"
     >
       <Icon size={18} />
     </a>

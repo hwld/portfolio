@@ -21,7 +21,7 @@ export const SearchInput = forwardRef<HTMLInputElement, Props>(
           ref={ref}
           autoFocus
           {...props}
-          className="inset-y-0 pl-8 pr-2 text-sm border border-border-strong rounded w-full h-full focus-visible:outline-none focus-visible:border-foreground bg-transparent placeholder:text-foreground-muted"
+          className="inset-y-0 pl-8 pr-2 text-sm border border-border-strong rounded-sm w-full h-full focus-visible:outline-hidden focus-visible:border-foreground bg-transparent placeholder:text-foreground-muted"
           // NotoSansだと全角アルファベットでbaselineがずれるので
           style={{ fontFamily: "sans-serif" }}
           placeholder="キーワード"

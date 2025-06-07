@@ -102,5 +102,5 @@ const CalloutIcon = ({ type }: { type: CalloutType }) => {
 };
 
 const CalloutBody = (props: ComponentPropsWithoutRef<"div">) => {
-  return <div {...props} className="[&>p:first-child]:!mt-0" />;
+  return <div {...props} className="[&>p:first-child]:mt-0!" />;
 };

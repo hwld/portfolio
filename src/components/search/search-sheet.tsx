@@ -117,7 +117,7 @@ const SearchSheet = forwardRef<HTMLDivElement, SearchSheetProps>(
 
           <Command
             shouldFilter={false}
-            className="focus-visible:outline-none w-full"
+            className="focus-visible:outline-hidden w-full"
           >
             <Command.List className="overflow-auto flex flex-col scroll-py-2 relative h-[450px]">
               <Command.Empty className="absolute inset-0 grid place-items-center">
@@ -209,7 +209,7 @@ const SearchResult: React.FC<SearchResultProps> = ({
               key={i}
               value={`${result.id}-${sub.url}`}
               onSelect={() => handleSelect(sub.url)}
-              className="grid grid-cols-[auto_1fr] grid-rows-[auto_1fr] gap-1 group items-center data-[selected=true]:bg-white/10 p-1 rounded cursor-pointer"
+              className="grid grid-cols-[auto_1fr] grid-rows-[auto_1fr] gap-1 group items-center data-[selected=true]:bg-white/10 p-1 rounded-sm cursor-pointer"
             >
               <MdOutlineSubdirectoryArrowRight className="size-4" />
               <TextLink

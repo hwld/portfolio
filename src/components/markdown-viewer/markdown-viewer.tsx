@@ -48,7 +48,7 @@ export const MarkdownViewer: React.FC<Props> = async ({ children }) => {
   return (
     <div
       id={MAKRDOWN_VIEWER_ID}
-      className="text-base [&>*:first-child]:!mt-0 break-all"
+      className="text-base [&>*:first-child]:mt-0! break-all"
     >
       {toJsxRuntime(hast, {
         Fragment: Fragment,
@@ -109,7 +109,7 @@ const Pre = ({
       <pre
         {...props}
         style={{ ...bgRemovedStyle }}
-        className="px-5 py-6 rounded-md overflow-auto focus-visible:outline-none border border-border bg-zinc-500/5"
+        className="px-5 py-6 rounded-md overflow-auto focus-visible:outline-hidden border border-border bg-zinc-500/5"
       />
     </div>
   );
@@ -131,7 +131,7 @@ const Code = ({
     <>
       {lang && (
         <>
-          <div className="text-xs absolute right-2 top-2 rounded text-foreground-muted select-none">
+          <div className="text-xs absolute right-2 top-2 rounded-sm text-foreground-muted select-none">
             {lang}
           </div>
           {/* codeブロックかをlangの有無で確認してる */}
@@ -141,7 +141,7 @@ const Code = ({
       <code
         id={codeId}
         className={clsx(
-          "[:not(pre)>&]:bg-background-muted [:not(pre)>&]:text-foreground [:not(pre)>&]:px-[6px] [:not(pre)>&]:py-[3px] [:not(pre)>&]:mx-1 [:not(pre)>&]:rounded break-all",
+          "[:not(pre)>&]:bg-background-muted [:not(pre)>&]:text-foreground [:not(pre)>&]:px-[6px] [:not(pre)>&]:py-[3px] [:not(pre)>&]:mx-1 [:not(pre)>&]:rounded-sm break-all",
           className
         )}
         {...props}
@@ -186,7 +186,7 @@ const Heading = ({
   return (
     <HeadingComponent {...props} className={heading}>
       <a
-        className="relative w-0 h-6 before:bg-[url('/icons/link.svg')] before:contents-[''] before:absolute before:right-0 before:top-0 before:block before:pr-1 before:h-6 before:w-7 before:bg-center before:group-hover:opacity-100 before:opacity-0 before:bg-contain before:bg-no-repeat before:transition-opacity"
+        className="relative w-0 h-6 before:bg-[url('/icons/link.svg')] before:contents-[''] before:absolute before:right-0 before:top-0 before:block before:pr-1 before:h-6 before:w-7 before:bg-center group-hover:before:opacity-100 before:opacity-0 before:bg-contain before:bg-no-repeat before:transition-opacity"
         href={href}
         aria-label="見出しへのリンク"
       />
@@ -247,7 +247,7 @@ const Img = ({ src, alt }: ComponentPropsWithoutRef<"img">) => {
       src={src}
       alt={alt}
       // Imgの次にemが来る場合には、それをキャプションとみなして画像の下のマージンをつけない
-      className="mt-[var(--margin)] [&:not(:has(+em))]:mb-[var(--margin)]"
+      className="mt-(--margin) [&:not(:has(+em))]:mb-(--margin)"
       style={{ ["--margin" as string]: defaultMargin }}
     />
   );
@@ -256,7 +256,7 @@ const Img = ({ src, alt }: ComponentPropsWithoutRef<"img">) => {
 const Ul = ({ children }: PropsWithChildren) => {
   return (
     <ul
-      className="pl-5 list-disc marker:text-foreground-muted group group-has-[ul]:!mt-0 group-has-[ol]:!mt-0"
+      className="pl-5 list-disc marker:text-foreground-muted group group-has-[ul]:mt-0! group-has-[ol]:mt-0!"
       style={{ marginTop: defaultMargin }}
     >
       {children}
@@ -267,7 +267,7 @@ const Ul = ({ children }: PropsWithChildren) => {
 const Ol = ({ children }: PropsWithChildren) => {
   return (
     <ol
-      className="list-decimal marker:text-foreground-muted pl-5 group group-has-[ol]:!mt-0 group-has-[ul]:!mt-0"
+      className="list-decimal marker:text-foreground-muted pl-5 group group-has-[ol]:mt-0! group-has-[ul]:mt-0!"
       style={{ marginTop: defaultMargin }}
     >
       {children}
@@ -296,7 +296,7 @@ const Hr = ({ children }: PropsWithChildren) => {
 const BlockQuote = ({ children }: PropsWithChildren) => {
   return (
     <blockquote
-      className="text-foreground/80 px-4 py-1 relative border-l-2 border-border-strong [&>p:first-child]:!mt-0"
+      className="text-foreground/80 px-4 py-1 relative border-l-2 border-border-strong [&>p:first-child]:mt-0!"
       style={{ marginBlock: defaultMargin }}
     >
       {children}

@@ -9,7 +9,7 @@ export const Heading: React.FC<Props> = ({ subTitle, children }) => {
         className="flex items-center gap-1 text-lg font-bold w-fit"
         href={`#${subTitle}`}
       >
-        <TbHash className="text-lg mt-[1px]" />
+        <TbHash className="text-lg mt-px" />
         {children}
       </a>
     </h2>

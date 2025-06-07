@@ -79,7 +79,7 @@ export const DesktopNavbar: React.FC = () => {
       <AnimatePresence>
         {activeMarker && (
           <motion.div
-            className="absolute bg-navbar-foreground rounded-full pointer-events-none -top-[1px] -left-[1px]"
+            className="absolute bg-navbar-foreground rounded-full pointer-events-none -top-px -left-px"
             transition={{ type: "spring", duration: 0.55 }}
             initial={{ ...activeMarker.style, opacity: 0 }}
             animate={{ ...activeMarker.style, opacity: 1 }}
@@ -103,7 +103,7 @@ export const DesktopNavbar: React.FC = () => {
           </NavbarItem>
         );
       })}
-      <div className="h-2/3 bg-navbar-border w-[1px] mx-1" />
+      <div className="h-2/3 bg-navbar-border w-px mx-1" />
       <div className="flex gap-1">
         {navbarSocialLinks.map((link) => {
           return (

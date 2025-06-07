@@ -56,7 +56,7 @@ const SkillCard: React.FC<{ skill: Skill }> = ({
     <a
       href={link}
       target="_blank"
-      className="flex flex-col group border p-4 rounded-lg items-center gap-1 size-[150px] justify-center border-border shadow hover:bg-background-hover transition-colors"
+      className="flex flex-col group border p-4 rounded-lg items-center gap-1 size-[150px] justify-center border-border shadow-sm hover:bg-background-hover transition-colors"
     >
       <Image
         src={`/techs-logo/${imgFile}`}

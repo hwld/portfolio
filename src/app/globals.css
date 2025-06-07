@@ -1,6 +1,51 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --font-*: initial;
+  --font-sans: Helvetica Neue, Arial, Hiragino Kaku Gothic ProN, Hiragino Sans,
+    Meiryo, sans-serif;
+
+  --color-background: var(--color-zinc-900);
+  --color-background-muted: var(--color-zinc-700);
+  --color-background-hover: var(--color-zinc-800);
+
+  --color-foreground: var(--color-zinc-300);
+  --color-foreground-strong: var(--color-zinc-50);
+  --color-foreground-muted: var(--color-zinc-400);
+
+  --color-border: var(--color-zinc-700);
+  --color-border-strong: var(--color-zinc-500);
+
+  --color-navbar-background: var(--color-zinc-900);
+  --color-navbar-background-hover: var(--color-zinc-700);
+
+  --color-navbar-foreground: var(--color-zinc-100);
+  --color-navbar-foreground-muted: var(--color-zinc-400);
+
+  --color-navbar-border: var(--color-zinc-500);
+  --color-navbar-border-muted: var(--color-zinc-600);
+
+  --shadow-navbar: 0 20px 25px -5px rgba(0, 0, 0, 0.3),
+    0 8px 10px -6px rgba(0, 0, 0, 0.3);
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
 
 ::-webkit-scrollbar {
   width: 16px;

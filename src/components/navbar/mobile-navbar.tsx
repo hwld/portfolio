@@ -65,7 +65,7 @@ export const MobileNavbar: React.FC = () => {
                 />
               );
             })}
-            <div className="w-full bg-navbar-border h-[1px]" />
+            <div className="w-full bg-navbar-border h-px" />
             <div className="flex gap-4 items-center justify-between px-2">
               <p className="text-navbar-foreground-muted">social link</p>
               <div className="flex gap-1 items-center">
@@ -141,7 +141,7 @@ const CurrentPageTitle: React.FC<{ currentPath: string }> = ({
 };
 
 const item = tv({
-  base: "px-2 h-8 grid grid-cols-[auto_1fr] items-center gap-2 rounded transition-colors",
+  base: "px-2 h-8 grid grid-cols-[auto_1fr] items-center gap-2 rounded-sm transition-colors",
   variants: {
     active: {
       true: "text-navbar-background bg-navbar-foreground",

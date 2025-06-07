@@ -6,7 +6,7 @@ type Props = { src: string | undefined; interactive?: boolean };
 
 export const ProjectThumbnail: React.FC<Props> = ({ src, interactive }) => {
   return (
-    <div className="w-full aspect-[16/9] overflow-hidden outline outline-1 outline-border relative rounded-lg shrink-0 ">
+    <div className="w-full aspect-video overflow-hidden outline-solid outline-1 outline-border relative rounded-lg shrink-0 ">
       {src ? (
         <img
           alt="screenshot"

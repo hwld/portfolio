@@ -102,7 +102,7 @@ export const TocAnchor = (props: ComponentPropsWithoutRef<"a">) => {
     <a
       className={clsx(
         tocAnchorClass,
-        "min-h-8 py-1 px-2 flex rounded items-center hover:bg-white/20 transition-colors break-all text-sm my-1",
+        "min-h-8 py-1 px-2 flex rounded-sm items-center hover:bg-white/20 transition-colors break-all text-sm my-1",
         isActive && "text-sky-400"
       )}
       {...props}
