@@ -52,34 +52,33 @@ export const MobileNavbar: React.FC = () => {
         style={floatingStyles}
       >
         <NavbarSheetBody>
-          <div className="flex flex-col gap-1">
-            {navbarPageLinks.map((page) => {
-              return (
-                <NavbarItem
-                  key={page.path}
-                  page={page}
-                  currentPath={currentPath}
-                  onClick={() => {
-                    setIsOpen(false);
-                  }}
-                />
-              );
-            })}
-            <div className="w-full bg-navbar-border h-px" />
-            <div className="flex gap-4 items-center justify-between px-2">
-              <p className="text-navbar-foreground-muted">social link</p>
-              <div className="flex gap-1 items-center">
-                {navbarSocialLinks.map((link) => {
-                  return (
-                    <SocialLinkItem
-                      key={link.uniquePath}
-                      label={link.label}
-                      icon={link.icon}
-                      href={link.href}
-                    />
-                  );
-                })}
-              </div>
+          <div className="grid grid-cols-[1fr_auto_auto]">
+            <div className="flex flex-col gap-1">
+              {navbarPageLinks.toReversed().map((page) => {
+                return (
+                  <NavbarItem
+                    key={page.path}
+                    page={page}
+                    currentPath={currentPath}
+                    onClick={() => {
+                      setIsOpen(false);
+                    }}
+                  />
+                );
+              })}
+            </div>
+            <div className="h-full w-px bg-border mx-2" />
+            <div className="flex flex-col gap-1 justify-end">
+              {navbarSocialLinks.map((link) => {
+                return (
+                  <SocialLinkItem
+                    key={link.uniquePath}
+                    label={link.label}
+                    icon={link.icon}
+                    href={link.href}
+                  />
+                );
+              })}
             </div>
           </div>
         </NavbarSheetBody>
@@ -87,7 +86,7 @@ export const MobileNavbar: React.FC = () => {
       <button
         ref={refs.setReference}
         {...getReferenceProps()}
-        className="h-10 w-full bg-navbar-background border shadow-navbar border-navbar-border rounded-full text-navbar-foreground items-center place-items-start grid grid-cols-[1fr_auto] gap-4 px-4 z-10"
+        className="h-11 w-full bg-navbar-background border-2 shadow-navbar border-navbar-border rounded-full text-navbar-foreground items-center place-items-start grid grid-cols-[1fr_auto] gap-4 px-4 z-10"
       >
         <CurrentPageTitle currentPath={currentPath} />
         <motion.div animate={isOpen ? { rotate: -90 } : { rotate: 0 }}>
