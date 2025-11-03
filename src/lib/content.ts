@@ -59,7 +59,7 @@ const getArticleInfos = (): ArticleInfo[] => {
     return { ...result.data, slug: getContentSlug(articlePath) };
   });
 
-  return infos;
+  return infos.filter((info) => info.isPublished);
 };
 
 const getProjectInfos = (): ProjectInfo[] => {

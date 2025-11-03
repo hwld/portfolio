@@ -1,4 +1,5 @@
 ---
+isPublished: false
 title: Reactのrender関数とコンポーネントの違い
 createdAt: 2024-11-16
 ---

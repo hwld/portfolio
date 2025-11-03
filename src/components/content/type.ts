@@ -3,6 +3,7 @@ import { z } from "zod";
 const ContentInfoSchema = z.object({
   title: z.string(),
   createdAt: z.date(),
+  isPublished: z.boolean().default(true),
 });
 
 const InternalArticleInfoSchema = ContentInfoSchema.merge(
