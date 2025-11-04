@@ -1,7 +1,8 @@
 ---
-isPublished: false
-title: Reactのrender関数とコンポーネントの違い
-createdAt: 2024-11-16
+isExternal: true
+url: https://zenn.dev/chot/articles/f0d20f46b60818
+title: Reactにおける<Component />とComponent()の違い
+createdAt: 2025-11-04
 ---
 
 > [!note]
