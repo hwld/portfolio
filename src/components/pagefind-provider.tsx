@@ -15,7 +15,7 @@ export const PagefindProvider: React.FC<PropsWithChildren> = ({ children }) => {
 
   useEffect(() => {
     (async () => {
-      const pagefind = await loadPagefind();
+      const pagefind = await loadPagefind("/pagefind/pagefind.js");
       setPagefind(pagefind);
     })();
   }, []);

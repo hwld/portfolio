@@ -28,10 +28,9 @@ export type Pagefind = RawPagefind & {
   ) => Promise<PagefindSearchAllResult[] | null>;
 };
 
-export const loadPagefind = async (): Promise<Pagefind> => {
+export const loadPagefind = async (modulePath: string): Promise<Pagefind> => {
   const rawPagefind: RawPagefind = await import(
-    // @ts-expect-error: Dynamic import of external script is not typed
-    /* webpackIgnore: true */ "/pagefind/pagefind.js"
+    /* webpackIgnore: true */ modulePath
   );
 
   const pagefind: Pagefind = {
