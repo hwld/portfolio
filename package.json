@@ -3,18 +3,26 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "tsx scripts/generateBlogOgImage.tsx && next build && pnpm -y pagefind --site out --output-path out/pagefind && pnpm -y pagefind --site out --output-path public/pagefind",
+    "build": "pnpm build:ogp && pnpm build:next && pnpm build:pagefind",
+    "build:ogp": "tsx scripts/generateBlogOgImage.tsx",
+    "build:next": "next build",
+    "build:pagefind": "pnpm -y pagefind --site .next --output-path public/pagefind",
+    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
+    "upload": "opennextjs-cloudflare build && opennextjs-cloudflare upload",
+    "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts",
     "check": "pnpm lint && pnpm tsc --noEmit",
     "dev": "next dev",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "start": "pnpm serve@latest out"
+    "start": "next start"
   },
   "dependencies": {
     "@floating-ui/react": "^0.26.24",
     "@hbsnow/rehype-sectionize": "^1.0.7",
     "@mantine/hooks": "^8.0.0",
     "@next/third-parties": "16.0.3",
+    "@opennextjs/cloudflare": "^1.13.1",
     "@r4ai/remark-callout": "^0.6.2",
     "@react-icons/all-files": "https://github.com/react-icons/react-icons/releases/download/v5.3.0/react-icons-all-files-5.3.0.tgz",
     "@shikijs/rehype": "^1.6.3",
@@ -56,7 +64,8 @@
     "tailwindcss": "^4.1.8",
     "tailwindcss-animate": "^1.0.7",
     "tsx": "^4.19.2",
-    "typescript": "^5"
+    "typescript": "^5",
+    "wrangler": "^4.50.0"
   },
   "overrides": {
     "@types/react": "19.1.3",

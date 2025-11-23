@@ -3,3 +3,4 @@ onlyBuiltDependencies:
   - puppeteer
   - sharp
   - unrs-resolver
+  - workerd

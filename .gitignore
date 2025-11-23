@@ -37,3 +37,5 @@ next-env.d.ts
 
 public/pagefind
 public/images/ogp/*.png
+
+.open-next
