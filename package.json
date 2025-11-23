@@ -6,7 +6,7 @@
     "build": "tsx scripts/generateBlogOgImage.tsx && next build && pnpm -y pagefind --site out --output-path out/pagefind && pnpm -y pagefind --site out --output-path public/pagefind",
     "check": "pnpm lint && pnpm tsc --noEmit",
     "dev": "next dev",
-    "lint": "next lint",
+    "lint": "eslint .",
     "start": "pnpm serve@latest out"
   },
   "dependencies": {
@@ -39,7 +39,6 @@
     "zod": "^3.24.1"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3.3.1",
     "@tailwindcss/postcss": "^4.1.8",
     "@types/node": "^20",
     "@types/react": "19.1.3",
