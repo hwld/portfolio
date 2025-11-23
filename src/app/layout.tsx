@@ -32,7 +32,7 @@ export default async function RootLayout({
         >
           <TocContextProvider>
             <body
-              className="font-sans min-h-screen bg-background antialiased text-foreground font-normal text-sm"
+              className="min-h-screen bg-background font-sans text-sm font-normal text-foreground antialiased"
               style={{ colorScheme: "dark" }}
             >
               <NuqsAdapter>{children}</NuqsAdapter>

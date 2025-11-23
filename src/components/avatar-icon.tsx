@@ -7,7 +7,7 @@ export const AvatarIcon: React.FC = () => {
 
 export const AvatarIconLink: React.FC = () => {
   return (
-    <Link href="/" className="w-fit block">
+    <Link href="/" className="block w-fit">
       <AvatarIcon />
     </Link>
   );

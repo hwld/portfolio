@@ -10,7 +10,7 @@ export const MarkdownViewerWithToc: React.FC<Props> = async ({ markdown }) => {
   const hasToc = tocHAst.children.length > 0;
 
   return (
-    <div className="relative w-full gap-8 grid grid-cols-[minmax(100%,700px)_300px]">
+    <div className="relative grid w-full grid-cols-[minmax(100%,700px)_300px] gap-8">
       <MarkdownViewer>{markdown}</MarkdownViewer>
       {hasToc ? (
         <>

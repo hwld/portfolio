@@ -7,6 +7,7 @@
     "check": "pnpm lint && pnpm tsc --noEmit",
     "dev": "next dev",
     "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "start": "pnpm serve@latest out"
   },
   "dependencies": {
@@ -46,6 +47,7 @@
     "@typescript-eslint/eslint-plugin": "^8.32.0",
     "eslint": "^9.26.0",
     "eslint-config-next": "16.0.3",
+    "eslint-plugin-better-tailwindcss": "^3.7.11",
     "knip": "^5.41.1",
     "pagefind": "^1.4.0",
     "postcss": "^8",

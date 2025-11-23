@@ -67,8 +67,8 @@ export const MobileNavbar: React.FC = () => {
                 );
               })}
             </div>
-            <div className="h-full w-px bg-border mx-2" />
-            <div className="flex flex-col gap-1 justify-end">
+            <div className="mx-2 h-full w-px bg-border" />
+            <div className="flex flex-col justify-end gap-1">
               {navbarSocialLinks.map((link) => {
                 return (
                   <SocialLinkItem
@@ -86,7 +86,7 @@ export const MobileNavbar: React.FC = () => {
       <button
         ref={refs.setReference}
         {...getReferenceProps()}
-        className="h-11 w-full bg-navbar-background border-2 shadow-navbar border-navbar-border rounded-full text-navbar-foreground items-center place-items-start grid grid-cols-[1fr_auto] gap-4 px-4 z-10"
+        className="z-10 grid h-11 w-full grid-cols-[1fr_auto] place-items-start items-center gap-4 rounded-full border-2 border-navbar-border bg-navbar-background px-4 text-navbar-foreground shadow-navbar"
       >
         <CurrentPageTitle currentPath={currentPath} />
         <motion.div animate={isOpen ? { rotate: -90 } : { rotate: 0 }}>
@@ -132,18 +132,18 @@ const CurrentPageTitle: React.FC<{ currentPath: string }> = ({
   const { Icon, title } = currentPage;
 
   return (
-    <div className="grid items-center grid-cols-[auto_1fr] gap-1">
+    <div className="grid grid-cols-[auto_1fr] items-center gap-1">
       <Icon className="size-5" />
-      <p className="whitespace-nowrap truncate">{title}</p>
+      <p className="truncate whitespace-nowrap">{title}</p>
     </div>
   );
 };
 
 const item = tv({
-  base: "px-2 h-8 grid grid-cols-[auto_1fr] items-center gap-2 rounded-sm transition-colors",
+  base: "grid h-8 grid-cols-[auto_1fr] items-center gap-2 rounded-sm px-2 transition-colors",
   variants: {
     active: {
-      true: "text-navbar-background bg-navbar-foreground",
+      true: "bg-navbar-foreground text-navbar-background",
       false: "hover:bg-navbar-background-hover",
     },
   },
@@ -191,7 +191,7 @@ const SocialLinkItem: React.FC<SocialLinkItemProps> = ({
       target="_blank"
       href={href}
       className={clsx(
-        "size-8 grid place-items-center rounded-full shrink-0 transition-colors hover:bg-navbar-background-hover"
+        "grid size-8 shrink-0 place-items-center rounded-full transition-colors hover:bg-navbar-background-hover"
       )}
     >
       <Icon className="size-5" />

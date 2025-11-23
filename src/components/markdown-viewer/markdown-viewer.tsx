@@ -48,7 +48,7 @@ export const MarkdownViewer: React.FC<Props> = async ({ children }) => {
   return (
     <div
       id={MAKRDOWN_VIEWER_ID}
-      className="text-base [&>*:first-child]:mt-0! break-all"
+      className="text-base break-all [&>*:first-child]:mt-0!"
     >
       {toJsxRuntime(hast, {
         Fragment: Fragment,
@@ -103,13 +103,13 @@ const Pre = ({
 
   return (
     <div
-      className={clsx("relative group", className)}
+      className={clsx("group relative", className)}
       style={{ marginTop: defaultMargin }}
     >
       <pre
         {...props}
         style={{ ...bgRemovedStyle }}
-        className="px-5 py-6 rounded-md overflow-auto focus-visible:outline-hidden border border-border bg-zinc-500/5"
+        className="overflow-auto rounded-md border border-border bg-zinc-500/5 px-5 py-6 focus-visible:outline-hidden"
       />
     </div>
   );
@@ -131,7 +131,7 @@ const Code = ({
     <>
       {lang && (
         <>
-          <div className="text-xs absolute right-2 top-2 rounded-sm text-foreground-muted select-none">
+          <div className="absolute top-2 right-2 rounded-sm text-xs text-foreground-muted select-none">
             {lang}
           </div>
           {/* codeブロックかをlangの有無で確認してる */}
@@ -141,7 +141,7 @@ const Code = ({
       <code
         id={codeId}
         className={clsx(
-          "[:not(pre)>&]:bg-background-muted [:not(pre)>&]:text-foreground [:not(pre)>&]:px-[6px] [:not(pre)>&]:py-[3px] [:not(pre)>&]:mx-1 [:not(pre)>&]:rounded-sm break-all",
+          "break-all [:not(pre)>&]:mx-1 [:not(pre)>&]:rounded-sm [:not(pre)>&]:bg-background-muted [:not(pre)>&]:px-[6px] [:not(pre)>&]:py-[3px] [:not(pre)>&]:text-foreground",
           className
         )}
         {...props}
@@ -159,15 +159,15 @@ const P = ({ children }: PropsWithChildren) => {
 };
 
 const headingClass = tv({
-  base: "text-foreground-strong flex items-center font-bold mb-6 group gap-0",
+  base: "group mb-6 flex items-center gap-0 font-bold text-foreground-strong",
   variants: {
     tag: {
-      h1: "text-3xl mt-12",
-      h2: "text-2xl mt-10 ml-0",
-      h3: "text-xl mt-8",
-      h4: "text-lg mt-6",
-      h5: "text-lg mt-6",
-      h6: "text-lg mt-6",
+      h1: "mt-12 text-3xl",
+      h2: "mt-10 ml-0 text-2xl",
+      h3: "mt-8 text-xl",
+      h4: "mt-6 text-lg",
+      h5: "mt-6 text-lg",
+      h6: "mt-6 text-lg",
     },
   },
 });
@@ -186,7 +186,7 @@ const Heading = ({
   return (
     <HeadingComponent {...props} className={heading}>
       <a
-        className="relative w-0 h-6 before:bg-[url('/icons/link.svg')] before:contents-[''] before:absolute before:right-0 before:top-0 before:block before:pr-1 before:h-6 before:w-7 before:bg-center group-hover:before:opacity-100 before:opacity-0 before:bg-contain before:bg-no-repeat before:transition-opacity"
+        className="relative h-6 w-0 before:absolute before:top-0 before:right-0 before:block before:h-6 before:w-7 before:bg-[url('/icons/link.svg')] before:bg-contain before:bg-center before:bg-no-repeat before:pr-1 before:opacity-0 before:transition-opacity before:content-[''] group-hover:before:opacity-100"
         href={href}
         aria-label="見出しへのリンク"
       />
@@ -220,7 +220,7 @@ const H6 = (props: ComponentPropsWithoutRef<"h4">) => {
 };
 
 const A = ({ children, href }: ComponentPropsWithoutRef<"a">) => {
-  const className = "text-sky-400 underline underline-offset-2 mx-1";
+  const className = "mx-1 text-sky-400 underline underline-offset-2";
 
   if (href?.startsWith("#")) {
     return (
@@ -256,7 +256,7 @@ const Img = ({ src, alt }: ComponentPropsWithoutRef<"img">) => {
 const Ul = ({ children }: PropsWithChildren) => {
   return (
     <ul
-      className="pl-5 list-disc marker:text-foreground-muted group group-has-[ul]:mt-0! group-has-[ol]:mt-0!"
+      className="group list-disc pl-5 group-has-[ol]:mt-0! group-has-[ul]:mt-0! marker:text-foreground-muted"
       style={{ marginTop: defaultMargin }}
     >
       {children}
@@ -267,7 +267,7 @@ const Ul = ({ children }: PropsWithChildren) => {
 const Ol = ({ children }: PropsWithChildren) => {
   return (
     <ol
-      className="list-decimal marker:text-foreground-muted pl-5 group group-has-[ol]:mt-0! group-has-[ul]:mt-0!"
+      className="group list-decimal pl-5 group-has-[ol]:mt-0! group-has-[ul]:mt-0! marker:text-foreground-muted"
       style={{ marginTop: defaultMargin }}
     >
       {children}
@@ -296,7 +296,7 @@ const Hr = ({ children }: PropsWithChildren) => {
 const BlockQuote = ({ children }: PropsWithChildren) => {
   return (
     <blockquote
-      className="text-foreground/80 px-4 py-1 relative border-l-2 border-border-strong [&>p:first-child]:mt-0!"
+      className="relative border-l-2 border-border-strong px-4 py-1 text-foreground/80 [&>p:first-child]:mt-0!"
       style={{ marginBlock: defaultMargin }}
     >
       {children}

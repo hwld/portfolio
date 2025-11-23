@@ -16,14 +16,14 @@ export const ExternalLink: React.FC<Props> = ({
       href={href}
       target="_blank"
       className={clsx(
-        "flex items-center underline underline-offset-4 transition-colors hover:text-foreground-strong w-fit group",
+        "group flex w-fit items-center underline underline-offset-4 transition-colors hover:text-foreground-strong",
         linkSizeClass[size]
       )}
     >
       {children}
       <TbExternalLink
         size={iconSizeClass[size]}
-        className="text-foreground-muted group-hover:text-foreground-strong transition-colors"
+        className="text-foreground-muted transition-colors group-hover:text-foreground-strong"
       />
     </a>
   );

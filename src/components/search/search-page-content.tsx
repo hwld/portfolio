@@ -22,19 +22,19 @@ export const SearchPageContent: React.FC = () => {
   return (
     <div className="flex flex-col gap-6">
       <SearchInput query={query} onChangeQuery={search} />
-      <div className="w-full flex flex-col gap-4">
+      <div className="flex w-full flex-col gap-4">
         {results.length === 0 ? (
           isSearching ? (
-            <div className="grid place-items-center mt-10">
+            <div className="mt-10 grid place-items-center">
               <CgSpinner className="size-8 animate-spin" />
             </div>
           ) : query.length > 0 ? (
-            <div className="flex flex-col gap-2 items-center mt-10">
+            <div className="mt-10 flex flex-col items-center gap-2">
               <TbGhost2 className="size-24" />
               <p>ページが見つかりませんでした</p>
             </div>
           ) : (
-            <div className="flex flex-col gap-2 items-center mt-10">
+            <div className="mt-10 flex flex-col items-center gap-2">
               <TbGhost3 className="size-24" />
               <p>ページを検索することができます</p>
             </div>
@@ -44,10 +44,10 @@ export const SearchPageContent: React.FC = () => {
           return (
             <div
               key={r.id}
-              className="border border-border p-4 flex flex-col gap-4 rounded-lg"
+              className="flex flex-col gap-4 rounded-lg border border-border p-4"
             >
-              <div className="grid grid-cols-[auto_1fr] gap-1 items-start">
-                <p className="text-foreground-muted leading-6">Page:</p>
+              <div className="grid grid-cols-[auto_1fr] items-start gap-1">
+                <p className="leading-6 text-foreground-muted">Page:</p>
                 <TextLink size="lg" href={r.url}>
                   {r.meta?.title ?? "不明なタイトル"}
                 </TextLink>

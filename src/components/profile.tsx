@@ -15,7 +15,7 @@ export const Profile: React.FC = () => {
       <AvatarIcon />
       <div className="flex flex-col gap-6">
         <div className="flex items-center gap-4 text-2xl font-bold">hwld</div>
-        <div className="max-w-[700px] md:text-base space-y-3">
+        <div className="max-w-[700px] space-y-3 md:text-base">
           <p>かっこいいUIのWebアプリを作るのが好きなひとです。</p>
           <p>
             言語はTypeScriptが好きで、Webフロントエンド・バックエンドの両方で使用しています。
@@ -66,8 +66,8 @@ const ProfileBasicInfo: React.FC<{
   children: ReactNode;
 }> = ({ icon: Icon, title, children }) => {
   return (
-    <div className="grid grid-cols-[110px_1fr] w-full">
-      <div className="flex gap-1 items-center text-foreground-muted">
+    <div className="grid w-full grid-cols-[110px_1fr]">
+      <div className="flex items-center gap-1 text-foreground-muted">
         <Icon size={18} />
         {title}
       </div>

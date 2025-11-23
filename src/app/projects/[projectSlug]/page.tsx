@@ -41,7 +41,7 @@ const ProjectDetailPage: React.FC<PageProps> = async (props) => {
       <div className="flex flex-col gap-4">
         <ProjectThumbnail src={project.imageSrc} />
         <div>
-          <div className="text-sm text-foreground-muted flex gap-1 items-center">
+          <div className="flex items-center gap-1 text-sm text-foreground-muted">
             <TbCode size={18} />
             {`${project.createdAt.getFullYear()}年${
               project.createdAt.getMonth() + 1
@@ -86,7 +86,7 @@ const IconLink: React.FC<{ icon: IconType; href: string; label: string }> = ({
       target="_blank"
       aria-label={label}
       href={href}
-      className="size-8 grid place-items-center border border-border-strong rounded-sm transition-colors hover:bg-background-hover hover:text-foreground-strong"
+      className="grid size-8 place-items-center rounded-sm border border-border-strong transition-colors hover:bg-background-hover hover:text-foreground-strong"
     >
       <Icon size={18} />
     </a>

@@ -14,7 +14,7 @@ export const FeaturedProjectList: React.FC = () => {
   return (
     <div className="flex flex-col gap-6">
       <Heading subTitle="projects">お気に入りのプロジェクト</Heading>
-      <div className="flex flex-col gap-8 sm:gap-6 ">
+      <div className="flex flex-col gap-8 sm:gap-6">
         {featuredProjectInfos.map((p, i) => {
           return (
             <React.Fragment key={p.title}>

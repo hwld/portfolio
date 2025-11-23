@@ -6,7 +6,7 @@ type Props = { src: string | undefined; interactive?: boolean };
 
 export const ProjectThumbnail: React.FC<Props> = ({ src, interactive }) => {
   return (
-    <div className="w-full aspect-video overflow-hidden outline-solid outline-1 outline-border relative rounded-lg shrink-0 ">
+    <div className="relative aspect-video w-full shrink-0 overflow-hidden rounded-lg outline-1 outline-border outline-solid">
       {src ? (
         <img
           alt="screenshot"
@@ -17,7 +17,7 @@ export const ProjectThumbnail: React.FC<Props> = ({ src, interactive }) => {
           src={src}
         />
       ) : (
-        <div className="inset-0 absolute grid place-items-center">
+        <div className="absolute inset-0 grid place-items-center">
           <TbX size="80%" strokeWidth={0.5} />
         </div>
       )}

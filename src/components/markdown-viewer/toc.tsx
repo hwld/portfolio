@@ -18,5 +18,6 @@ export const Toc: React.FC<Props> = ({ hAst }) => {
 
 const Ul = (props: ComponentPropsWithoutRef<"ul">) => {
   // ルートのulにpl-2が当たらないようにする
+  // eslint-disable-next-line better-tailwindcss/no-unregistered-classes
   return <ul className="ul group group-has-[ul]:pl-4" {...props} />;
 };

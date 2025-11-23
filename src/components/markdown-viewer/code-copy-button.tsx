@@ -27,7 +27,7 @@ export const CodeCopyButton: React.FC<Props> = ({ codeId }) => {
     <button
       aria-label="コードをコピーする"
       onClick={handleCopyCode}
-      className="absolute right-2 top-2 pb-px opacity-0 group-hover:opacity-100 size-8 shadow-sm border border-zinc-500 bg-zinc-700 rounded-sm grid place-items-center hover:bg-zinc-600 transition-all"
+      className="absolute top-2 right-2 grid size-8 place-items-center rounded-sm border border-zinc-500 bg-zinc-700 pb-px opacity-0 shadow-sm transition-all group-hover:opacity-100 hover:bg-zinc-600"
     >
       <Icon size="75%" />
     </button>

@@ -5,9 +5,9 @@ type Props = { hAst: Root };
 
 export const DesktopToc: React.FC<Props> = async ({ hAst: hast }) => {
   return (
-    <div className="sticky flex flex-col top-[16px] max-h-[calc(100dvh-32px)] h-fit py-4 rounded-lg border border-border shadow-xl w-full">
-      <p className="text-sm text-foreground-muted px-6">目次</p>
-      <div className="w-full h-px bg-border my-2" />
+    <div className="sticky top-[16px] flex h-fit max-h-[calc(100dvh-32px)] w-full flex-col rounded-lg border border-border py-4 shadow-xl">
+      <p className="px-6 text-sm text-foreground-muted">目次</p>
+      <div className="my-2 h-px w-full bg-border" />
       <div className="overflow-auto px-4">
         <Toc hAst={hast} />
       </div>

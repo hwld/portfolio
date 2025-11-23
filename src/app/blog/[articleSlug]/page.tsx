@@ -50,7 +50,7 @@ const ArticleDetailPage: React.FC<PageProps> = async (props) => {
   return (
     <DetailLayout>
       <div className="flex flex-col gap-2">
-        <div className="text-foreground-muted flex text-sm items-center gap-1">
+        <div className="flex items-center gap-1 text-sm text-foreground-muted">
           <TbClock className="size-4" />
           {`${article.createdAt.getFullYear()}年 ${
             article.createdAt.getMonth() + 1

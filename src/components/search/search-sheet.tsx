@@ -109,7 +109,7 @@ const SearchSheet = forwardRef<HTMLDivElement, SearchSheetProps>(
           {...props}
         >
           <NavbarSheetHeader>
-            <div className="flex items-center justify-between w-full">
+            <div className="flex w-full items-center justify-between">
               <p>ページ検索</p>
               <p className="text-navbar-foreground-muted">Cmd + K</p>
             </div>
@@ -117,21 +117,21 @@ const SearchSheet = forwardRef<HTMLDivElement, SearchSheetProps>(
 
           <Command
             shouldFilter={false}
-            className="focus-visible:outline-hidden w-full"
+            className="w-full focus-visible:outline-hidden"
           >
-            <Command.List className="overflow-auto flex flex-col scroll-py-2 relative h-[450px]">
+            <Command.List className="relative flex h-[450px] scroll-py-2 flex-col overflow-auto">
               <Command.Empty className="absolute inset-0 grid place-items-center">
                 {isSearching ? (
                   <div className="grid place-items-center">
                     <CgSpinner className="size-8 animate-spin" />
                   </div>
                 ) : query.length > 0 ? (
-                  <div className="flex flex-col gap-2 items-center -mt-10">
+                  <div className="-mt-10 flex flex-col items-center gap-2">
                     <TbGhost2 className="size-24" />
                     <p>ページが見つかりませんでした</p>
                   </div>
                 ) : (
-                  <div className="flex flex-col gap-2 items-center -mt-10">
+                  <div className="-mt-10 flex flex-col items-center gap-2">
                     <TbGhost3 className="size-24" />
                     <p>ページを検索することができます</p>
                     <TextLink
@@ -188,9 +188,9 @@ const SearchResult: React.FC<SearchResultProps> = ({
   };
 
   return (
-    <div className="border-b border-navbar-border p-2 flex flex-col gap-2">
-      <div className="grid grid-cols-[auto_1fr] gap-1 items-start">
-        <p className="text-navbar-foreground-muted leading-6">Page:</p>
+    <div className="flex flex-col gap-2 border-b border-navbar-border p-2">
+      <div className="grid grid-cols-[auto_1fr] items-start gap-1">
+        <p className="leading-6 text-navbar-foreground-muted">Page:</p>
         <Command.Item
           asChild
           value={result.id}
@@ -209,7 +209,7 @@ const SearchResult: React.FC<SearchResultProps> = ({
               key={i}
               value={`${result.id}-${sub.url}`}
               onSelect={() => handleSelect(sub.url)}
-              className="grid grid-cols-[auto_1fr] grid-rows-[auto_1fr] gap-1 group items-center data-[selected=true]:bg-white/10 p-1 rounded-sm cursor-pointer"
+              className="group grid cursor-pointer grid-cols-[auto_1fr] grid-rows-[auto_1fr] items-center gap-1 rounded-sm p-1 data-[selected=true]:bg-white/10"
             >
               <MdOutlineSubdirectoryArrowRight className="size-4" />
               <TextLink

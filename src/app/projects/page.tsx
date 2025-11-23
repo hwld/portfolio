@@ -20,7 +20,7 @@ const ProjectsPage: React.FC = () => {
         </>
       }
     >
-      <div className="w-full grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-4 auto-rows-min">
+      <div className="grid w-full auto-rows-min grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-4">
         {[...projectInfos]
           .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime())
           .map((project) => {

@@ -4,12 +4,12 @@ type Props = { subTitle: string; children: string };
 export const Heading: React.FC<Props> = ({ subTitle, children }) => {
   return (
     <h2 id={subTitle} className="space-y-1">
-      <div className="text-foreground-muted text-sm">{subTitle}</div>
+      <div className="text-sm text-foreground-muted">{subTitle}</div>
       <a
-        className="flex items-center gap-1 text-lg font-bold w-fit"
+        className="flex w-fit items-center gap-1 text-lg font-bold"
         href={`#${subTitle}`}
       >
-        <TbHash className="text-lg mt-px" />
+        <TbHash className="mt-px text-lg" />
         {children}
       </a>
     </h2>

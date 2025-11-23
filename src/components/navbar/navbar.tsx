@@ -36,7 +36,7 @@ export const Navbar: React.FC = () => {
             />
           </div>
         ) : (
-          <div className="gap-2 grid-cols-[min-content_1fr_min-content] grid">
+          <div className="grid grid-cols-[min-content_1fr_min-content] gap-2">
             {isMobileTocVisible ? <MobileTocButton /> : null}
             <DesktopNavbar />
             <SearchSheetTrigger />

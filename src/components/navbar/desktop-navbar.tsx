@@ -71,16 +71,16 @@ export const DesktopNavbar: React.FC = () => {
   }, [currentPath]);
 
   return (
-    <div className="bg-navbar-background border-2 border-navbar-border text-navbar-foreground h-11 w-full p-1 rounded-full shadow-navbar">
+    <div className="h-11 w-full rounded-full border-2 border-navbar-border bg-navbar-background p-1 text-navbar-foreground shadow-navbar">
       <div
         ref={navbarRef}
-        className="h-full w-full flex items-center gap-[2px] relative"
+        className="relative flex h-full w-full items-center gap-[2px]"
         onMouseLeave={handleNavbarMouseLeave}
       >
         <AnimatePresence>
           {activeMarker && (
             <motion.div
-              className="absolute bg-navbar-foreground rounded-full pointer-events-none"
+              className="pointer-events-none absolute rounded-full bg-navbar-foreground"
               transition={{ type: "spring", duration: 0.55 }}
               initial={{ ...activeMarker.style, opacity: 0 }}
               animate={{ ...activeMarker.style, opacity: 1 }}
@@ -104,7 +104,7 @@ export const DesktopNavbar: React.FC = () => {
             </NavbarItem>
           );
         })}
-        <div className="h-2/3 bg-navbar-border w-[2px] shrink-0 mx-1" />
+        <div className="mx-1 h-2/3 w-[2px] shrink-0 bg-navbar-border" />
         <div className="flex gap-1">
           {navbarSocialLinks.map((link) => {
             return (
@@ -130,8 +130,8 @@ export const DesktopNavbar: React.FC = () => {
 
 const navbarItem = tv({
   slots: {
-    page: "flex gap-1 items-center w-full h-full justify-center pl-3 pr-4",
-    social: "size-8 grid place-items-center rounded-full shrink-0",
+    page: "flex h-full w-full items-center justify-center gap-1 pr-4 pl-3",
+    social: "grid size-8 shrink-0 place-items-center rounded-full",
   },
   variants: {
     isActive: { true: "", false: "" },
@@ -139,7 +139,7 @@ const navbarItem = tv({
   compoundSlots: [
     {
       slots: ["page", "social"],
-      className: "transition-colors duration-200 relative rounded-full",
+      className: "relative rounded-full transition-colors duration-200",
     },
     {
       slots: ["page", "social"],

@@ -40,7 +40,7 @@ export const SkillList: React.FC = () => {
   return (
     <div className="space-y-6">
       <Heading subTitle="skills">使ったことのある技術</Heading>
-      <div className="w-full flex flex-wrap gap-4">
+      <div className="flex w-full flex-wrap gap-4">
         {skills.map((t) => {
           return <SkillCard skill={t} key={t.name} />;
         })}
@@ -56,7 +56,7 @@ const SkillCard: React.FC<{ skill: Skill }> = ({
     <a
       href={link}
       target="_blank"
-      className="flex flex-col group border p-4 rounded-lg items-center gap-1 size-[150px] justify-center border-border shadow-sm hover:bg-background-hover transition-colors"
+      className="group flex size-[150px] flex-col items-center justify-center gap-1 rounded-lg border border-border p-4 shadow-sm transition-colors hover:bg-background-hover"
     >
       <Image
         src={`/techs-logo/${imgFile}`}
@@ -64,11 +64,11 @@ const SkillCard: React.FC<{ skill: Skill }> = ({
         height={80}
         alt={`${name}-logo`}
       />
-      <div className="font-bold flex items-center gap-1 group-hover:text-foreground-strong transition-colors">
+      <div className="flex items-center gap-1 font-bold transition-colors group-hover:text-foreground-strong">
         {name}
         <TbExternalLink
           size={14}
-          className="text-foreground-muted group-hover:text-foreground-strong transition-colors"
+          className="text-foreground-muted transition-colors group-hover:text-foreground-strong"
         />
       </div>
     </a>

@@ -28,9 +28,9 @@ export const SummaryLayout: React.FC<Props> = ({
       <div className="flex flex-col gap-10">
         <div className="flex flex-col gap-2">
           <h1 className="flex flex-col gap-1">
-            <div className="text-foreground-muted text-sm">{pageSubTitle}</div>
+            <div className="text-sm text-foreground-muted">{pageSubTitle}</div>
             <div className="flex items-center gap-1 text-xl font-bold">
-              <TbHash className="text-lg mt-px" />
+              <TbHash className="mt-px text-lg" />
               {pageTitle}
             </div>
           </h1>

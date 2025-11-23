@@ -19,7 +19,7 @@ export const NavbarSheet = forwardRef<HTMLDivElement, Props>(function Sheet(
         <FloatingFocusManager context={floatingContext}>
           <div {...props} ref={ref} className="w-full">
             <motion.div
-              className="bg-navbar-background rounded-lg overflow-hidden shadow-navbar border-2 border-navbar-border text-navbar-foreground"
+              className="overflow-hidden rounded-lg border-2 border-navbar-border bg-navbar-background text-navbar-foreground shadow-navbar"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}
@@ -39,12 +39,12 @@ export const NavbarSheetHeader: React.FC<PropsWithChildren> = ({
   children,
 }) => {
   return (
-    <div className="p-2 text-xs flex items-center border-b border-navbar-border bg-navbar-background-muted">
+    <div className="flex items-center border-b border-navbar-border bg-navbar-background-muted p-2 text-xs">
       {children}
     </div>
   );
 };
 
 export const NavbarSheetBody: React.FC<PropsWithChildren> = ({ children }) => {
-  return <div className="p-2 overflow-auto scroll-p-2">{children}</div>;
+  return <div className="scroll-p-2 overflow-auto p-2">{children}</div>;
 };

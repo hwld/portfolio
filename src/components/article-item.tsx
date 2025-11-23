@@ -9,9 +9,9 @@ export const ArticleItem: React.FC<{ article: ArticleInfo }> = ({
   return (
     <div
       key={article.title}
-      className="grid grid-rows-[auto_1fr] md:grid-rows-1 grid-cols-1 md:grid-cols-[auto_1fr] gap-0 md:gap-4 items-start"
+      className="grid grid-cols-1 grid-rows-[auto_1fr] items-start gap-0 md:grid-cols-[auto_1fr] md:grid-rows-1 md:gap-4"
     >
-      <div className="flex items-center text-center text-foreground-muted tabular-nums leading-6">
+      <div className="flex items-center text-center leading-6 text-foreground-muted tabular-nums">
         {article.createdAt.getFullYear()}・
         <div className="w-[2ch] tabular-nums">
           {article.createdAt.getMonth() + 1}

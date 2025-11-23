@@ -1,3 +1,3 @@
 export const Separator: React.FC = () => {
-  return <div className="h-px bg-border w-full" />;
+  return <div className="h-px w-full bg-border" />;
 };
