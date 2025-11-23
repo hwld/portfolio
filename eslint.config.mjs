@@ -14,18 +14,10 @@ const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
   {
-    rules: {
-      "@typescript-eslint/no-unused-vars": [
-        "warn",
-        {
-          argsIgnorePattern: "^_",
-          varsIgnorePattern: "^_",
-          ignoreRestSiblings: true,
-        },
-      ],
-      // バグがありそうなので無効化
-      // https://github.com/facebook/react/issues/34775
-      "react-hooks/refs": "off",
+    languageOptions: {
+      parserOptions: {
+        projectService: true,
+      },
     },
   },
   {
@@ -41,6 +33,22 @@ const eslintConfig = defineConfig([
       "better-tailwindcss": {
         entryPoint: "src/app/globals.css",
       },
+    },
+  },
+  {
+    rules: {
+      "@typescript-eslint/no-deprecated": "warn",
+      "@typescript-eslint/no-unused-vars": [
+        "warn",
+        {
+          argsIgnorePattern: "^_",
+          varsIgnorePattern: "^_",
+          ignoreRestSiblings: true,
+        },
+      ],
+      // バグがありそうなので無効化
+      // https://github.com/facebook/react/issues/34775
+      "react-hooks/refs": "off",
     },
   },
 ]);
