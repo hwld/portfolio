@@ -64,7 +64,7 @@ const calloutClass = tv({
     type: {
       note: {
         root: "bg-blue-500/10 border-blue-500/30",
-        icon: "mt-[2px] size-6 text-blue-400",
+        icon: "mt-0.5 size-6 text-blue-400",
       },
       warning: {
         root: "bg-orange-500/10 border-orange-500/30",

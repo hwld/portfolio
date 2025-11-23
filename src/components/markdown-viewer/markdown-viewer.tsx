@@ -141,7 +141,7 @@ const Code = ({
       <code
         id={codeId}
         className={clsx(
-          "break-all [:not(pre)>&]:mx-1 [:not(pre)>&]:rounded-sm [:not(pre)>&]:bg-background-muted [:not(pre)>&]:px-[6px] [:not(pre)>&]:py-[3px] [:not(pre)>&]:text-foreground",
+          "break-all [:not(pre)>&]:mx-1 [:not(pre)>&]:rounded-sm [:not(pre)>&]:bg-background-muted [:not(pre)>&]:px-1.5 [:not(pre)>&]:py-[3px] [:not(pre)>&]:text-foreground",
           className
         )}
         {...props}

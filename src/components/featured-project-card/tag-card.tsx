@@ -6,7 +6,7 @@ export const FeaturedProjectTagCard: React.FC<{
 }> = ({ tag }) => {
   return (
     <a
-      className="group flex h-[24px] items-center gap-1 rounded-sm border border-border-strong px-2 pb-[2px] text-nowrap transition-colors hover:bg-background-hover hover:text-foreground-strong"
+      className="group flex h-6 items-center gap-1 rounded-sm border border-border-strong px-2 pb-0.5 text-nowrap transition-colors hover:bg-background-hover hover:text-foreground-strong"
       target="_blank"
       href={projectTagLinkMap.get(tag)}
     >

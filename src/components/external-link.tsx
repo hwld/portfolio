@@ -8,7 +8,7 @@ export const ExternalLink: React.FC<Props> = ({
   size = "default",
   children,
 }) => {
-  const linkSizeClass = { default: "text-base gap-1", sm: "text-sm gap-[2px]" };
+  const linkSizeClass = { default: "text-base gap-1", sm: "text-sm gap-0.5" };
   const iconSizeClass = { default: 16, sm: 14 };
 
   return (

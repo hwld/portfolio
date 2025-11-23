@@ -74,7 +74,7 @@ export const DesktopNavbar: React.FC = () => {
     <div className="h-11 w-full rounded-full border-2 border-navbar-border bg-navbar-background p-1 text-navbar-foreground shadow-navbar">
       <div
         ref={navbarRef}
-        className="relative flex h-full w-full items-center gap-[2px]"
+        className="relative flex h-full w-full items-center gap-0.5"
         onMouseLeave={handleNavbarMouseLeave}
       >
         <AnimatePresence>
@@ -104,7 +104,7 @@ export const DesktopNavbar: React.FC = () => {
             </NavbarItem>
           );
         })}
-        <div className="mx-1 h-2/3 w-[2px] shrink-0 bg-navbar-border" />
+        <div className="mx-1 h-2/3 w-0.5 shrink-0 bg-navbar-border" />
         <div className="flex gap-1">
           {navbarSocialLinks.map((link) => {
             return (
