@@ -6,7 +6,7 @@
     "build": "pnpm build:ogp && pnpm build:next && pnpm build:pagefind",
     "build:ogp": "tsx scripts/generateBlogOgImage.tsx",
     "build:next": "next build",
-    "build:pagefind": "pnpm -y pagefind --site .next --output-path public/pagefind",
+    "build:pagefind": "pnpm -y pagefind --site .next/server/app --output-path public/pagefind",
     "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
     "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
     "upload": "opennextjs-cloudflare build && opennextjs-cloudflare upload",
