@@ -6,13 +6,20 @@ const ContentInfoSchema = z.object({
   isPublished: z.boolean().default(true),
 });
 
-const InternalArticleInfoSchema = ContentInfoSchema.merge(
-  z.object({ isExternal: z.literal(false).default(false) })
-).strict();
+const InternalArticleInfoSchema = z
+  .object({
+    ...ContentInfoSchema.shape,
+    isExternal: z.literal(false).default(false),
+  })
+  .strict();
 
-const ExternalArticleInfoSchema = ContentInfoSchema.merge(
-  z.object({ isExternal: z.literal(true), url: z.string().url() })
-).strict();
+const ExternalArticleInfoSchema = z
+  .object({
+    ...ContentInfoSchema.shape,
+    isExternal: z.literal(true),
+    url: z.url(),
+  })
+  .strict();
 
 export const ArticleInfoSchema = InternalArticleInfoSchema.or(
   ExternalArticleInfoSchema
@@ -46,27 +53,29 @@ export const projectTagLinkMap: Map<ProjectTag, string> = new Map([
   ["tailwindcss", "https://tailwindcss.com/"],
 ]);
 
-const ProjectInfoBaseSchema = ContentInfoSchema.merge(
-  z.object({
-    tags: z.array(ProjectTag),
-    imageSrc: z.string().optional(),
-    summary: z.string(),
-    projectUrl: z.string().optional(),
-    githubUrl: z.string().optional(),
-  })
-);
+const ProjectInfoBaseSchema = z.object({
+  ...ContentInfoSchema.shape,
+  tags: z.array(ProjectTag),
+  imageSrc: z.string().optional(),
+  summary: z.string(),
+  projectUrl: z.string().optional(),
+  githubUrl: z.string().optional(),
+});
 
-const NormalProjectInfoSchema = ProjectInfoBaseSchema.merge(
-  z.object({ type: z.literal("normal").default("normal") })
-).strict();
-
-const FeaturedProjectInfoSchema = ProjectInfoBaseSchema.merge(
-  z.object({
-    type: z.literal("featured"),
-    featuredDesc: z.string(),
-    featuredOrder: z.number(),
+const NormalProjectInfoSchema = z
+  .object({
+    ...ProjectInfoBaseSchema.shape,
+    type: z.literal("normal").default("normal"),
   })
-).strict();
+  .strict();
+
+const FeaturedProjectInfoSchema = z.object({
+  ...ProjectInfoBaseSchema.shape,
+  type: z.literal("featured"),
+  featuredDesc: z.string(),
+  featuredOrder: z.number(),
+});
+
 export type FeaturedProjectInfo = z.infer<typeof FeaturedProjectInfoSchema> & {
   slug: string;
 };
