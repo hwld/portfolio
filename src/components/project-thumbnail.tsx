@@ -9,6 +9,7 @@ export const ProjectThumbnail: React.FC<Props> = ({ src, interactive }) => {
     <div className="relative aspect-video w-full shrink-0 overflow-hidden rounded-lg outline-1 outline-border outline-solid">
       {src ? (
         <img
+          loading="lazy"
           alt="screenshot"
           className={clsx(
             "size-full transition-transform",
