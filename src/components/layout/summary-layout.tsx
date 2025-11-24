@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { BaseLayout } from "./base-layout";
 import { AvatarIconLink } from "../avatar-icon";
-import { TbHash } from "@react-icons/all-files/tb/TbHash";
+import { TbHash } from "react-icons/tb";
 
 type Props = {
   children: ReactNode;

@@ -9,8 +9,7 @@ import {
   size,
   autoUpdate,
 } from "@floating-ui/react";
-import { TbMenu2 } from "@react-icons/all-files/tb/TbMenu2";
-import { TbX } from "@react-icons/all-files/tb/TbX";
+import { TbMenu2, TbX } from "react-icons/tb";
 import { useEffect, useState } from "react";
 import { flushSync } from "react-dom";
 import { tocAnchorClass, useToc } from "./toc-provider";

@@ -1,6 +1,5 @@
-import type { IconType } from "@react-icons/all-files";
-import { TbSquareRotatedFilled } from "@react-icons/all-files/tb/TbSquareRotatedFilled";
-import { TbFileFilled } from "@react-icons/all-files/tb/TbFileFilled";
+import type { IconType } from "react-icons/lib";
+import { TbSquareRotatedFilled, TbFileFilled } from "react-icons/tb";
 import type Link from "next/link";
 import type { ComponentProps } from "react";
 import { ArticleInfo, ProjectInfo } from "@/components/content/type";

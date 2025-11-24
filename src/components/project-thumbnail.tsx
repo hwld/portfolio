@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import clsx from "clsx";
-import { TbX } from "@react-icons/all-files/tb/TbX";
+import { TbX } from "react-icons/tb";
 
 type Props = { src: string | undefined; interactive?: boolean };
 

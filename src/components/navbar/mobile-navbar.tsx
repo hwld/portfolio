@@ -1,11 +1,11 @@
-import { TbChevronRight } from "@react-icons/all-files/tb/TbChevronRight";
+import { TbChevronRight } from "react-icons/tb";
 import { motion } from "motion/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { tv } from "tailwind-variants";
 import { getDetailPageTitle } from "@/lib/get-detail-page-title";
-import type { IconType } from "@react-icons/all-files";
+import type { IconType } from "react-icons/lib";
 import {
   offset,
   useClick,

@@ -1,4 +1,4 @@
-import { IconType } from "@react-icons/all-files";
+import { IconType } from "react-icons/lib";
 import Link, { LinkProps } from "next/link";
 import { ComponentPropsWithRef, forwardRef } from "react";
 import { tv } from "tailwind-variants";

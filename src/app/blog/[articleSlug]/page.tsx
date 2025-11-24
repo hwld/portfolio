@@ -1,6 +1,6 @@
 import { articleInfos, getContent } from "@/lib/content";
 import type { Metadata } from "next";
-import { TbClock } from "@react-icons/all-files/tb/TbClock";
+import { TbClock } from "react-icons/tb";
 import { MarkdownViewerWithToc } from "@/components/markdown-viewer/with-toc";
 import { DetailLayout } from "@/components/layout/detail-layout";
 import { appUrl } from "@/routes";

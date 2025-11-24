@@ -1,12 +1,10 @@
 import { ProjectThumbnail } from "@/components/project-thumbnail";
-import { type IconType } from "@react-icons/all-files/lib";
-import { TbBrandGithub } from "@react-icons/all-files/tb/TbBrandGithub";
-import { TbCode } from "@react-icons/all-files/tb/TbCode";
-import { TbLink } from "@react-icons/all-files/tb/TbLink";
+import { TbBrandGithub, TbCode, TbLink } from "react-icons/tb";
 import { Metadata } from "next";
 import { getContent, projectInfos } from "@/lib/content";
 import { MarkdownViewerWithToc } from "@/components/markdown-viewer/with-toc";
 import { DetailLayout } from "@/components/layout/detail-layout";
+import type { IconType } from "react-icons/lib";
 
 type Params = { projectSlug: string };
 

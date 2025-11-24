@@ -1,13 +1,13 @@
 "use client";
 
 import { TextLink } from "../link";
-import { MdOutlineSubdirectoryArrowRight } from "@react-icons/all-files/md/MdOutlineSubdirectoryArrowRight";
-import { TbGhost2 } from "@react-icons/all-files/tb/TbGhost2";
-import { TbGhost3 } from "@react-icons/all-files/tb/TbGhost3";
+import { MdOutlineSubdirectoryArrowRight } from "react-icons/md";
+import { TbGhost2 } from "react-icons/tb";
+import { TbGhost3 } from "react-icons/tb";
 import { SearchInput } from "./search-input";
 import { useSearchPage } from "./use-search-page";
 import { useQueryState, parseAsString } from "nuqs";
-import { CgSpinner } from "@react-icons/all-files/cg/CgSpinner";
+import { CgSpinner } from "react-icons/cg";
 
 export const SearchPageContent: React.FC = () => {
   const [query, setQuery] = useQueryState<string>(

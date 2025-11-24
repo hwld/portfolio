@@ -7,7 +7,7 @@ import { SearchSheetTrigger } from "../search/search-sheet";
 import { Routes } from "@/routes";
 import { MobileTocButton } from "../markdown-viewer/mobile-toc-button";
 import { NavbarButtonLink } from "./button";
-import { TbSearch } from "@react-icons/all-files/tb/TbSearch";
+import { TbSearch } from "react-icons/tb";
 
 export const Navbar: React.FC = () => {
   const isMobile = useMediaQuery("(max-width: 700px)");

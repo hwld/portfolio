@@ -1,8 +1,8 @@
 import { Command } from "cmdk";
-import { TbGhost2 } from "@react-icons/all-files/tb/TbGhost2";
-import { TbGhost3 } from "@react-icons/all-files/tb/TbGhost3";
-import { MdOutlineSubdirectoryArrowRight } from "@react-icons/all-files/md/MdOutlineSubdirectoryArrowRight";
-import { CgSpinner } from "@react-icons/all-files/cg/CgSpinner";
+import { TbGhost2 } from "react-icons/tb";
+import { TbGhost3 } from "react-icons/tb";
+import { MdOutlineSubdirectoryArrowRight } from "react-icons/md";
+import { CgSpinner } from "react-icons/cg";
 import {
   useState,
   type ComponentPropsWithoutRef,
@@ -24,7 +24,7 @@ import { SearchInput } from "./search-input";
 import { useSearchPage } from "./use-search-page";
 import { NavbarSheet, NavbarSheetHeader } from "../navbar/sheet";
 import { NavbarButton } from "../navbar/button";
-import { TbSearch } from "@react-icons/all-files/tb/TbSearch";
+import { TbSearch } from "react-icons/tb";
 import { PagefindSearchAllResult } from "@/lib/pagefind";
 
 export const SearchSheetTrigger: React.FC = () => {

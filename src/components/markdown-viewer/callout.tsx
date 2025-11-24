@@ -1,6 +1,5 @@
-import { IconType } from "@react-icons/all-files";
-import { TbAlertTriangle } from "@react-icons/all-files/tb/TbAlertTriangle";
-import { TbInfoCircle } from "@react-icons/all-files/tb/TbInfoCircle";
+import { IconType } from "react-icons/lib";
+import { TbAlertTriangle, TbInfoCircle } from "react-icons/tb";
 import { ComponentPropsWithoutRef } from "react";
 import { tv } from "tailwind-variants";
 

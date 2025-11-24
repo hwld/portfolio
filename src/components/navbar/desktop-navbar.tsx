@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { forwardRef } from "react";
 import { tv } from "tailwind-variants";
-import { IconType } from "@react-icons/all-files";
+import { IconType } from "react-icons/lib";
 import { navbarPageLinks, PageLink, navbarSocialLinks } from "./consts";
 
 /**

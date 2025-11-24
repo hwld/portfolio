@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { TbExternalLink } from "@react-icons/all-files/tb/TbExternalLink";
+import { TbExternalLink } from "react-icons/tb";
 
 type Props = { href: string; size?: "default" | "sm"; children: string };
 

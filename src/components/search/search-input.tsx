@@ -1,4 +1,4 @@
-import { TbSearch } from "@react-icons/all-files/tb/TbSearch";
+import { TbSearch } from "react-icons/tb";
 import { forwardRef } from "react";
 
 type Props = { query: string; onChangeQuery: (query: string) => void };

@@ -1,14 +1,16 @@
 import { Routes } from "@/routes";
-import { IconType } from "@react-icons/all-files";
-import { TbBrandGithub } from "@react-icons/all-files/tb/TbBrandGithub";
-import { TbBrandX } from "@react-icons/all-files/tb/TbBrandX";
-import { TbSearch } from "@react-icons/all-files/tb/TbSearch";
-import { TbStack2 } from "@react-icons/all-files/tb/TbStack2";
-import { TbStack2Filled } from "@react-icons/all-files/tb/TbStack2Filled";
-import { TbHome } from "@react-icons/all-files/tb/TbHome";
-import { TbHomeFilled } from "@react-icons/all-files/tb/TbHomeFilled";
-import { TbBallpen } from "@react-icons/all-files/tb/TbBallpen";
-import { TbBallpenFilled } from "@react-icons/all-files/tb/TbBallpenFilled";
+import { IconType } from "react-icons/lib";
+import {
+  TbBrandGithub,
+  TbBrandX,
+  TbSearch,
+  TbStack2,
+  TbStack2Filled,
+  TbHome,
+  TbHomeFilled,
+  TbBallpen,
+  TbBallpenFilled,
+} from "react-icons/tb";
 
 export type PageLink = {
   path: string;

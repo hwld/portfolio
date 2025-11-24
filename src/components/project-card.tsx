@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ProjectThumbnail } from "./project-thumbnail";
-import { TbCode } from "@react-icons/all-files/tb/TbCode";
+import { TbCode } from "react-icons/tb";
 import { ProjectInfo } from "./content/type";
 
 type Props = { project: ProjectInfo };

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { Heading } from "./heading";
-import { TbExternalLink } from "@react-icons/all-files/tb/TbExternalLink";
+import { TbExternalLink } from "react-icons/tb";
 
 type Skill = { name: string; imgFile: string; link: string };
 const skills = [

@@ -1,4 +1,4 @@
-import { TbHash } from "@react-icons/all-files/tb/TbHash";
+import { TbHash } from "react-icons/tb";
 
 type Props = { subTitle: string; children: string };
 export const Heading: React.FC<Props> = ({ subTitle, children }) => {

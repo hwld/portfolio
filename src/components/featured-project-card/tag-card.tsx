@@ -1,4 +1,4 @@
-import { TbExternalLink } from "@react-icons/all-files/tb/TbExternalLink";
+import { TbExternalLink } from "react-icons/tb";
 import { ProjectTag, projectTagLinkMap } from "../content/type";
 
 export const FeaturedProjectTagCard: React.FC<{
