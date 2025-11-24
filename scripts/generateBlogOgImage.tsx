@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-head-element */
 /* eslint-disable @next/next/no-img-element */
 import React from "react";
-import puppeteer from "puppeteer";
+import { chromium } from "playwright";
 import { renderToStaticMarkup } from "react-dom/server";
 import { readFileSync } from "fs";
 import path from "path";
@@ -81,9 +81,9 @@ const generate = async ({
   article: ArticleInfo;
   avatar: string;
 }) => {
-  const browser = await puppeteer.launch({ args: ["--no-sandbox"] });
+  const browser = await chromium.launch({ args: ["--no-sandbox"] });
   const page = await browser.newPage();
-  await page.setViewport({ width: 1200, height: 630 });
+  await page.setViewportSize({ width: 1200, height: 630 });
 
   const markup = renderToStaticMarkup(
     <BlogOgImage article={article} avatar={avatar} />
@@ -103,7 +103,7 @@ const main = async () => {
     path.join(__dirname, "../public/avatar.png")
   ).toString("base64");
 
-  Promise.all(articleInfos.map((p) => generate({ article: p, avatar })));
+  await Promise.all(articleInfos.map((p) => generate({ article: p, avatar })));
 };
 
 main();

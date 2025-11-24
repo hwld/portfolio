@@ -26,6 +26,9 @@ jobs:
       - name: Install Dependencies
         run: pnpm install --no-frozen-lockfile
 
+      - name: Install Playwright Browsers
+        run: pnpm exec playwright install chromium --with-deps
+
       - name: Build & Deploy Worker
         run: pnpm run deploy
         env:
